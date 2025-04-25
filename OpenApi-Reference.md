@@ -5,8 +5,8 @@ cardepass.com 卡系统API文档
 
 Base URLs:
 
-* <a href="https://test.cardepass.com/openapi">体验环境: https://test.cardepass.com/openapi</a>
-* <a href="https://cardepass.com/openapi">生成环境: https://cardepass.com/openapi</a>
+* <a href="https://test.cardepass.com/openapi">测试环境: https://test.cardepass.com/openapi</a>
+* <a href="https://cardepass.com/openapi">生产环境: https://cardepass.com/openapi</a>
 
 # Authentication
 
