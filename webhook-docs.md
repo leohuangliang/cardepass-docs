@@ -47,29 +47,94 @@
 
 ### 3.4 事件类型(Type)
 
-| 类型           | 说明                 |
-|----------------|----------------------|
-| ApplyCard      | 开卡通知             |
-| Recharge       | 充值通知             |
-| CardPay        | 卡消费通知           |
-| AcctPay        | 共享账户资金动账通知 |
-| CardAudit      | 卡片审核通知         |
-| CardActivation | 卡片激活通知         |
-| CardBlock      | 卡片锁定通知         |
-| CardUnblock    | 卡片解锁通知         |
-| CardCancel     | 卡片注销通知         |
+| 类型           | 说明                 | 实现状态            |
+|----------------|----------------------|---------------------|
+| CardPay        | 卡消费通知           | ✅ 已实现            |
+| ApplyCard      | 开卡通知             | 🚧 开发中，暂未提供 |
+| Recharge       | 充值通知             | 🚧 开发中，暂未提供 |
+| AcctPay        | 共享账户资金动账通知 | 🚧 开发中，暂未提供 |
+| CardAudit      | 卡片审核通知         | 🚧 开发中，暂未提供 |
+| CardActivation | 卡片激活通知         | 🚧 开发中，暂未提供 |
+| CardBlock      | 卡片锁定通知         | 🚧 开发中，暂未提供 |
+| CardUnblock    | 卡片解锁通知         | 🚧 开发中，暂未提供 |
+| CardCancel     | 卡片注销通知         | 🚧 开发中，暂未提供 |
 
-## 4. 签名验证
+> **📋 实现状态说明**：
+> - ✅ **已实现**：完全支持，可正常使用
+> - 🚧 **开发中，暂未提供**：功能规划中，敬请期待后续版本
+
+## 4. 事件数据结构(Data字段)
+
+### 4.1 CardPay - 卡消费通知 ✅
+
+当卡片发生消费时，系统会发送此通知。包含预授权成功、预授权失败和交易结算三种子类型。
+
+```json
+{
+  "Id": "66f8a1e4-1234-5678-9abc-123456789012",
+  "AuthTime": "2023-05-20T08:30:45Z",
+  "SettleTime": "2023-05-20T08:35:12Z",
+  "TransAmount": {
+    "Currency": "USD",
+    "Amount": 29.99
+  },
+  "BillingAmount": {
+    "Currency": "USD", 
+    "Amount": 29.99
+  },
+  "Fee": {
+    "Currency": "USD",
+    "Amount": 0.50
+  },
+  "MerchantInfo": {
+    "Name": "AMAZON.COM",
+    "CategoryCode": "5942"
+  },
+  "CardNumber": "4***-****-****-1234",
+  "TransType": "PURCHASE",
+  "Status": "SUCCESS"
+}
+```
+
+**字段说明**：
+
+| 字段          | 类型     | 说明                    |
+|---------------|----------|-------------------------|
+| Id            | string   | 交易唯一标识符          |
+| AuthTime      | datetime | 预授权时间(UTC)         |
+| SettleTime    | datetime | 结算时间(UTC，可能为空) |
+| TransAmount   | object   | 原始交易金额            |
+| BillingAmount | object   | 计费金额                |
+| Fee           | object   | 手续费                  |
+| MerchantInfo  | object   | 商户信息                |
+| CardNumber    | string   | 脱敏卡号                |
+| TransType     | string   | 交易类型                |
+| Status        | string   | 交易状态                |
+
+### 4.2 其他事件类型 🚧
+
+以下事件类型正在开发中，Data字段结构将在后续版本中提供：
+
+- **ApplyCard** - 开卡通知
+- **Recharge** - 充值通知  
+- **AcctPay** - 共享账户资金动账通知
+- **CardAudit** - 卡片审核通知
+- **CardActivation** - 卡片激活通知
+- **CardBlock** - 卡片锁定通知
+- **CardUnblock** - 卡片解锁通知
+- **CardCancel** - 卡片注销通知
+
+## 5. 签名验证
 
 系统使用HMAC-SHA256算法对通知内容进行签名，您需要在收到通知后验证签名以确保通知的真实性。
 
-### 4.1 签名生成规则
+### 5.1 签名生成规则
 
 1. 将以下字段按顺序拼接：`Id + Type + CreatedTime + Data + Version`
 2. 使用您配置的Secret和HMAC-SHA256算法对拼接字符串进行签名
 3. 将结果进行Base64编码
 
-## 5. 响应要求
+## 6. 响应要求
 
 您的服务器需要在接收到通知后，返回以下格式的JSON响应：
 
@@ -93,9 +158,9 @@
 
 注意：系统会根据您的响应判断通知是否处理成功。如果您返回了错误状态码或错误的响应格式，系统将认为通知发送失败并可能进行重试。
 
-## 6. 代码示例
+## 7. 代码示例
 
-### 6.1 Java实现
+### 7.1 Java实现
 
 ```java
 import javax.crypto.Mac;
@@ -233,7 +298,7 @@ public class WebhookController {
 }
 ```
 
-### 6.2 PHP实现
+### 7.2 PHP实现
 
 ```php
 <?php
@@ -326,7 +391,7 @@ function handleRechargeNotification($payload) {
 }
 ```
 
-### 6.3 C#实现
+### 7.3 C#实现
 
 ```csharp
 using System;
@@ -472,27 +537,27 @@ public class WebhookController : ControllerBase
 }
 ```
 
-## 7. 常见问题
+## 8. 常见问题
 
-### 7.1 我收不到通知怎么办？
+### 8.1 我收不到通知怎么办？
 
 - 确认您的回调地址是否可公网访问
 - 检查您是否正确配置了WebHook并启用了相关事件
 - 查看您的服务器日志，确认是否收到了请求但处理失败
 
-### 7.2 签名验证失败怎么办？
+### 8.2 签名验证失败怎么办？
 
 - 确认您使用的Secret是否正确
 - 检查签名计算逻辑是否与文档一致
 - 确认没有对签名字符串进行额外的处理（如去除空格、换行符等）
 
-### 7.3 如何测试我的WebHook实现？
+### 8.3 如何测试我的WebHook实现？
 
 - 使用工具如Postman创建模拟的WebHook请求
 - 在测试环境中触发相关事件，观察WebHook是否正常推送
 - 实现详细的日志记录，以便于排查问题
 
-## 8. 安全最佳实践
+## 9. 安全最佳实践
 
 - 使用HTTPS作为回调地址
 - 对密钥进行安全存储，不要硬编码在代码中
