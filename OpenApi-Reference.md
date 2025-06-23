@@ -858,17 +858,11 @@ GET /v1/orders/standard
         "feeItems": [
           {
             "feeType": "OpenCardFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           },
           {
             "feeType": "TopUpFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           }
         ]
       }
@@ -937,9 +931,8 @@ GET /v1/orders/standard
 | »»» quantity        | integer  | false | none | 开卡数量     | none              |
 | »»» feeItems        | [object] | false | none | 费用明细     | none              |
 | »»»» feeType        | string   | true  | none | 费用类型     | none              |
-| »»»» feeAmount      | object   | true  | none | 费用         | none              |
-| »»»»» currency      | string   | true  | none | 费用币种     | none              |
-| »»»»» amount        | number   | true  | none | 费用金额     | none              |
+| »»»» amount         | number   | true  | none | 费用金额     | none              |
+| »»»» currency       | string   | true  | none | 费用币种     | none              |
 | »» cardInfos        | [object] | true  | none | 卡信息       | none              |
 | »»» cardId          | string   | false | none | 卡ID         | none              |
 | »»» productCode     | string   | false | none | 产品编码     | none              |
@@ -1026,17 +1019,11 @@ POST /v1/orders/standard/apply
         "feeItems": [
           {
             "feeType": "OpenCardFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           },
           {
             "feeType": "TopUpFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           }
         ]
       }
@@ -1096,9 +1083,8 @@ POST /v1/orders/standard/apply
 | »»» quantity        | string   | true | none | 开卡数       | none                                               |
 | »»» feeItems        | [object] | true | none | 费用明细     | none                                               |
 | »»»» feeType        | string   | true | none | 费用类型     | none                                               |
-| »»»» feeAmount      | object   | true | none | 费用         | none                                               |
-| »»»»» currency      | string   | true | none | 费用币种     | none                                               |
-| »»»»» amount        | string   | true | none | 费用金额     | none                                               |
+| »»»» amount         | number   | true | none | 费用金额     | none                                               |
+| »»»» currency       | string   | true | none | 费用币种     | none                                               |
 | »» cardInfos        | [object] | true | none | 已开卡信息   | none                                               |
 | »»» cardId          | string   | true | none | 卡ID         | none                                               |
 | »»» productCode     | string   | true | none | 产品编码     | none                                               |
@@ -1180,10 +1166,7 @@ POST /v1/orders/standard/topup
         "feeItems": [
           {
             "feeType": "TopUpFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           }
         ],
         "isCompleted": false,
@@ -1250,9 +1233,8 @@ POST /v1/orders/standard/topup
 | »»» topUpAmount            | string   | true | none | 充值金额         | none                                               |
 | »»» feeItems               | [object] | true | none | 费用明细         | none                                               |
 | »»»» feeType               | string   | true | none | 费用类型         | none                                               |
-| »»»» feeAmount             | object   | true | none | 费用             | none                                               |
-| »»»»» currency             | string   | true | none | 费用币种         | none                                               |
-| »»»»» amount               | string   | true | none | 费用金额         | none                                               |
+| »»»» amount                | number   | true | none | 费用金额         | none                                               |
+| »»»» currency              | string   | true | none | 费用币种         | none                                               |
 | »»» isCompleted            | string   | true | none | 是否已完充值     | none                                               |
 | »»» completedOn            | string   | true | none | 充值完成时间     | none                                               |
 | »» status                  | string   | true | none | 订单状态         | 处理中 Pending，已完成 Completed，处理失败 Failure |
@@ -2053,10 +2035,7 @@ GET /v1/accounts/cardAccountLogs
         "feeItems": [
           {
             "feeType": "CancelCardFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           }
         ],
         "totalAmount": {
@@ -2100,10 +2079,7 @@ GET /v1/accounts/cardAccountLogs
         "feeItems": [
           {
             "feeType": "CardWithdrawFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           }
         ],
         "totalAmount": {
@@ -2147,10 +2123,7 @@ GET /v1/accounts/cardAccountLogs
         "feeItems": [
           {
             "feeType": "TopUpFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           }
         ],
         "totalAmount": {
@@ -2194,17 +2167,11 @@ GET /v1/accounts/cardAccountLogs
         "feeItems": [
           {
             "feeType": "OpenCardFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           },
           {
             "feeType": "TopUpFee",
-            "feeAmount": {
-              "currency": "USD",
-              "amount": 0.1
-            }
+            "amount": 0.1, "currency": "USD"
           }
         ],
         "totalAmount": {
@@ -2271,9 +2238,8 @@ GET /v1/accounts/cardAccountLogs
 | »»»» amount            | string   | true | none | 总手续费金额       | none                                                                                                     |
 | »»» feeItems           | [object] | true | none | 费用明细           | none                                                                                                     |
 | »»»» feeType           | string   | true | none | 费用类型           | none                                                                                                     |
-| »»»» feeAmount         | object   | true | none | 费用金额信息       | none                                                                                                     |
-| »»»»» currency         | string   | true | none | 费用币种           | none                                                                                                     |
-| »»»»» amount           | string   | true | none | 费用金额           | none                                                                                                     |
+| »»»» amount            | number   | true | none | 费用金额           | none                                                                                                     |
+| »»»» currency          | string   | true | none | 费用币种           | none                                                                                                     |
 | »»» totalAmount        | object   | true | none | 总金额信息         | 总金额= 交易金额+总手续费                                                                                |
 | »»»» currency          | string   | true | none | 总金额币种         | none                                                                                                     |
 | »»»» amount            | string   | true | none | 总金额金额         | none                                                                                                     |
