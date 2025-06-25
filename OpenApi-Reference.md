@@ -31,12 +31,13 @@ redirect_uri: ""
 
 ### 请求参数
 
-| 名称            | 位置 | 类型   | 说明                                  |
-|-----------------|------|--------|------|
-| body            | body | object | 否   | none                                  | » grant_type    | body | string | 是   | 固定值                                |
-| body | string | 是   | client_id 请联系cardepass 获取        |
-| » client_secret | string | 是   | client_secret 秘钥请联系cardepass获取 |
-| » redirect_uri  | body | 否   | none                                  |
+| 名称            | 位置 | 类型   | 必选 | 说明                                  |
+|-----------------|------|--------|------|---------------------------------------|
+| body            | body | object | 否   | none                                  |
+| » grant_type    | body | string | 是   | 固定值                                |
+| » client_id     | body | string | 是   | client_id 请联系cardepass 获取        |
+| » client_secret | body | string | 是   | client_secret 秘钥请联系cardepass获取 |
+| » redirect_uri  | body | string | 否   | none                                  |
 
 > 返回示例
 
@@ -53,9 +54,9 @@ redirect_uri: ""
 
 ### 返回结果
 
-| 状态码 | 状态码含义                                              | 说明 |
+| 状态码 | 状态码含义                                              | 说明 | 数据模型 |
 |--------|---------------------------------------------------------|------|----------|
-| [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | none | Inline   |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | none | Inline   |
 
 ### 返回数据结构
 
@@ -97,8 +98,8 @@ GET /v1/ping
 | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   | 名称   | 位置   | 类型   | 必选 | 说明 |
-|--------|--------|------|------|
-| Accept | string | 是   | none |
+|--------|--------|--------|------|------|
+| Accept | header | string | 是   | none |
 
 > 返回示例
 
@@ -147,20 +148,32 @@ GET /v1/ping
 ### 返回结果
 
 | 状态码 | 状态码含义                                                      | 说明 | 数据模型 |
-|--------|-----------------------------------------------------------------|------|----------| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
-| 401    | none | Inline   |
+|--------|-----------------------------------------------------------------|------|----------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
+| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | none | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   |
 
 ### 返回数据结构
 
 状态码 **200**
 
-| 名称            | 类型     | 约束 | 中文名 | 说明       |-----------------|----------|------|------|--------|------------| » data          | [object] | true | none |        | none       | »» productCode  | string   | true | none |        | 产品编码   | »» productName  | string   | true | none |        | 产品名称   | »» cardModels   | [string] | true | none |        | 卡模式     | »» cardCurrency | [string] | true | none |        | 卡结算币种 | »» description  | string   | true | none |        | 产品描述   | » responseId    | string   | true | none |        | 响应Id     | » hasError      | boolean  | true | none |        | 是否有错误 | » errorCode     | null     | true | none |        | 错误码     | » errorMessage  | null     | true | none |        | 错误信息   | 名称            | 位置   | 类型   | 必选 | 说明                         |
-|--------|--------|------|------------------------------|
-| OrderType       | string | 是   | 订单类型:                    |
-| OrderNo         | query  | 是   | 订单号。和客户订单号必选其一 |
-| CustomerOrderNo | query  | string | 客户订单号。和订单号必选其一 |
-| Accept          | header | string | 是   |
+| 名称            | 类型     | 约束 | 中文名     | 说明       |
+|-----------------|----------|------|------------|------------|
+| » data          | [object] | true | none       | none       |
+| »» productCode  | string   | true | 产品编码   | none       |
+| »» productName  | string   | true | 产品名称   | none       |
+| »» cardModels   | [string] | true | 卡模式     | none       |
+| »» cardCurrency | [string] | true | 卡结算币种 | none       |
+| »» description  | string   | true | 产品描述   | none       |
+| » responseId    | string   | true | 响应Id     | none       |
+| » hasError      | boolean  | true | 是否有错误 | none       |
+| » errorCode     | null     | true | 错误码     | none       |
+| » errorMessage  | null     | true | 错误信息   | none       | 名称            | 位置   | 类型   | 必选 | 说明                         |
+|-----------------|--------|--------|------|------------------------------|
+| OrderType       | query  | string | 是   | 订单类型:                    |
+| OrderNo         | query  | string | 是   | 订单号。和客户订单号必选其一 |
+| CustomerOrderNo | query  | string | 否   | 客户订单号。和订单号必选其一 |
+| Accept          | header | string | 是   | none                         |
 
 #### 详细说明
 
@@ -240,10 +253,10 @@ ApplyCard 申请开卡、CreditLimit 调整限额、CardCancel 销卡、CardBloc
 | »»» cardModel      | string   | none | 卡模式         | none                                               |
 | »»» cardCurrency   | string   | none | 卡结算币种     | none                                               |
 | »» quantity        | integer  | none | 申请开卡卡数   | none                                               |
-| »» maxAuthAmount   | integer  | none | 单笔限额       | none                                               |
+| »» maxAuthAmount   | number   | none | 单笔限额       | none                                               |
 | »» maxCreditAmount | null     | none | 单卡消费总额度 | 可以为空，为空表示无限额度                         |
 | »» totalAmount     | number   | none | 总交易金额     | none                                               |
-| »» transAmount     | integer  | none | 交易金额       | none                                               |
+| »» transAmount     | number   | none | 交易金额       | none                                               |
 | »» transFee        | number   | none | 交易手续费     | none                                               |
 | »» openedQty       | integer  | none | 已开卡数       | none                                               |
 | »» cardInfos       | [object] | none | 已开卡信息     | none                                               |
@@ -343,38 +356,44 @@ POST /v1/orders/sharebalance/apply
 
 ### 返回结果
 
-| 状态码 | 状态码含义                                                      | 说明 |
+| 状态码 | 状态码含义                                                      | 说明 | 数据模型 |
 |--------|-----------------------------------------------------------------|------|----------|
-| [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
-| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | Inline   |
-| 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   | 名称               | 类型     | 约束 | 中文名         | 说明                       |
-|----------|------|------|----------------|----------------------------|
-| object   | true | none |                | none                       |
-| string   | true | none | 订单号         | none                       |
-| object   | true | none | 产品信息       | none                       |
-| string   | true | none | 产品代码       | none                       |
-| string   | true | none | 产品名称       | none                       |
-| string   | true | none | 卡模式         | none                       |
-| string   | true | none | 卡结算币种     | none                       |
-| integer  | true | none | 开卡数量       | none                       |
-| integer  | true | none | 单笔限额       | none                       |
-| null     | true | none | 单卡消费总额度 | 可以为空，为空表示无限额度 |
-| number   | true | none | 总金额         | none                       |
-| integer  | true | none | 交易实际金额   | none                       |
-| number   | true | none | 交易手续费     | none                       |
-| integer  | true | none | 已开卡数       | none                       |
-| [string] | true | none | 卡信息         | none                       |
-| string   | true | none | 备注           | none                       |
-| string   | true | none | 订单状态       | none                       |
-| string   | true | none | 订单类型       | none                       |
-| string   | true | none | 订单创建时间   | none                       |
-| string   | true | none | 订单修改时间   | none                       |
-| null     | true | none | 订单完成时间   | none                       |
-| string   | true | none | 客户订单号     | none                       |
-| string   | true | none | 响应ID         | none                       |
-| boolean  | true | none | 是否出错       | none                       |
-| null     | true | none | 错误码         | none                       |
-| null     | true | none | 错误信息       | none                       |
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
+| 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | none | Inline   |
+| 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   |
+
+### 返回数据结构
+
+状态码 **200**
+
+| 名称               | 类型     | 约束 | 中文名         | 说明                       |
+|------------------|----------|------|----------------|----------------------------|
+| » data             | object   | true | none           | none                       |
+| »» orderNo         | string   | true | 订单号         | none                       |
+| »» productInfo     | object   | true | 产品信息       | none                       |
+| »»» productCode    | string   | true | 产品代码       | none                       |
+| »»» productName    | string   | true | 产品名称       | none                       |
+| »»» cardModel      | string   | true | 卡模式         | none                       |
+| »»» cardCurrency   | string   | true | 卡结算币种     | none                       |
+| »» quantity        | integer  | true | 开卡数量       | none                       |
+| »» maxAuthAmount   | number   | true | 单笔限额       | none                       |
+| »» maxCreditAmount | null     | true | 单卡消费总额度 | 可以为空，为空表示无限额度 |
+| »» totalAmount     | number   | true | 总金额         | none                       |
+| »» transAmount     | number   | true | 交易实际金额   | none                       |
+| »» transFee        | number   | true | 交易手续费     | none                       |
+| »» openedQty       | integer  | true | 已开卡数       | none                       |
+| »» cardInfos       | [object] | true | 卡信息         | none                       |
+| »» note            | string   | true | 备注           | none                       |
+| »» status          | string   | true | 订单状态       | none                       |
+| »» orderType       | string   | true | 订单类型       | none                       |
+| »» createdOn       | string   | true | 订单创建时间   | none                       |
+| »» modifiedOn      | string   | true | 订单修改时间   | none                       |
+| »» completedOn     | null     | true | 订单完成时间   | none                       |
+| »» customerOrderNo | string   | true | 客户订单号     | none                       |
+| » responseId       | string   | true | 响应ID         | none                       |
+| » hasError         | boolean  | true | 是否出错       | none                       |
+| » errorCode        | null     | true | 错误码         | none                       |
+| » errorMessage     | null     | true | 错误信息       | none                       |
 
 # orders/sharebalance/creditLimit
 
@@ -395,15 +414,15 @@ POST /v1/orders/sharebalance/creditLimit
 
 ### 请求参数
 
-| 位置   | 类型   | 中文名         | 说明                           |
-|-------------------|--------|------|----------------|--------------------------------|
-| Content-Type      | string | 是   |                | none                           |
-| Accept            | string | 是   |                | none                           |
-| body              | object | 否   |                | none                           |
-| » cardId          | string | 是   | 卡ID           | none                           |
-| » customerOrderNo | string | 否   | 客户订单号     | none                           |
-| » maxAuthAmount   | string | 是   | 单笔限额       | none                           |
-| » maxCreditAmount | string | 否   | 单卡消费总额度 | 可以为空，额度为空表示无限额度 |
+| 名称              | 位置   | 类型   | 必选 | 中文名         | 说明                           |
+|-------------------|--------|--------|------|----------------|--------------------------------|
+| Content-Type      | header | string | 是   | none           | none                           |
+| Accept            | header | string | 是   | none           | none                           |
+| body              | body   | object | 否   | none           | none                           |
+| » cardId          | body   | string | 是   | 卡ID           | none                           |
+| » customerOrderNo | body   | string | 否   | 客户订单号     | none                           |
+| » maxAuthAmount   | body   | string | 是   | 单笔限额       | none                           |
+| » maxCreditAmount | body   | string | 否   | 单卡消费总额度 | 可以为空，额度为空表示无限额度 |
 
 > 返回示例
 
@@ -453,7 +472,7 @@ POST /v1/orders/sharebalance/creditLimit
 | » data             | object  | true | none |              |
 | »» orderNo         | string  | true | none | 订单号       |
 | »» cardId          | string  | true | none | 卡ID         |
-| »» maxAuthAmount   | integer | true | none | 单笔限额     |
+| »» maxAuthAmount   | number  | true | none | 单笔限额     |
 | »» maxCreditAmount | null    | true | none | 单卡消费额度 |
 | »» status          | string  | true | none | 订单状态     |
 | »» orderType       | string  | true | none | 订单类型     |
@@ -693,12 +712,37 @@ POST /v1/orders/sharebalance/cancel
 
 状态码 **200**
 
-| 名称                | 类型    | 约束 | 中文名         | 说明 |---------------------|---------|------|------|----------------|------| » data              | object  | true | none |                | none | »» orderNo          | string  | true | none | 订单号         | none | »» cardInfo         | object  | true | none | 卡信息         | none | »»» cardId          | string  | true | none | 卡ID           | none | »»» productCode     | string  | true | none | 产品编码       | none | »»» productName     | string  | true | none | 产品名称       | none | »»» cardCurrency    | string  | true | none | 卡结算币种     | none | »»» maskCardNumber  | string  | true | none | 脱敏卡号       | none | »»» cardModel       | string  | true | none | 卡模式         | none | »» fee              | null    | true | none | 销卡费         | none | »» chargeMethodType | string  | true | none | 收费方式       | none | »» fixedValue       | integer | true | none | 固定值收费标准 | none | »» percent          | null    | true | none | 百分比收费标准 | none | »» note             | string  | true | none | 备注           | none | »» status           | string  | true | none | 订单状态       | none | »» orderType        | string  | true | none | 订单类型       | none | »» settleStatus     | string  | true | none | 结算状态       | none | »» failureReason    | null    | true | none | 失败原因       | none | »» createdOn        | string  | true | none | 订单创建时间   | none | »» completedOn      | null    | true | none | 订单完成时间   | none | » responseId        | string  | true | none | 响应ID         | none | » hasError          | boolean | true | none | 是否出错       | none | » errorCode         | null    | true | none | 错误码         | none | » errorMessage      | null    | true | none | 错误信息       | none | 名称            | 位置   | 类型   | 中文名 | 说明                                                                                                                                             |
-|--------|--------|------|--------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| query  | string | 是   |        | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CardWithdraw 卡余额转出订单 |
-| query  | string | 是   |        | 订单号。和商户订单号至少填写一个                                                                                                                 |
-| query  | string | 是   |        | 商户订单号。和订单号至少填写一个                                                                                                                 |
-| header | string | 是   |        | none                                                                                                                                             |
+| 名称                | 类型    | 约束 | 中文名         | 说明 |
+|---------------------|---------|------|----------------|------|
+| » data              | object  | true | none           | none |
+| »» orderNo          | string  | true | 订单号         | none |
+| »» cardInfo         | object  | true | 卡信息         | none |
+| »»» cardId          | string  | true | 卡ID           | none |
+| »»» productCode     | string  | true | 产品编码       | none |
+| »»» productName     | string  | true | 产品名称       | none |
+| »»» cardCurrency    | string  | true | 卡结算币种     | none |
+| »»» maskCardNumber  | string  | true | 脱敏卡号       | none |
+| »»» cardModel       | string  | true | 卡模式         | none |
+| »» fee              | null    | true | 销卡费         | none |
+| »» chargeMethodType | string  | true | 收费方式       | none |
+| »» fixedValue       | number  | true | 固定值收费标准 | none |
+| »» percent          | null    | true | 百分比收费标准 | none |
+| »» note             | string  | true | 备注           | none |
+| »» status           | string  | true | 订单状态       | none |
+| »» orderType        | string  | true | 订单类型       | none |
+| »» settleStatus     | string  | true | 结算状态       | none |
+| »» failureReason    | null    | true | 失败原因       | none |
+| »» createdOn        | string  | true | 订单创建时间   | none |
+| »» completedOn      | null    | true | 订单完成时间   | none |
+| » responseId        | string  | true | 响应ID         | none |
+| » hasError          | boolean | true | 是否出错       | none |
+| » errorCode         | null    | true | 错误码         | none |
+| » errorMessage      | null    | true | 错误信息       | none | 名称            | 位置   | 类型   | 必选 | 说明                                                                                                                                             |
+|-----------------|--------|--------|------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| OrderType       | query  | string | 是   | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CardWithdraw 卡余额转出订单 |
+| OrderNo         | query  | string | 是   | 订单号。和商户订单号至少填写一个                                                                                                                 |
+| CustomerOrderNo | query  | string | 否   | 商户订单号。和订单号至少填写一个                                                                                                                 |
+| Accept          | header | string | 是   | none                                                                                                                                             |
 
 > 返回示例
 
@@ -788,14 +832,14 @@ POST /v1/orders/sharebalance/cancel
 | »»» productName     | string   | true  | none | none              |
 | »»» cardModel       | string   | true  | none | none              |
 | »»» cardCurrency    | string   | true  | none | none              |
-| »» totalTopUpAmount | integer  | true  | none | none              |
+| »» totalTopUpAmount | number   | true  | none | none              |
 | »» totalFee         | number   | true  | none | none              |
 | »» totalPayAmount   | number   | true  | none | 总充值金额+总费用 |
 | »» totalCardCount   | integer  | true  | none | none              |
 | »» totalOpened      | integer  | true  | none | none              |
 | »» orderLines       | [object] | true  | none | none              |
 | »»» orderLineNo     | integer  | false | none | none              |
-| »»» topUpAmount     | integer  | false | none | none              |
+| »»» topUpAmount     | number   | false | none | none              |
 | »»» quantity        | integer  | false | none | none              |
 | »»» feeItems        | [object] | false | none | none              |
 | »»»» feeType        | string   | true  | none | none              |
@@ -939,15 +983,15 @@ POST /v1/orders/standard/apply
 | »»» productName     | string   | none | 产品名称     | none                                               |
 | »»» cardModel       | string   | none | 卡模式       | none                                               |
 | »»» cardCurrency    | string   | none | 卡结算币种   | none                                               |
-| »» totalTopUpAmount | string   | none | 总充值金额   | none                                               |
-| »» totalFee         | string   | none | 总费用       | none                                               |
-| »» totalPayAmount   | string   | none | 总支付金额   | none                                               |
-| »» totalCardCount   | string   | none | 开卡数量     | none                                               |
-| »» totalOpened      | string   | none | 已开卡数     | none                                               |
+| »» totalTopUpAmount | number   | none | 总充值金额   | none                                               |
+| »» totalFee         | number   | none | 总费用       | none                                               |
+| »» totalPayAmount   | number   | none | 总支付金额   | none                                               |
+| »» totalCardCount   | integer  | none | 开卡数量     | none                                               |
+| »» totalOpened      | integer  | none | 已开卡数     | none                                               |
 | »» orderLines       | [object] | none | 订单明细     | none                                               |
-| »»» orderLineNo     | string   | none | 订单明细编号 | none                                               |
-| »»» topUpAmount     | string   | none | 充值金额     | none                                               |
-| »»» quantity        | string   | none | 开卡数       | none                                               |
+| »»» orderLineNo     | integer  | none | 订单明细编号 | none                                               |
+| »»» topUpAmount     | number   | none | 充值金额     | none                                               |
+| »»» quantity        | integer  | none | 开卡数       | none                                               |
 | »»» feeItems        | [object] | none | 费用明细     | none                                               |
 | »»»» feeType        | string   | none | 费用类型     | none                                               |
 | »»»» amount         | number   | none | 费用金额     | none                                               |
@@ -968,7 +1012,7 @@ POST /v1/orders/standard/apply
 | »» completedOn      | string   | none | 完成时间     | none                                               |
 | »» customerOrderNo  | string   | none | 客户订单号   | none                                               |
 | » responseId        | string   | none | 响应ID       | none                                               |
-| » hasError          | string   | none | 是否有错误   | none                                               |
+| » hasError          | boolean  | none | 是否有错误   | none                                               |
 | » errorCode         | string   | none | 错误编码     | none                                               |
 | » errorMessage      | string   | none | 错误信息     | none                                               |
 
@@ -1069,19 +1113,19 @@ POST /v1/orders/standard/topup
 | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   | 名称                       | 类型     | 约束 | 中文名           | 说明                                               |
-|----------|------|------|------------------|----------------------------------------------------|
-| object   | true | none |                  | none                                               |
-| string   | true | none | 订单号           | none                                               |
-| object   | true | none | 产品信息         | none                                               |
-| string   | true | none | 产品编号         | none                                               |
-| string   | true | none | 产品名称         | none                                               |
-| string   | true | none | 卡模式           | none                                               |
-| string   | true | none | 卡币种           | none                                               |
-| string   | true | none | 总充值金额       | none                                               |
-| string   | true | none | 总费用           | none                                               |
-| string   | true | none | 总支付金额       | none                                               |
-| string   | true | none | 总充值卡数       | none                                               |
-| string   | true | none | 总完成充值卡数数 | none                                               |
+|----------------------------|----------|------|------------------|----------------------------------------------------|
+| » data                     | object   | true | none             | none                                               |
+| »» orderNo                 | string   | true | 订单号           | none                                               |
+| »» productInfo             | object   | true | 产品信息         | none                                               |
+| »»» productCode            | string   | true | 产品编号         | none                                               |
+| »»» productName            | string   | true | 产品名称         | none                                               |
+| »»» cardModel              | string   | true | 卡模式           | none                                               |
+| »»» cardCurrency           | string   | true | 卡币种           | none                                               |
+| »» totalTopUpAmount        | number   | true | 总充值金额       | none                                               |
+| »» totalFee                | number   | true | 总费用           | none                                               |
+| »» totalPayAmount          | number   | true | 总支付金额       | none                                               |
+| »» totalCardCount          | integer  | true | 总充值卡数       | none                                               |
+| »» totalCompletedCardCount | integer  | true | 总完成充值卡数数 | none                                               |
 | [object] | true | none | 订单明细行       | none                                               |
 | string   | true | none | 订单明细行号     | none                                               |
 | object   | true | none | 卡信息           | none                                               |
