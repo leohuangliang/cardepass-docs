@@ -167,8 +167,8 @@ GET /v1/ping
 | »» description  | string   | true | 产品描述   | none       |
 | » responseId    | string   | true | 响应Id     | none       |
 | » hasError      | boolean  | true | 是否有错误 | none       |
-| » errorCode     | null     | true | 错误码     | none       |
-| » errorMessage  | null     | true | 错误信息   | none       | 名称            | 位置   | 类型   | 必选 | 说明                         |
+| » errorCode     | string   | true | 错误码     | none       |
+| » errorMessage  | string   | true | 错误信息   | none       | 名称            | 位置   | 类型   | 必选 | 说明                         |
 |-----------------|--------|--------|------|------------------------------|
 | OrderType       | query  | string | 是   | 订单类型:                    |
 | OrderNo         | query  | string | 是   | 订单号。和客户订单号必选其一 |
@@ -254,7 +254,7 @@ ApplyCard 申请开卡、CreditLimit 调整限额、CardCancel 销卡、CardBloc
 | »»» cardCurrency   | string   | none | 卡结算币种     | none                                               |
 | »» quantity        | integer  | none | 申请开卡卡数   | none                                               |
 | »» maxAuthAmount   | number   | none | 单笔限额       | none                                               |
-| »» maxCreditAmount | null     | none | 单卡消费总额度 | 可以为空，为空表示无限额度                         |
+| »» maxCreditAmount | number   | none | 单卡消费总额度 | 可以为空，为空表示无限额度                         |
 | »» totalAmount     | number   | none | 总交易金额     | none                                               |
 | »» transAmount     | number   | none | 交易金额       | none                                               |
 | »» transFee        | number   | none | 交易手续费     | none                                               |
@@ -377,7 +377,7 @@ POST /v1/orders/sharebalance/apply
 | »»» cardCurrency   | string   | true | 卡结算币种     | none                       |
 | »» quantity        | integer  | true | 开卡数量       | none                       |
 | »» maxAuthAmount   | number   | true | 单笔限额       | none                       |
-| »» maxCreditAmount | null     | true | 单卡消费总额度 | 可以为空，为空表示无限额度 |
+| »» maxCreditAmount | number   | true | 单卡消费总额度 | 可以为空，为空表示无限额度 |
 | »» totalAmount     | number   | true | 总金额         | none                       |
 | »» transAmount     | number   | true | 交易实际金额   | none                       |
 | »» transFee        | number   | true | 交易手续费     | none                       |
@@ -388,12 +388,12 @@ POST /v1/orders/sharebalance/apply
 | »» orderType       | string   | true | 订单类型       | none                       |
 | »» createdOn       | string   | true | 订单创建时间   | none                       |
 | »» modifiedOn      | string   | true | 订单修改时间   | none                       |
-| »» completedOn     | null     | true | 订单完成时间   | none                       |
+| »» completedOn     | string   | true | 订单完成时间   | none                       |
 | »» customerOrderNo | string   | true | 客户订单号     | none                       |
 | » responseId       | string   | true | 响应ID         | none                       |
 | » hasError         | boolean  | true | 是否出错       | none                       |
-| » errorCode        | null     | true | 错误码         | none                       |
-| » errorMessage     | null     | true | 错误信息       | none                       |
+| » errorCode        | string   | true | 错误码         | none                       |
+| » errorMessage     | string   | true | 错误信息       | none                       |
 
 # orders/sharebalance/creditLimit
 
@@ -473,17 +473,17 @@ POST /v1/orders/sharebalance/creditLimit
 | »» orderNo         | string  | true | none | 订单号       |
 | »» cardId          | string  | true | none | 卡ID         |
 | »» maxAuthAmount   | number  | true | none | 单笔限额     |
-| »» maxCreditAmount | null    | true | none | 单卡消费额度 |
+| »» maxCreditAmount | number  | true | none | 单卡消费额度 |
 | »» status          | string  | true | none | 订单状态     |
 | »» orderType       | string  | true | none | 订单类型     |
-| »» failureReason   | null    | true | none | 失败原因     |
+| »» failureReason   | string  | true | none | 失败原因     |
 | »» createdOn       | string  | true | none | 订单创建时间 |
-| »» completedOn     | null    | true | none | 订单完成时间 |
+| »» completedOn     | string  | true | none | 订单完成时间 |
 | »» customerOrderNo | string  | true | none | 客户订单号   |
 | » responseId       | string  | true | none | 响应ID       |
 | » hasError         | boolean | true | none | 是否出错     |
-| » errorCode        | null    | true | none | 错误码       |
-| » errorMessage     | null    | true | none | 错误信息     |
+| » errorCode        | string  | true | none | 错误码       |
+| » errorMessage     | string  | true | none | 错误信息     |
 
 # orders/sharebalance/block
 
@@ -526,16 +526,16 @@ POST /v1/orders/sharebalance/block
 | »» note            | string  | true | 备注         | none |
 | »» isBlocked       | boolean | true | 是否被冻结   | none |
 | »» status          | string  | true | 订单状态     | none |
-| »» failureReason   | null    | true | 错误原因     | none |
+| »» failureReason   | string  | true | 错误原因     | none |
 | »» orderType       | string  | true | 订单类型     | none |
 | »» createdOn       | string  | true | 订单创建时间 | none |
 | »» modifiedOn      | string  | true | 订单修改时间 | none |
-| »» completedOn     | null    | true | 订单完成时间 | none |
+| »» completedOn     | string  | true | 订单完成时间 | none |
 | »» customerOrderNo | string  | true | 客户订单号   | none |
 | » responseId       | string  | true | 响应ID       | none |
 | » hasError         | boolean | true | 是否出错     | none |
-| » errorCode        | null    | true | 错误码       | none |
-| » errorMessage     | null    | true | 错误信息     | none |
+| » errorCode        | string  | true | 错误码       | none |
+| » errorMessage     | string  | true | 错误信息     | none |
 
 # orders/sharebalance/unblock
 
@@ -723,21 +723,21 @@ POST /v1/orders/sharebalance/cancel
 | »»» cardCurrency    | string  | true | 卡结算币种     | none |
 | »»» maskCardNumber  | string  | true | 脱敏卡号       | none |
 | »»» cardModel       | string  | true | 卡模式         | none |
-| »» fee              | null    | true | 销卡费         | none |
+| »» fee              | number  | true | 销卡费         | none |
 | »» chargeMethodType | string  | true | 收费方式       | none |
 | »» fixedValue       | number  | true | 固定值收费标准 | none |
-| »» percent          | null    | true | 百分比收费标准 | none |
+| »» percent          | number  | true | 百分比收费标准 | none |
 | »» note             | string  | true | 备注           | none |
 | »» status           | string  | true | 订单状态       | none |
 | »» orderType        | string  | true | 订单类型       | none |
 | »» settleStatus     | string  | true | 结算状态       | none |
-| »» failureReason    | null    | true | 失败原因       | none |
+| »» failureReason    | string  | true | 失败原因       | none |
 | »» createdOn        | string  | true | 订单创建时间   | none |
-| »» completedOn      | null    | true | 订单完成时间   | none |
+| »» completedOn      | string  | true | 订单完成时间   | none |
 | » responseId        | string  | true | 响应ID         | none |
 | » hasError          | boolean | true | 是否出错       | none |
-| » errorCode         | null    | true | 错误码         | none |
-| » errorMessage      | null    | true | 错误信息       | none | 名称            | 位置   | 类型   | 必选 | 说明                                                                                                                                             |
+| » errorCode         | string  | true | 错误码         | none |
+| » errorMessage      | string  | true | 错误信息       | none | 名称            | 位置   | 类型   | 必选 | 说明                                                                                                                                             |
 |-----------------|--------|--------|------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | OrderType       | query  | string | 是   | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CardWithdraw 卡余额转出订单 |
 | OrderNo         | query  | string | 是   | 订单号。和商户订单号至少填写一个                                                                                                                 |
@@ -862,8 +862,8 @@ POST /v1/orders/sharebalance/cancel
 | »» customerOrderNo  | string   | true  | none | none              |
 | » responseId        | string   | true  | none | none              |
 | » hasError          | boolean  | true  | none | none              |
-| » errorCode         | null     | true  | none | none              |
-| » errorMessage      | null     | true  | none | none              |
+| » errorCode         | string   | true  | none | none              |
+| » errorMessage      | string   | true  | none | none              |
 
 # orders/standard/apply
 
@@ -1296,16 +1296,16 @@ POST /v1/orders/standard/unblock
 | »»» cardModel      | string  | true | 卡模式       | none |
 | »» note            | string  | true | 订单备注     | none |
 | »» status          | string  | true | 订单状态     | none |
-| »» failureReason   | null    | true | 失败原因     | none |
+| »» failureReason   | string  | true | 失败原因     | none |
 | »» orderType       | string  | true | 订单类型     | none |
 | »» createdOn       | string  | true | 订单创建时间 | none |
 | »» modifiedOn      | string  | true | 订单修改时间 | none |
-| »» completedOn     | null    | true | 订单完成时间 | none |
-| »» customerOrderNo | null    | true | 客户订单号   | none |
+| »» completedOn     | string  | true | 订单完成时间 | none |
+| »» customerOrderNo | string  | true | 客户订单号   | none |
 | » responseId       | string  | true | 响应ID       | none |
 | » hasError         | boolean | true | 是否出错     | none |
-| » errorCode        | null    | true | 错误码       | none |
-| » errorMessage     | null    | true | 错误信息     | none |
+| » errorCode        | string  | true | 错误码       | none |
+| » errorMessage     | string  | true | 错误信息     | none |
 
 # orders/standard/cancel
 
