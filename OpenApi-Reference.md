@@ -502,11 +502,21 @@ POST /v1/orders/sharebalance/block
 
 ### 请求参数
 
-| 名称              | 位置   | 类型   | 中文名     | 说明 |-------------------|--------|--------|------|------------|------| Content-Type      | header | string | 是   |            | none | Accept            | header | string | 是   |            | none | body              | body   | object | 否   |            | none | » cardId          | body   | string | 是   | 卡ID       | none | » customerOrderNo | body   | string | 否   | 客户订单号 | none | 状态码 | 状态码含义                                                      | 说明 | 数据模型 |
-|--------|------|----------|
-| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none |
+| 名称              | 位置   | 类型   | 必选 | 中文名     | 说明 |
+|-------------------|--------|--------|------|------------|------|
+| Content-Type      | header | string | 是   |            | none |
+| Accept            | header | string | 是   |            | none |
+| body              | body   | object | 否   |            | none |
+| » cardId          | body   | string | 是   | 卡ID       | none |
+| » customerOrderNo | body   | string | 否   | 客户订单号 | none |
+
+### 返回结果
+
+| 状态码 | 状态码含义                                                      | 说明 | 数据模型 |
+|--------|----------------------------------------------------------------|------|----------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | none | Inline   |
-| [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   |
+| 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   |
 
 ### 返回数据结构
 
@@ -611,29 +621,29 @@ POST /v1/orders/sharebalance/unblock
 
 状态码 **200**
 
-| 类型    | 约束 | 中文名       | 说明 |
-|--------------------|------|------|--------------|------|
-| » data             | true | none |              | none |
-| »» orderNo         | true | none | 订单号       | none |
-| »» cardInfo        | true | none | 卡信息       | none |
-| »»» cardId         | true | none | 卡ID         | none |
-| »»» productCode    | true | none | 产品编码     | none |
-| »»» productName    | true | none | 产品名称     | none |
-| »»» cardCurrency   | true | none | 卡结算币种   | none |
-| »»» maskCardNumber | true | none | 脱敏卡号     | none |
-| »»» cardModel      | true | none | 卡模式       | none |
-| »» note            | true | none | 备注         | none |
-| »» status          | true | none | 订单状态     | none |
-| »» failureReason   | true | none | 失败原因     | none |
-| »» orderType       | true | none | 订单类型     | none |
-| »» createdOn       | true | none | 订单创建时间 | none |
-| »» modifiedOn      | true | none | 订单修改时间 | none |
-| »» completedOn     | true | none | 订单完成时间 | none |
-| »» customerOrderNo | true | none | 客户订单号   | none |
-| » responseId       | true | none | 响应ID       | none |
-| » hasError         | true | none | 是否出错     | none |
-| » errorCode        | true | none | 错误码       | none |
-| » errorMessage     | true | none | 错误信息     | none |
+| 名称               | 类型    | 约束 | 中文名       | 说明 |
+|--------------------|---------|------|--------------|------|
+| » data             | object  | true |              | none |
+| »» orderNo         | string  | true | 订单号       | none |
+| »» cardInfo        | object  | true | 卡信息       | none |
+| »»» cardId         | string  | true | 卡ID         | none |
+| »»» productCode    | string  | true | 产品编码     | none |
+| »»» productName    | string  | true | 产品名称     | none |
+| »»» cardCurrency   | string  | true | 卡结算币种   | none |
+| »»» maskCardNumber | string  | true | 脱敏卡号     | none |
+| »»» cardModel      | string  | true | 卡模式       | none |
+| »» note            | string  | true | 备注         | none |
+| »» status          | string  | true | 订单状态     | none |
+| »» failureReason   | string  | true | 失败原因     | none |
+| »» orderType       | string  | true | 订单类型     | none |
+| »» createdOn       | string  | true | 订单创建时间 | none |
+| »» modifiedOn      | string  | true | 订单修改时间 | none |
+| »» completedOn     | string  | true | 订单完成时间 | none |
+| »» customerOrderNo | string  | true | 客户订单号   | none |
+| » responseId       | string  | true | 响应ID       | none |
+| » hasError         | boolean | true | 是否出错     | none |
+| » errorCode        | string  | true | 错误码       | none |
+| » errorMessage     | string  | true | 错误信息     | none |
 
 # orders/sharebalance/cancel
 
@@ -652,13 +662,13 @@ POST /v1/orders/sharebalance/cancel
 
 ### 请求参数
 
-| 名称              | 类型   | 中文名     | 说明 |
-|-------------------|--------|------|------------|------|
-| Content-Type      | header | 是   |            | none |
-| Accept            | header | 是   |            | none |
-| body              | body   | 否   |            | none |
-| » cardId          | body   | 是   | 卡ID       | none |
-| » customerOrderNo | body   | 否   | 客户订单号 | none |
+| 名称              | 位置   | 类型   | 必选 | 中文名     | 说明 |
+|-------------------|--------|--------|------|------------|------|
+| Content-Type      | header | string | 是   |            | none |
+| Accept            | header | string | 是   |            | none |
+| body              | body   | object | 否   |            | none |
+| » cardId          | body   | string | 是   | 卡ID       | none |
+| » customerOrderNo | body   | string | 否   | 客户订单号 | none |
 
 > 返回示例
 
@@ -885,16 +895,16 @@ POST /v1/orders/standard/apply
 
 ### 请求参数
 
-| 名称              | 位置   | 类型   | 中文名 |
-|-------------------|--------|--------|------|--------|
-| Content-Type      | header | string | 是   |        |
-| Accept            | header | string | 是   |        |
-| body              | body   | object | 否   |        |
-| » productCode     | body   | string | 是   |        |
-| » cardCurrency    | body   | string | 是   |        |
-| » topUpAmount     | body   | string | 是   |        |
-| » cardAlias       | body   | string | 是   |        |
-| » customerOrderNo | body   | string | 是   |        |
+| 名称              | 位置   | 类型   | 必选 | 中文名 | 说明 |
+|-------------------|--------|--------|------|--------|------|
+| Content-Type      | header | string | 是   |        | none |
+| Accept            | header | string | 是   |        | none |
+| body              | body   | object | 否   |        | none |
+| » productCode     | body   | string | 是   |        | none |
+| » cardCurrency    | body   | string | 是   |        | none |
+| » topUpAmount     | body   | string | 是   |        | none |
+| » cardAlias       | body   | string | 是   |        | none |
+| » customerOrderNo | body   | string | 是   |        | none |
 
 > 返回示例
 
@@ -974,20 +984,20 @@ POST /v1/orders/standard/apply
 
 状态码 **200**
 
-| 名称                | 约束 | 中文名       | 说明                                               |
-|---------------------|----------|------|--------------|----------------------------------------------------|
-| » data              | object   | none |              | none                                               |
-| »» orderNo          | string   | none | 订单号       | none                                               |
-| »» productInfo      | object   | none | 产品信息     | none                                               |
-| »»» productCode     | string   | none | 产品编码     | none                                               |
-| »»» productName     | string   | none | 产品名称     | none                                               |
-| »»» cardModel       | string   | none | 卡模式       | none                                               |
-| »»» cardCurrency    | string   | none | 卡结算币种   | none                                               |
-| »» totalTopUpAmount | number   | none | 总充值金额   | none                                               |
-| »» totalFee         | number   | none | 总费用       | none                                               |
-| »» totalPayAmount   | number   | none | 总支付金额   | none                                               |
-| »» totalCardCount   | integer  | none | 开卡数量     | none                                               |
-| »» totalOpened      | integer  | none | 已开卡数     | none                                               |
+| 名称                | 类型     | 约束 | 中文名       | 说明                                               |
+|---------------------|----------|------|--------------|----------------------------------------------------| 
+| » data              | object   | true | none         | none                                               |
+| »» orderNo          | string   | true | 订单号       | none                                               |
+| »» productInfo      | object   | true | 产品信息     | none                                               |
+| »»» productCode     | string   | true | 产品编码     | none                                               |
+| »»» productName     | string   | true | 产品名称     | none                                               |
+| »»» cardModel       | string   | true | 卡模式       | none                                               |
+| »»» cardCurrency    | string   | true | 卡结算币种   | none                                               |
+| »» totalTopUpAmount | number   | true | 总充值金额   | none                                               |
+| »» totalFee         | number   | true | 总费用       | none                                               |
+| »» totalPayAmount   | number   | true | 总支付金额   | none                                               |
+| »» totalCardCount   | integer  | true | 开卡数量     | none                                               |
+| »» totalOpened      | integer  | true | 已开卡数     | none                                               |
 | »» orderLines       | [object] | none | 订单明细     | none                                               |
 | »»» orderLineNo     | integer  | none | 订单明细编号 | none                                               |
 | »»» topUpAmount     | number   | none | 充值金额     | none                                               |
