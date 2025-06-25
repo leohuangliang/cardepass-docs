@@ -78,21 +78,36 @@
     "Currency": "USD",
     "Amount": 29.99
   },
-  "BillingAmount": {
-    "Currency": "USD", 
+  "AuthAmount": {
+    "Currency": "USD",
     "Amount": 29.99
   },
-  "Fee": {
+  "SettledAmount": {
     "Currency": "USD",
-    "Amount": 0.50
+    "Amount": 29.99
   },
-  "MerchantInfo": {
-    "Name": "AMAZON.COM",
-    "CategoryCode": "5942"
+  "CardInfo": {
+    "CardId": "6805b2caa94783c5566f9397",
+    "ProductCode": "0BN03HNK",
+    "ProductName": "通用测试2卡",
+    "CardCurrency": "USD",
+    "MaskCardNumber": "436797******2419",
+    "CardModel": "Standard"
   },
-  "CardNumber": "4***-****-****-1234",
-  "TransType": "PURCHASE",
-  "Status": "SUCCESS"
+  "CardAlias": "测试卡01",
+  "AuthCode": "123456",
+  "MerchantName": "AMAZON.COM",
+  "MerchantCountryCode": "US",
+  "MerchantCity": "Seattle",
+  "MerchantState": "WA",
+  "MerchantZipCode": "98101",
+  "MerchantDesc": "AMAZON.COM AMZN.COM/BILL WA",
+  "Status": "AuthSuccess",
+  "FundsDirection": "Expenditure",
+  "TransactionType": "Consume",
+  "FailureReason": null,
+  "FailureReasonCn": null,
+  "Note": "消费交易"
 }
 ```
 
@@ -103,13 +118,30 @@
 | Id            | string   | 交易唯一标识符          |
 | AuthTime      | datetime | 预授权时间(UTC)         |
 | SettleTime    | datetime | 结算时间(UTC，可能为空) |
-| TransAmount   | object   | 原始交易金额            |
-| BillingAmount | object   | 计费金额                |
-| Fee           | object   | 手续费                  |
-| MerchantInfo  | object   | 商户信息                |
-| CardNumber    | string   | 脱敏卡号                |
-| TransType     | string   | 交易类型                |
+| TransAmount   | Money    | 原始交易金额            |
+| AuthAmount    | Money    | 预授权金额              |
+| SettledAmount | Money    | 结算金额(入账后返回)    |
+| CardInfo      | CardInfo | 卡片信息                |
+| CardAlias     | string   | 卡别名(卡昵称)          |
+| AuthCode      | string   | 授权码(授权失败时可能为空) |
+| MerchantName  | string   | 商户名称                |
+| MerchantCountryCode | string | 商户国家代码      |
+| MerchantCity  | string   | 商户所在城市            |
+| MerchantState | string   | 商户所在州              |
+| MerchantZipCode | string | 商户邮编              |
+| MerchantDesc  | string   | 商户描述                |
 | Status        | string   | 交易状态                |
+| FundsDirection | string  | 资金方向(Income/Expenditure) |
+| TransactionType | string | 交易类型               |
+| FailureReason | string   | 失败原因(英文)          |
+| FailureReasonCn | string | 失败原因(中文)          |
+| Note          | string   | 备注信息                |
+
+**枚举值说明**：
+
+- **Status**: `AuthSuccess`(预授权成功), `AuthFailure`(预授权失败), `Settled`(已入账)
+- **FundsDirection**: `Income`(收入), `Expenditure`(支出)  
+- **TransactionType**: `Consume`(消费), `ConsumeRefund`(消费退款), `ConsumeDispute`(消费争议), `DisputeRelease`(争议释放), `ConsumeReversal`(取消消费), `ConsumeRefundReversal`(消费退款冲正), `AuthQuery`(预授权查询), `TransFee`(交易手续费)
 
 ### 4.2 其他事件类型 🚧
 
@@ -174,6 +206,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 public class WebhookController {
@@ -232,6 +265,49 @@ public class WebhookController {
     private void handleCardPayNotification(WebHookPayload payload) {
         // 处理卡消费通知的业务逻辑
         System.out.println("收到卡消费通知: " + payload.getId());
+        
+        // 解析CardPay数据
+        try {
+            JsonNode data = objectMapper.readTree(objectMapper.writeValueAsString(payload.getData()));
+            String transactionId = data.get("Id").asText();
+            String status = data.get("Status").asText();
+            String authCode = data.has("AuthCode") && !data.get("AuthCode").isNull() 
+                            ? data.get("AuthCode").asText() : null;
+            
+            System.out.println("交易ID: " + transactionId);
+            System.out.println("交易状态: " + status);
+            System.out.println("授权码: " + authCode);
+            
+            // 根据交易状态处理业务逻辑
+            switch (status) {
+                case "AuthSuccess":
+                    handleAuthSuccess(transactionId, authCode);
+                    break;
+                case "AuthFailure":
+                    handleAuthFailure(transactionId);
+                    break;
+                case "Settled":
+                    handleSettled(transactionId, authCode);
+                    break;
+            }
+        } catch (Exception e) {
+            System.err.println("处理CardPay通知时发生错误: " + e.getMessage());
+        }
+    }
+    
+    private void handleAuthSuccess(String transactionId, String authCode) {
+        System.out.println("处理预授权成功: " + transactionId + ", 授权码: " + authCode);
+        // 处理预授权成功的业务逻辑
+    }
+    
+    private void handleAuthFailure(String transactionId) {
+        System.out.println("处理预授权失败: " + transactionId);
+        // 处理预授权失败的业务逻辑
+    }
+    
+    private void handleSettled(String transactionId, String authCode) {
+        System.out.println("处理交易结算: " + transactionId + ", 授权码: " + authCode);
+        // 处理交易结算的业务逻辑
     }
 
     private void handleRechargeNotification(WebHookPayload payload) {
@@ -377,14 +453,46 @@ function verifySignature($payload, $secret) {
 function handleCardPayNotification($payload) {
     // 处理卡消费通知的业务逻辑
     error_log('收到卡消费通知: ' . $payload['Id']);
+    
+    // 解析CardPay数据
+    $data = $payload['Data'];
+    $transactionId = $data['Id'];
+    $status = $data['Status'];
+    $authCode = isset($data['AuthCode']) ? $data['AuthCode'] : null;
+    
+    error_log("交易ID: $transactionId");
+    error_log("交易状态: $status");
+    error_log("授权码: $authCode");
+    
+    // 根据交易状态处理业务逻辑
+    switch ($status) {
+        case 'AuthSuccess':
+            handleAuthSuccess($transactionId, $authCode);
+            break;
+        case 'AuthFailure':
+            handleAuthFailure($transactionId);
+            break;
+        case 'Settled':
+            handleSettled($transactionId, $authCode);
+            break;
+    }
 }
 
-/**
- * 处理充值通知
- *
- * @param array $payload
- * @return void
- */
+function handleAuthSuccess($transactionId, $authCode) {
+    error_log("处理预授权成功: $transactionId, 授权码: $authCode");
+    // 处理预授权成功的业务逻辑
+}
+
+function handleAuthFailure($transactionId) {
+    error_log("处理预授权失败: $transactionId");
+    // 处理预授权失败的业务逻辑
+}
+
+function handleSettled($transactionId, $authCode) {
+    error_log("处理交易结算: $transactionId, 授权码: $authCode");
+    // 处理交易结算的业务逻辑
+}
+
 function handleRechargeNotification($payload) {
     // 处理充值通知的业务逻辑
     error_log('收到充值通知: ' . $payload['Id']);
@@ -403,6 +511,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using com.fasterxml.jackson.databind.JsonNode;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -492,16 +601,60 @@ public class WebhookController : ControllerBase
     {
         // 处理卡消费通知的业务逻辑
         Console.WriteLine($"收到卡消费通知: {payload.Id}");
+        
+        // 解析CardPay数据
+        try {
+            JsonNode data = JsonSerializer.Deserialize<JsonNode>(JsonSerializer.Serialize(payload.Data));
+            string transactionId = data.GetProperty("Id").ToString();
+            string status = data.GetProperty("Status").ToString();
+            string authCode = data.TryGetProperty("AuthCode", out var authCodeNode) && !authCodeNode.IsNull
+                            ? authCodeNode.ToString() : null;
+            
+            Console.WriteLine("交易ID: " + transactionId);
+            Console.WriteLine("交易状态: " + status);
+            Console.WriteLine("授权码: " + authCode);
+            
+            // 根据交易状态处理业务逻辑
+            switch (status) {
+                case "AuthSuccess":
+                    HandleAuthSuccess(transactionId, authCode);
+                    break;
+                case "AuthFailure":
+                    HandleAuthFailure(transactionId);
+                    break;
+                case "Settled":
+                    HandleSettled(transactionId, authCode);
+                    break;
+            }
+        } catch (Exception e) {
+            Console.Error.WriteLine("处理CardPay通知时发生错误: " + e.Message);
+        }
+        
         return Task.CompletedTask;
     }
     
+    private void HandleAuthSuccess(string transactionId, string authCode) {
+        Console.WriteLine("处理预授权成功: " + transactionId + ", 授权码: " + authCode);
+        // 处理预授权成功的业务逻辑
+    }
+    
+    private void HandleAuthFailure(string transactionId) {
+        Console.WriteLine("处理预授权失败: " + transactionId);
+        // 处理预授权失败的业务逻辑
+    }
+    
+    private void HandleSettled(string transactionId, string authCode) {
+        Console.WriteLine("处理交易结算: " + transactionId + ", 授权码: " + authCode);
+        // 处理交易结算的业务逻辑
+    }
+
     private Task HandleRechargeNotification(WebHookPayload payload)
     {
         // 处理充值通知的业务逻辑
         Console.WriteLine($"收到充值通知: {payload.Id}");
         return Task.CompletedTask;
     }
-    
+
     public class WebHookPayload
     {
         [JsonPropertyName("Id")]
