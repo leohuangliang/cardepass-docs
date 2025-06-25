@@ -95,7 +95,7 @@ GET /v1/ping
 
 | 状态码 | 状态码含义                                                      | 说明 |
 |--------|-----------------------------------------------------------------|------|----------|
-| [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
+| [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | 请求成功 | Inline   |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | 请参考API文档 | Inline   |
 
@@ -468,7 +468,7 @@ POST /v1/orders/sharebalance/creditLimit
 | 状态码 | 说明 | 数据模型 |
 |--------|-----------------------------------------------------------------|------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 | Inline   |
-| [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | none | Inline   |
+| [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 未授权访问 | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | Inline   |
 
 ### 返回数据结构
@@ -621,7 +621,7 @@ POST /v1/orders/sharebalance/unblock
 ### 返回结果
 
 | 状态码 | 状态码含义                                                      | 说明 | 数据模型 |--------|-----------------------------------------------------------------|------|----------|
-| 200    | none | Inline   |
+| 200 | 请求成功 | Inline   |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 请参考API文档 |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | 请参考API文档 | Inline   |
 
@@ -723,7 +723,7 @@ POST /v1/orders/sharebalance/cancel
 
 | 状态码 | 状态码含义                                                      | 数据模型 |
 |--------|-----------------------------------------------------------------|------|----------| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 | Inline   |
-| 401    | none | Inline   |
+| 401 | 未授权访问 | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | 请参考API文档 |
 
 ### 返回数据结构
@@ -835,7 +835,7 @@ POST /v1/orders/sharebalance/cancel
 | 状态码含义                                                      | 说明 | 数据模型 |
 |--------|-----------------------------------------------------------------|----------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 | Inline   | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 请参考API文档 | Inline   |
-| 403    | none | Inline   |
+| 403 | 访问被禁止 | Inline   |
 
 ### 返回数据结构
 
@@ -1128,7 +1128,7 @@ POST /v1/orders/standard/topup
 
 | 状态码 | 状态码含义                                                      | 说明 |
 |--------|-----------------------------------------------------------------|------|----------|
-| [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
+| [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | 请求成功 | Inline   |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | 请参考API文档 | Inline   | 名称                       | 类型     | 约束 | 中文名           | 说明                                               |
 |----------------------------|----------|------|------------------|----------------------------------------------------|
@@ -1242,7 +1242,7 @@ POST /v1/orders/standard/block
 | 状态码 | 说明 | 数据模型 |
 |--------|-----------------------------------------------------------------|------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 | Inline   |
-| [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | none | Inline   |
+| [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 未授权访问 | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | Inline   |
 
 ### 返回数据结构
@@ -1295,7 +1295,7 @@ POST /v1/orders/standard/unblock
 |--------|------|----------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 请参考API文档 | Inline   |
-| [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   |
+| [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3) | 访问被禁止 | Inline   |
 
 ### 返回数据结构
 
@@ -1396,7 +1396,7 @@ POST /v1/orders/standard/cancel
 ### 返回结果
 
 | 状态码 | 状态码含义                                                      | 说明 | 数据模型 |--------|-----------------------------------------------------------------|------|----------|
-| 200    | none | Inline   |
+| 200 | 请求成功 | Inline   |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 请参考API文档 |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | 请参考API文档 | Inline   |
 
@@ -1496,7 +1496,7 @@ POST /v1/orders/standard/withdraw
 
 | 状态码 | 状态码含义                                                      | 数据模型 |
 |--------|-----------------------------------------------------------------|------|----------| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 | Inline   |
-| 401    | none | Inline   |
+| 401 | 未授权访问 | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | 请参考API文档 |
 
 ### 返回数据结构
@@ -1549,7 +1549,7 @@ POST /v1/orders/standard/withdraw
 | 状态码含义                                                      | 说明 | 数据模型 |
 |--------|-----------------------------------------------------------------|----------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 | Inline   | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 请参考API文档 | Inline   |
-| 403    | none | Inline   |
+| 403 | 访问被禁止 | Inline   |
 
 ### 返回数据结构
 
@@ -1799,7 +1799,7 @@ GET /v1/accounts
 
 | 状态码 | 状态码含义                                                      | 说明 |
 |--------|-----------------------------------------------------------------|------|----------|
-| [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | none | Inline   |
+| [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | 请求成功 | Inline   |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | 请参考API文档 | Inline   | 名称           | 类型     | 约束 | 中文名       | 说明 |
 |----------|------|------|--------------|------|
@@ -2040,7 +2040,7 @@ GET /v1/accounts/cardAccountLogs
 | 状态码 | 说明 | 数据模型 |
 |--------|-----------------------------------------------------------------|------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 | Inline   |
-| [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | none | Inline   |
+| [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 未授权访问 | Inline   |
 | 403    | [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | Inline   |
 
 ### 返回数据结构
@@ -2101,7 +2101,7 @@ GET /v1/accounts/accountLogs
 |--------|------|----------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)         | 请参考API文档 |
 | 401    | [Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1) | 请参考API文档 | Inline   |
-| [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)  | none | Inline   |
+| [Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3) | 访问被禁止 | Inline   |
 
 ### 返回数据结构
 
