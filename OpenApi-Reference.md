@@ -24,13 +24,13 @@ Base URLs:
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Content-Type | header | string | 是 | 内容类型 | application/x-www-form-urlencoded |
-| grant_type | body | string | 是 | 授权类型 | 固定值：client_credentials |
-| client_id | body | string | 是 | 客户端ID | 客户端标识，需向cardepass申请 |
-| client_secret | body | string | 是 | 客户端密钥 | 客户端密钥，需向cardepass申请 |
-| scope | body | string | 是 | 权限范围 | 固定值：openapi |
+| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                          |
+|---------------|----------|----------|----------|------------|-----------------------------------|
+| Content-Type  | header   | string   | 是       | 内容类型   | application/x-www-form-urlencoded |
+| grant_type    | body     | string   | 是       | 授权类型   | 固定值：client_credentials        |
+| client_id     | body     | string   | 是       | 客户端ID   | 客户端标识，需向cardepass申请     |
+| client_secret | body     | string   | 是       | 客户端密钥 | 客户端密钥，需向cardepass申请     |
+| scope         | body     | string   | 是       | 权限范围   | 固定值：openapi                   |
 
 ### 请求示例
 
@@ -57,9 +57,9 @@ curl -X POST "https://test.cardepass.com/openapi/connect/token" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
+| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
+|---------------|----------|----------|----------|----------|-----------------------|
+| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
 
 ### 请求示例
 
@@ -79,11 +79,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/ping" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -97,10 +97,10 @@ curl -X GET "https://test.cardepass.com/openapi/v1/ping" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| request | query |  | 否 | request | 获取产品信息请求 |
+| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
+|---------------|----------|----------|----------|----------|-----------------------|
+| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
+| request       | query    |          | 否       | request  | 获取产品信息请求      |
 
 ### 请求示例
 
@@ -144,11 +144,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/products" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -162,10 +162,10 @@ curl -X GET "https://test.cardepass.com/openapi/v1/products" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| cardId | path | string | 是 | 卡ID | 卡ID |
+| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
+|---------------|----------|----------|----------|----------|-----------------------|
+| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
+| cardId        | path     | string   | 是       | 卡ID     | 卡ID                  |
 
 ### 请求示例
 
@@ -227,11 +227,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -245,15 +245,15 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| productCode | body | string | 是 | 产品编码 | 卡产品编码 |
-| cardCurrency | body | string | 是 | 支持的结算币种列表 | 币种 |
-| topUpAmount | body | decimal | 是 | 充值金额 | 开卡金额 |
-| cardAlias | body | string | 否 | 卡别名 | 卡别名 |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性） (可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称           | 参数描述                            |
+|-----------------|----------|----------|----------|--------------------|-------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头             | Bearer {access_token}               |
+| Content-Type    | header   | string   | 是       | 内容类型           | application/json                    |
+| productCode     | body     | string   | 是       | 产品编码           | 卡产品编码                          |
+| cardCurrency    | body     | string   | 是       | 支持的结算币种列表 | 币种                                |
+| topUpAmount     | body     | decimal  | 是       | 充值金额           | 开卡金额                            |
+| cardAlias       | body     | string   | 否       | 卡别名             | 卡别名                              |
+| customerOrderNo | body     | string   | 否       | 商户订单号         | 商户请求订单号（确保唯一性） (可选) |
 
 ### 请求示例
 
@@ -358,11 +358,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/apply" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -374,13 +374,13 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/apply" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| topUpAmount | body | decimal | 是 | 充值金额 | 充值金额. （最低充值金额为1） |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
+|-----------------|----------|----------|----------|------------|------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
+| topUpAmount     | body     | decimal  | 是       | 充值金额   | 充值金额. （最低充值金额为1）      |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
 
 ### 请求示例
 
@@ -459,11 +459,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/topup" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -475,12 +475,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/topup" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
+|-----------------|----------|----------|----------|------------|------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
 
 ### 请求示例
 
@@ -552,11 +552,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/block" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -568,12 +568,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/block" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
+|-----------------|----------|----------|----------|------------|------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
 
 ### 请求示例
 
@@ -643,11 +643,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/unblock" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -659,12 +659,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/unblock" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
+|-----------------|----------|----------|----------|------------|------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
 
 ### 请求示例
 
@@ -744,11 +744,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/cancel" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -760,13 +760,13 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/cancel" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| withdrawAmount | body | decimal | 否 | 转出金额 | 转出金额 |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
+|-----------------|----------|----------|----------|------------|------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
+| withdrawAmount  | body     | decimal  | 否       | 转出金额   | 转出金额                           |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
 
 ### 请求示例
 
@@ -826,11 +826,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/withdraw" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -846,12 +846,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/withdraw" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| OrderType | query | string | 否 | 订单类型 | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CardWithdraw 卡余额转出订单 |
-| OrderNo | query | string | 否 | 订单号 | 订单号 (可选) |
-| CustomerOrderNo | query | string | 否 | 商户订单号 | 商户订单号 (可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                                                                                                                                         |
+|-----------------|----------|----------|----------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}                                                                                                                            |
+| OrderType       | query    | string   | 否       | 订单类型   | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CardWithdraw 卡余额转出订单 |
+| OrderNo         | query    | string   | 否       | 订单号     | 订单号 (可选)                                                                                                                                    |
+| CustomerOrderNo | query    | string   | 否       | 商户订单号 | 商户订单号 (可选)                                                                                                                                |
 
 ### 请求示例
 
@@ -878,11 +878,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/standard?OrderType=App
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -896,16 +896,16 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/standard?OrderType=App
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| productCode | body | string | 是 | 产品编码 | 卡产品编码 |
-| cardCurrency | body | string | 是 | 支持的结算币种列表 | 币种 |
-| maxAuthAmount | body | decimal | 是 | 单笔限额 | 单笔限额 |
-| maxCreditAmount | body | decimal | 否 | 总额度上限 | 单卡消费总额度,可以为空，为空表示不限额度 |
-| cardAlias | body | string | 否 | 卡别名 | 卡别名 |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性） (可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称           | 参数描述                                  |
+|-----------------|----------|----------|----------|--------------------|-------------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头             | Bearer {access_token}                     |
+| Content-Type    | header   | string   | 是       | 内容类型           | application/json                          |
+| productCode     | body     | string   | 是       | 产品编码           | 卡产品编码                                |
+| cardCurrency    | body     | string   | 是       | 支持的结算币种列表 | 币种                                      |
+| maxAuthAmount   | body     | decimal  | 是       | 单笔限额           | 单笔限额                                  |
+| maxCreditAmount | body     | decimal  | 否       | 总额度上限         | 单卡消费总额度,可以为空，为空表示不限额度 |
+| cardAlias       | body     | string   | 否       | 卡别名             | 卡别名                                    |
+| customerOrderNo | body     | string   | 否       | 商户订单号         | 商户请求订单号（确保唯一性） (可选)       |
 
 ### 请求示例
 
@@ -989,11 +989,11 @@ Failure-处理失败 |
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1005,14 +1005,14 @@ Failure-处理失败 |
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
-| maxAuthAmount | body | decimal | 是 | 单笔限额 | 共享模式： 单笔限额 |
-| maxCreditAmount | body | decimal | 否 | 总额度上限 | 共享模式: 总额度。额度为空表示 不限制。 |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                                |
+|-----------------|----------|----------|----------|------------|-----------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}                   |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                        |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                             |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选)      |
+| maxAuthAmount   | body     | decimal  | 是       | 单笔限额   | 共享模式： 单笔限额                     |
+| maxCreditAmount | body     | decimal  | 否       | 总额度上限 | 共享模式: 总额度。额度为空表示 不限制。 |
 
 ### 请求示例
 
@@ -1071,11 +1071,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/creditLi
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1087,12 +1087,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/creditLi
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
+|-----------------|----------|----------|----------|------------|------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
 
 ### 请求示例
 
@@ -1163,11 +1163,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/block" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1179,12 +1179,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/block" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
+|-----------------|----------|----------|----------|------------|------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
 
 ### 请求示例
 
@@ -1253,11 +1253,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/unblock"
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1269,12 +1269,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/unblock"
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| Content-Type | header | string | 是 | 内容类型 | application/json |
-| cardId | body | string | 是 | 卡ID | 卡ID (必填) |
-| customerOrderNo | body | string | 否 | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
+|-----------------|----------|----------|----------|------------|------------------------------------|
+| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
+| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
+| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
+| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
 
 ### 请求示例
 
@@ -1351,11 +1351,11 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/cancel" 
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1371,10 +1371,10 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/cancel" 
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| OrderType | query | string | 否 | 订单类型 | 订单类型:
+| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
+|---------------|----------|----------|----------|----------|-----------------------|
+| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
+| OrderType     | query    | string   | 否       | 订单类型 | 订单类型:             |
 
 ApplyCard 开卡订单、CreditLimit 调整限额、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CreditLimit 调整限额订单 |
 | OrderNo | query | string | 否 | 订单号 | 订单号 |
@@ -1405,11 +1405,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/sharebalance?OrderType
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1423,9 +1423,9 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/sharebalance?OrderType
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
+| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
+|---------------|----------|----------|----------|----------|-----------------------|
+| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
 
 ### 请求示例
 
@@ -1442,8 +1442,8 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts" \
   "hasError": false,
   "errorCode": null,
   "errorMessage": "操作成功",
-  "data": [
-    {
+    "data": [
+      {
       "currency": "示例文本",
       "amount": 0
     }
@@ -1463,11 +1463,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1479,14 +1479,14 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts" \
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| CardId | query | string | 否 | 卡片ID | 卡ID (可选) |
-| TransactionDateFrom | query | DateTime | 否 | 开始日期 | 开始交易日期 |
-| TransactionDateTo | query | DateTime | 否 | 结束日期 | 结束交易日期 |
-| PageNumber | query | integer | 否 | 页码 | 当前页 |
-| PageSize | query | integer | 否 | 页大小 | 分页大小 |
+| 参数名称            | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
+|---------------------|----------|----------|----------|----------|-----------------------|
+| Authorization       | header   | string   | 是       | 授权头   | Bearer {access_token} |
+| CardId              | query    | string   | 否       | 卡片ID   | 卡ID (可选)           |
+| TransactionDateFrom | query    | DateTime | 否       | 开始日期 | 开始交易日期          |
+| TransactionDateTo   | query    | DateTime | 否       | 结束日期 | 结束交易日期          |
+| PageNumber          | query    | integer  | 否       | 页码     | 当前页                |
+| PageSize            | query    | integer  | 否       | 页大小   | 分页大小              |
 
 ### 请求示例
 
@@ -1528,11 +1528,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/cardAccountLogs?Card
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1544,13 +1544,13 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/cardAccountLogs?Card
 
 ### 请求参数
 
-| 参数名称 | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述 |
-|----------|----------|----------|----------|----------|----------|
-| Authorization | header | string | 是 | 授权头 | Bearer {access_token} |
-| TransactionDateFrom | query | DateTime | 否 | 开始日期 | 开始交易日期 |
-| TransactionDateTo | query | DateTime | 否 | 结束日期 | 结束交易日期 |
-| Limit | query | integer | 否 | 限制数量 |  |
-| Offset | query | integer | 否 | 偏移量 |  |
+| 参数名称            | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
+|---------------------|----------|----------|----------|----------|-----------------------|
+| Authorization       | header   | string   | 是       | 授权头   | Bearer {access_token} |
+| TransactionDateFrom | query    | DateTime | 否       | 开始日期 | 开始交易日期          |
+| TransactionDateTo   | query    | DateTime | 否       | 结束日期 | 结束交易日期          |
+| Limit               | query    | integer  | 否       | 限制数量 |                       |
+| Offset              | query    | integer  | 否       | 偏移量   |                       |
 
 ### 请求示例
 
@@ -1592,11 +1592,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs" \
 
 ### 状态码说明
 
-| 状态码 | 说明 | 解决方案 |
-|--------|------|----------|
-| 200 | 成功 | 请求处理成功 |
-| 401 | 未授权 | 重新获取访问令牌 |
-| 403 | 禁止访问 | 检查权限设置 |
+| 状态码 | 说明     | 解决方案         |
+|--------|----------|------------------|
+| 200    | 成功     | 请求处理成功     |
+| 401    | 未授权   | 重新获取访问令牌 |
+| 403    | 禁止访问 | 检查权限设置     |
 
 ---
 
@@ -1604,14 +1604,14 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs" \
 
 ## 通用错误码
 
-| 错误码 | HTTP状态码 | 错误说明 | 解决方案 |
-|--------|------------|----------|----------|
-| 401 | 401 | 访问令牌无效或过期 | 重新获取访问令牌 |
-| 403 | 403 | 权限不足 | 检查账户权限或联系管理员 |
-| 404 | 404 | 请求的资源不存在 | 检查请求的资源ID是否正确 |
-| 400 | 400 | 请求参数错误 | 检查请求参数格式和内容 |
-| 429 | 429 | 请求频率超限 | 降低请求频率或等待后重试 |
-| 500 | 500 | 服务器内部错误 | 稍后重试或联系技术支持 |
+| 错误码 | HTTP状态码 | 错误说明           | 解决方案                 |
+|--------|------------|--------------------|--------------------------|
+| 401    | 401        | 访问令牌无效或过期 | 重新获取访问令牌         |
+| 403    | 403        | 权限不足           | 检查账户权限或联系管理员 |
+| 404    | 404        | 请求的资源不存在   | 检查请求的资源ID是否正确 |
+| 400    | 400        | 请求参数错误       | 检查请求参数格式和内容   |
+| 429    | 429        | 请求频率超限       | 降低请求频率或等待后重试 |
+| 500    | 500        | 服务器内部错误     | 稍后重试或联系技术支持   |
 
 ---
 
@@ -1645,9 +1645,9 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs" \
 
 # 版本历史
 
-| 版本号 | 发布日期 | 更新内容 |
-|--------|----------|----------|
-| v1.0 | 2025-06-26 | 第一版 |
+| 版本号 | 发布日期   | 更新内容 |
+|--------|------------|----------|
+| v1.0   | 2025-06-26 | 第一版   |
 
 ---
 
