@@ -118,21 +118,21 @@
 | Id            | string   | 交易唯一标识符          |
 | AuthTime      | datetime | 预授权时间(UTC)         |
 | SettleTime    | datetime | 结算时间(UTC，可能为空) |
-| ├─ TransAmount   | Money    | 原始交易金额            |
-| │　├─ Currency | string   | 币种                    |
-| │　└─ Amount   | decimal  | 金额                    |
-| ├─ AuthAmount    | Money    | 预授权金额              |
-| │　├─ Currency | string   | 币种                    |
-| │　└─ Amount   | decimal  | 金额                    |
-| ├─ SettledAmount | Money    | 结算金额(入账后返回)    |
-| │　├─ Currency | string   | 币种                    |
-| │　└─ Amount   | decimal  | 金额                    |
-| ├─ CardInfo      | CardInfo | 卡片信息                |
-| │　├─ Id       | string   | 卡片ID                  |
-| │　├─ ProductCode | string | 产品编码                |
-| │　├─ ProductName | string | 产品名称                |
-| │　├─ MaskCardNumber | string | 脱敏卡号            |
-| │　└─ CardModel | string   | 卡模式                  |
+| TransAmount   | Money    | 原始交易金额            |
+| ├─ Currency | string   | 币种                    |
+| └─ Amount   | decimal  | 金额                    |
+| AuthAmount    | Money    | 预授权金额              |
+| ├─ Currency | string   | 币种                    |
+| └─ Amount   | decimal  | 金额                    |
+| SettledAmount | Money    | 结算金额(入账后返回)    |
+| ├─ Currency | string   | 币种                    |
+| └─ Amount   | decimal  | 金额                    |
+| CardInfo      | CardInfo | 卡片信息                |
+| ├─ Id       | string   | 卡片ID                  |
+| ├─ ProductCode | string | 产品编码                |
+| ├─ ProductName | string | 产品名称                |
+| ├─ MaskCardNumber | string | 脱敏卡号            |
+| └─ CardModel | string   | 卡模式                  |
 | CardAlias     | string   | 卡别名(卡昵称)          |
 | AuthCode      | string   | 授权码(授权失败时可能为空) |
 | MerchantName  | string   | 商户名称                |
@@ -728,6 +728,9 @@ public class WebhookController : ControllerBase
 - 实现IP白名单，只允许系统的IP访问您的WebHook接口
 - 实现请求超时处理，避免长时间处理导致资源耗尽
 - 对接收到的数据进行验证，防止注入攻击 
+
+
+
 
 
 
