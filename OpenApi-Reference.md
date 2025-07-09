@@ -867,7 +867,7 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/withdraw" \
 | 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                                                                                                                                         |
 |-----------------|----------|----------|----------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
 | Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}                                                                                                                            |
-| OrderType       | query    | string   | 否       | 订单类型   | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CardWithdraw 卡余额转出订单 |
+| OrderType       | query    | string   | 否       | 订单类型   | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnblock 卡解冻订单、CardWithdraw 卡余额转出订单 |
 | OrderNo         | query    | string   | 否       | 订单号     | 订单号 (可选)                                                                                                                                    |
 | CustomerOrderNo | query    | string   | 否       | 商户订单号 | 商户订单号 (可选)                                                                                                                                |
 
@@ -1404,7 +1404,7 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/cancel" 
 | 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                                                                                                                             |
 |-----------------|----------|----------|----------|------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}                                                                                                                |
-| OrderType       | query    | string   | 否       | 订单类型   | 订单类型：ApplyCard（开卡订单）、CreditLimit（调整限额）、CardCancel（销卡订单）、CardBlock（卡冻结订单）、CardUnBlock（卡解冻订单） |
+| OrderType       | query    | string   | 否       | 订单类型   | 订单类型：ApplyCard（开卡订单）、CreditLimit（调整限额）、CardCancel（销卡订单）、CardBlock（卡冻结订单）、CardUnblock（卡解冻订单） |
 | OrderNo         | query    | string   | 否       | 订单号     | 订单号                                                                                                                               |
 | CustomerOrderNo | query    | string   | 否       | 商户订单号 | 商户订单号                                                                                                                           |
 
