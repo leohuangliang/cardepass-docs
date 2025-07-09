@@ -1687,7 +1687,22 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs" \
 
 ---
 
-**文档最后更新时间**: 2025-06-26
+# 修改日志
+
+## 2025-07-09
+
+### 🔧 修复
+- **标准模式订单查询**：修复订单类型参数中的大小写错误 `CardUnBlock` → `CardUnblock`
+- **共享余额模式订单查询**：修复订单类型参数中的大小写错误 `CardUnBlock` → `CardUnblock`
+
+### 📋 说明
+- 确保API文档与代码实现完全一致
+- 用户使用 `OrderType=CardUnblock` 参数将不再收到 `invalid_order_type` 错误
+- 统一了所有文档中的订单类型命名规范
+
+---
+
+**文档最后更新时间**: 2025-07-09
 **文档版本**: v1.0
 **API版本**: v1
 **生成方式**: 基于OpenAPI规范(swagger.json)自动生成
