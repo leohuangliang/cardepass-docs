@@ -113,40 +113,40 @@
 
 **字段说明**：
 
-| 字段          | 类型     | 说明                    |
-|---------------|----------|-------------------------|
-| Id            | string   | 交易唯一标识符          |
-| AuthTime      | datetime | 预授权时间(UTC)         |
-| SettleTime    | datetime | 结算时间(UTC，可能为空) |
-| TransAmount   | Money    | 原始交易金额            |
-| ├─ Currency | string   | 币种                    |
-| └─ Amount   | decimal  | 金额                    |
-| AuthAmount    | Money    | 预授权金额              |
-| ├─ Currency | string   | 币种                    |
-| └─ Amount   | decimal  | 金额                    |
-| SettledAmount | Money    | 结算金额(入账后返回)    |
-| ├─ Currency | string   | 币种                    |
-| └─ Amount   | decimal  | 金额                    |
-| CardInfo      | CardInfo | 卡片信息                |
-| ├─ Id       | string   | 卡片ID                  |
-| ├─ ProductCode | string | 产品编码                |
-| ├─ ProductName | string | 产品名称                |
-| ├─ MaskCardNumber | string | 脱敏卡号            |
-| └─ CardModel | string   | 卡模式                  |
-| CardAlias     | string   | 卡别名(卡昵称)          |
-| AuthCode      | string   | 授权码(授权失败时可能为空) |
-| MerchantName  | string   | 商户名称                |
-| MerchantCountryCode | string | 商户国家代码      |
-| MerchantCity  | string   | 商户所在城市            |
-| MerchantState | string   | 商户所在州              |
-| MerchantZipCode | string | 商户邮编              |
-| MerchantDesc  | string   | 商户描述                |
-| Status        | string   | 交易状态                |
-| FundsDirection | string  | 资金方向(Income/Expenditure) |
-| TransactionType | string | 交易类型               |
-| FailureReason | string   | 失败原因(英文)          |
-| FailureReasonCn | string | 失败原因(中文)          |
-| Note          | string   | 备注信息                |
+| 字段                | 类型     | 说明                         |
+|---------------------|----------|------------------------------|
+| Id                  | string   | 交易唯一标识符               |
+| AuthTime            | datetime | 预授权时间(UTC)              |
+| SettleTime          | datetime | 结算时间(UTC，可能为空)      |
+| TransAmount         | Money    | 原始交易金额                 |
+| ├─ Currency         | string   | 币种                         |
+| └─ Amount           | decimal  | 金额                         |
+| AuthAmount          | Money    | 预授权金额                   |
+| ├─ Currency         | string   | 币种                         |
+| └─ Amount           | decimal  | 金额                         |
+| SettledAmount       | Money    | 结算金额(入账后返回)         |
+| ├─ Currency         | string   | 币种                         |
+| └─ Amount           | decimal  | 金额                         |
+| CardInfo            | CardInfo | 卡片信息                     |
+| ├─ Id               | string   | 卡片ID                       |
+| ├─ ProductCode      | string   | 产品编码                     |
+| ├─ ProductName      | string   | 产品名称                     |
+| ├─ MaskCardNumber   | string   | 脱敏卡号                     |
+| └─ CardModel        | string   | 卡模式                       |
+| CardAlias           | string   | 卡别名(卡昵称)               |
+| AuthCode            | string   | 授权码(授权失败时可能为空)   |
+| MerchantName        | string   | 商户名称                     |
+| MerchantCountryCode | string   | 商户国家代码                 |
+| MerchantCity        | string   | 商户所在城市                 |
+| MerchantState       | string   | 商户所在州                   |
+| MerchantZipCode     | string   | 商户邮编                     |
+| MerchantDesc        | string   | 商户描述                     |
+| Status              | string   | 交易状态                     |
+| FundsDirection      | string   | 资金方向(Income/Expenditure) |
+| TransactionType     | string   | 交易类型                     |
+| FailureReason       | string   | 失败原因(英文)               |
+| FailureReasonCn     | string   | 失败原因(中文)               |
+| Note                | string   | 备注信息                     |
 
 **枚举值说明**：
 
@@ -203,187 +203,37 @@
 
 ## 7. 代码示例
 
-### 7.1 Java实现
+### 7.1 Java实现（OpenAPI Webhook签名示例）
 
 ```java
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.time.ZonedDateTime;
 import java.util.Base64;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import com.fasterxml.jackson.databind.JsonNode;
 
-@RestController
-public class WebhookController {
-
-    private static final String SECRET = "your_webhook_secret";
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    @PostMapping("/webhook/callback")
-    public ResponseEntity<WebHookResponse> handleWebhook(@RequestBody WebHookPayload payload) {
-        try {
-            // 验证签名
-            if (!verifySignature(payload)) {
-                return ResponseEntity.ok(new WebHookResponse(false, "INVALID_SIGNATURE", "签名验证失败"));
-            }
-
-            // 根据事件类型处理不同的业务逻辑
-            switch (payload.getType()) {
-                case "CardPay":
-                    handleCardPayNotification(payload);
-                    break;
-                case "Recharge":
-                    handleRechargeNotification(payload);
-                    break;
-                // 处理其他事件类型...
-                default:
-                    return ResponseEntity.ok(new WebHookResponse(false, "UNKNOWN_EVENT_TYPE", "未知的事件类型"));
-            }
-
-            // 处理成功，返回成功响应
-            return ResponseEntity.ok(new WebHookResponse(true, null, null));
-        } catch (Exception e) {
-            return ResponseEntity.ok(new WebHookResponse(false, "INTERNAL_ERROR", e.getMessage()));
-        }
+public class OpenApiWebhookSignDemo {
+    public static String generateSignature(String id, String type, String createdTime, String data, String version, String secret) throws Exception {
+        String content = id + type + createdTime + data + version;
+        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+        sha256_HMAC.init(secret_key);
+        byte[] hash = sha256_HMAC.doFinal(content.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(hash);
     }
-
-    private boolean verifySignature(WebHookPayload payload) {
-        try {
-            // 构建用于签名的字符串
-            String content = payload.getId() + payload.getType() + payload.getCreatedTime() + 
-                             objectMapper.writeValueAsString(payload.getData()) + payload.getVersion();
-
-            // 使用HMAC-SHA256计算签名
-            Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secret_key = new SecretKeySpec(SECRET.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-            sha256_HMAC.init(secret_key);
-            byte[] hash = sha256_HMAC.doFinal(content.getBytes(StandardCharsets.UTF_8));
-            String signature = Base64.getEncoder().encodeToString(hash);
-
-            // 比较计算出的签名与接收到的签名
-            return signature.equals(payload.getSignature());
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    private void handleCardPayNotification(WebHookPayload payload) {
-        // 处理卡消费通知的业务逻辑
-        System.out.println("收到卡消费通知: " + payload.getId());
-        
-        // 解析CardPay数据
-        try {
-            JsonNode data = objectMapper.readTree(objectMapper.writeValueAsString(payload.getData()));
-            String transactionId = data.get("Id").asText();
-            String status = data.get("Status").asText();
-            String authCode = data.has("AuthCode") && !data.get("AuthCode").isNull() 
-                            ? data.get("AuthCode").asText() : null;
-            
-            System.out.println("交易ID: " + transactionId);
-            System.out.println("交易状态: " + status);
-            System.out.println("授权码: " + authCode);
-            
-            // 根据交易状态处理业务逻辑
-            switch (status) {
-                case "AuthSuccess":
-                    handleAuthSuccess(transactionId, authCode);
-                    break;
-                case "AuthFailure":
-                    handleAuthFailure(transactionId);
-                    break;
-                case "Settled":
-                    handleSettled(transactionId, authCode);
-                    break;
-            }
-        } catch (Exception e) {
-            System.err.println("处理CardPay通知时发生错误: " + e.getMessage());
-        }
-    }
-    
-    private void handleAuthSuccess(String transactionId, String authCode) {
-        System.out.println("处理预授权成功: " + transactionId + ", 授权码: " + authCode);
-        // 处理预授权成功的业务逻辑
-    }
-    
-    private void handleAuthFailure(String transactionId) {
-        System.out.println("处理预授权失败: " + transactionId);
-        // 处理预授权失败的业务逻辑
-    }
-    
-    private void handleSettled(String transactionId, String authCode) {
-        System.out.println("处理交易结算: " + transactionId + ", 授权码: " + authCode);
-        // 处理交易结算的业务逻辑
-    }
-
-    private void handleRechargeNotification(WebHookPayload payload) {
-        // 处理充值通知的业务逻辑
-        System.out.println("收到充值通知: " + payload.getId());
-    }
-
-    // WebHook请求体模型
-    public static class WebHookPayload {
-        private String id;
-        private String type;
-        private String createdTime;
-        private Object data;
-        private String version;
-        private String signature;
-
-        // Getters and setters
-        public String getId() { return id; }
-        public void setId(String id) { this.id = id; }
-        
-        public String getType() { return type; }
-        public void setType(String type) { this.type = type; }
-        
-        public String getCreatedTime() { return createdTime; }
-        public void setCreatedTime(String createdTime) { this.createdTime = createdTime; }
-        
-        public Object getData() { return data; }
-        public void setData(Object data) { this.data = data; }
-        
-        public String getVersion() { return version; }
-        public void setVersion(String version) { this.version = version; }
-        
-        public String getSignature() { return signature; }
-        public void setSignature(String signature) { this.signature = signature; }
-    }
-
-    // WebHook响应模型
-    public static class WebHookResponse {
-        @JsonProperty("Success")
-        private boolean success;
-        
-        @JsonProperty("ErrorCode")
-        private String errorCode;
-        
-        @JsonProperty("ErrorMessage")
-        private String errorMessage;
-
-        public WebHookResponse(boolean success, String errorCode, String errorMessage) {
-            this.success = success;
-            this.errorCode = errorCode;
-            this.errorMessage = errorMessage;
-        }
-
-        // Getters and setters
-        public boolean isSuccess() { return success; }
-        public void setSuccess(boolean success) { this.success = success; }
-        
-        public String getErrorCode() { return errorCode; }
-        public void setErrorCode(String errorCode) { this.errorCode = errorCode; }
-        
-        public String getErrorMessage() { return errorMessage; }
-        public void setErrorMessage(String errorMessage) { this.errorMessage = errorMessage; }
+    public static void main(String[] args) throws Exception {
+        String id = "123456";
+        String type = "CardPay";
+        String createdTime = "2023-05-20T08:30:45Z";
+        String data = "{\"Id\":\"abc\",\"Amount\":100}"; // Data字段原始JSON字符串
+        String version = "1.0";
+        String secret = "your_webhook_secret";
+        String sign = generateSignature(id, type, createdTime, data, version, secret);
+        System.out.println("签名: " + sign);
     }
 }
 ```
+
+> 本示例适用于OpenAPI Webhook消息签名。
 
 ### 7.2 PHP实现
 
@@ -510,196 +360,39 @@ function handleRechargeNotification($payload) {
 }
 ```
 
-### 7.3 C#实现
+### 7.3 C#实现（OpenAPI Webhook签名示例）
 
 ```csharp
 using System;
-using System.IO;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using com.fasterxml.jackson.databind.JsonNode;
 
-[ApiController]
-[Route("api/[controller]")]
-public class WebhookController : ControllerBase
+public class OpenApiWebhookSignDemo
 {
-    private readonly string _secret = "your_webhook_secret";
-    
-    [HttpPost]
-    public async Task<IActionResult> ReceiveWebhook()
+    public static string GenerateSignature(string id, string type, string createdTime, string data, string version, string secret)
     {
-        try
+        var content = id + type + createdTime + data + version;
+        using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret)))
         {
-            // 读取请求体
-            using var reader = new StreamReader(Request.Body);
-            var requestBody = await reader.ReadToEndAsync();
-            var payload = JsonSerializer.Deserialize<WebHookPayload>(requestBody);
-            
-            // 验证签名
-            if (!VerifySignature(payload, requestBody))
-            {
-                return Ok(new WebHookResponse 
-                { 
-                    Success = false, 
-                    ErrorCode = "INVALID_SIGNATURE", 
-                    ErrorMessage = "签名验证失败" 
-                });
-            }
-            
-            // 根据事件类型处理不同的业务逻辑
-            switch (payload.Type)
-            {
-                case "CardPay":
-                    await HandleCardPayNotification(payload);
-                    break;
-                case "Recharge":
-                    await HandleRechargeNotification(payload);
-                    break;
-                // 处理其他事件类型...
-                default:
-                    return Ok(new WebHookResponse 
-                    { 
-                        Success = false, 
-                        ErrorCode = "UNKNOWN_EVENT_TYPE", 
-                        ErrorMessage = "未知的事件类型" 
-                    });
-            }
-            
-            // 返回成功响应
-            return Ok(new WebHookResponse { Success = true });
-        }
-        catch (Exception ex)
-        {
-            return Ok(new WebHookResponse 
-            { 
-                Success = false, 
-                ErrorCode = "INTERNAL_ERROR", 
-                ErrorMessage = ex.Message 
-            });
-        }
-    }
-    
-    private bool VerifySignature(WebHookPayload payload, string requestBody)
-    {
-        try
-        {
-            // 构建用于签名的字符串
-            var jsonElement = JsonSerializer.Deserialize<JsonElement>(requestBody);
-            var dataJson = jsonElement.GetProperty("Data").ToString();
-            
-            var content = payload.Id + payload.Type + payload.CreatedTime + dataJson + payload.Version;
-            
-            // 使用HMAC-SHA256计算签名
-            using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_secret));
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(content));
-            var calculatedSignature = Convert.ToBase64String(hash);
-            
-            // 比较计算出的签名与接收到的签名
-            return calculatedSignature == payload.Signature;
-        }
-        catch
-        {
-            return false;
+            return Convert.ToBase64String(hash);
         }
     }
-    
-    private Task HandleCardPayNotification(WebHookPayload payload)
+    public static void Main()
     {
-        // 处理卡消费通知的业务逻辑
-        Console.WriteLine($"收到卡消费通知: {payload.Id}");
-        
-        // 解析CardPay数据
-        try {
-            JsonNode data = JsonSerializer.Deserialize<JsonNode>(JsonSerializer.Serialize(payload.Data));
-            string transactionId = data.GetProperty("Id").ToString();
-            string status = data.GetProperty("Status").ToString();
-            string authCode = data.TryGetProperty("AuthCode", out var authCodeNode) && !authCodeNode.IsNull
-                            ? authCodeNode.ToString() : null;
-            
-            Console.WriteLine("交易ID: " + transactionId);
-            Console.WriteLine("交易状态: " + status);
-            Console.WriteLine("授权码: " + authCode);
-            
-            // 根据交易状态处理业务逻辑
-            switch (status) {
-                case "AuthSuccess":
-                    HandleAuthSuccess(transactionId, authCode);
-                    break;
-                case "AuthFailure":
-                    HandleAuthFailure(transactionId);
-                    break;
-                case "Settled":
-                    HandleSettled(transactionId, authCode);
-                    break;
-            }
-        } catch (Exception e) {
-            Console.Error.WriteLine("处理CardPay通知时发生错误: " + e.Message);
-        }
-        
-        return Task.CompletedTask;
-    }
-    
-    private void HandleAuthSuccess(string transactionId, string authCode) {
-        Console.WriteLine("处理预授权成功: " + transactionId + ", 授权码: " + authCode);
-        // 处理预授权成功的业务逻辑
-    }
-    
-    private void HandleAuthFailure(string transactionId) {
-        Console.WriteLine("处理预授权失败: " + transactionId);
-        // 处理预授权失败的业务逻辑
-    }
-    
-    private void HandleSettled(string transactionId, string authCode) {
-        Console.WriteLine("处理交易结算: " + transactionId + ", 授权码: " + authCode);
-        // 处理交易结算的业务逻辑
-    }
-
-    private Task HandleRechargeNotification(WebHookPayload payload)
-    {
-        // 处理充值通知的业务逻辑
-        Console.WriteLine($"收到充值通知: {payload.Id}");
-        return Task.CompletedTask;
-    }
-
-    public class WebHookPayload
-    {
-        [JsonPropertyName("Id")]
-        public string Id { get; set; }
-        
-        [JsonPropertyName("Type")]
-        public string Type { get; set; }
-        
-        [JsonPropertyName("CreatedTime")]
-        public string CreatedTime { get; set; }
-        
-        [JsonPropertyName("Data")]
-        public JsonElement Data { get; set; }
-        
-        [JsonPropertyName("Version")]
-        public string Version { get; set; }
-        
-        [JsonPropertyName("Signature")]
-        public string Signature { get; set; }
-    }
-    
-    public class WebHookResponse
-    {
-        [JsonPropertyName("Success")]
-        public bool Success { get; set; }
-        
-        [JsonPropertyName("ErrorCode")]
-        public string ErrorCode { get; set; }
-        
-        [JsonPropertyName("ErrorMessage")]
-        public string ErrorMessage { get; set; }
+        var id = "123456";
+        var type = "CardPay";
+        var createdTime = "2023-05-20T08:30:45Z";
+        var data = "{\"Id\":\"abc\",\"Amount\":100}"; // Data字段原始JSON字符串
+        var version = "1.0";
+        var secret = "your_webhook_secret";
+        var sign = GenerateSignature(id, type, createdTime, data, version, secret);
+        Console.WriteLine($"签名: {sign}");
     }
 }
 ```
+
+> 本示例适用于OpenAPI Webhook消息签名。
 
 ## 8. 常见问题
 
