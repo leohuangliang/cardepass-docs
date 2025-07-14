@@ -1,5 +1,7 @@
 # Webhook通知对接文档
 
+> **注意：Webhook所有字段（包括Envelope外层、Data业务数据、响应体）均为小写字母开头（小驼峰），如 id、type、createdTime、data、version、signature、success、errorCode、errorMessage。请严格区分。**
+
 ## 1. 概述
 
 本文档描述了如何接收和处理系统发送的Webhook通知。系统会将各类业务事件通过HTTP POST请求推送到您配置的回调地址，您需要实现相应的接口来处理这些通知。
@@ -23,14 +25,50 @@
 
 ```json
 {
-  "Id": "1234567890abcdef1234567890abcdef",
-  "Type": "CardPay",
-  "CreatedTime": "2023-05-20T08:30:45Z",
-  "Data": {
-    // 事件相关数据，根据事件类型不同而不同
+  "id": "1234567890abcdef1234567890abcdef",
+  "type": "CardPay",
+  "createdTime": "2023-05-20T08:30:45Z",
+  "data": {
+    "id": "66f8a1e4-1234-5678-9abc-123456789012",
+    "authTime": "2023-05-20T08:30:45Z",
+    "settleTime": "2023-05-20T08:35:12Z",
+    "transAmount": {
+      "currency": "USD",
+      "amount": 29.99
+    },
+    "authAmount": {
+      "currency": "USD",
+      "amount": 29.99
+    },
+    "settledAmount": {
+      "currency": "USD",
+      "amount": 29.99
+    },
+    "cardInfo": {
+      "id": "6805b2caa94783c5566f9397",
+      "productCode": "0BN03HNK",
+      "productName": "通用测试2卡",
+      "cardCurrency": "USD",
+      "maskCardNumber": "436797******2419",
+      "cardModel": "Standard"
+    },
+    "cardAlias": "测试卡01",
+    "authCode": "123456",
+    "merchantName": "AMAZON.COM",
+    "merchantCountryCode": "US",
+    "merchantCity": "Seattle",
+    "merchantState": "WA",
+    "merchantZipCode": "98101",
+    "merchantDesc": "AMAZON.COM AMZN.COM/BILL WA",
+    "status": "AuthSuccess",
+    "fundsDirection": "Expenditure",
+    "transactionType": "Consume",
+    "failureReason": null,
+    "failureReasonCn": null,
+    "note": "消费交易"
   },
-  "Version": "1.0",
-  "Signature": "base64编码的签名"
+  "version": "1.0",
+  "signature": "base64编码的签名"
 }
 ```
 
@@ -38,12 +76,12 @@
 
 | 字段名      | 类型     | 说明                           |
 |-------------|----------|--------------------------------|
-| Id          | string   | 通知的唯一标识符               |
-| Type        | string   | 通知类型，见下方事件类型表     |
-| CreatedTime | datetime | 通知创建时间（UTC时间）        |
-| Data        | object   | 通知的具体内容，与事件类型相关 |
-| Version     | string   | 接口版本号                     |
-| Signature   | string   | 请求签名，用于验证请求的真实性 |
+| id          | string   | 通知的唯一标识符               |
+| type        | string   | 通知类型，见下方事件类型表     |
+| createdTime | datetime | 通知创建时间（UTC时间）        |
+| data        | object   | 通知的具体内容，与事件类型相关 |
+| version     | string   | 接口版本号                     |
+| signature   | string   | 请求签名，用于验证请求的真实性 |
 
 ### 3.4 事件类型(Type)
 
@@ -71,43 +109,43 @@
 
 ```json
 {
-  "Id": "66f8a1e4-1234-5678-9abc-123456789012",
-  "AuthTime": "2023-05-20T08:30:45Z",
-  "SettleTime": "2023-05-20T08:35:12Z",
-  "TransAmount": {
-    "Currency": "USD",
-    "Amount": 29.99
+  "id": "66f8a1e4-1234-5678-9abc-123456789012",
+  "authTime": "2023-05-20T08:30:45Z",
+  "settleTime": "2023-05-20T08:35:12Z",
+  "transAmount": {
+    "currency": "USD",
+    "amount": 29.99
   },
-  "AuthAmount": {
-    "Currency": "USD",
-    "Amount": 29.99
+  "authAmount": {
+    "currency": "USD",
+    "amount": 29.99
   },
-  "SettledAmount": {
-    "Currency": "USD",
-    "Amount": 29.99
+  "settledAmount": {
+    "currency": "USD",
+    "amount": 29.99
   },
-  "CardInfo": {
-    "Id": "6805b2caa94783c5566f9397",
-    "ProductCode": "0BN03HNK",
-    "ProductName": "通用测试2卡",
-    "CardCurrency": "USD",
-    "MaskCardNumber": "436797******2419",
-    "CardModel": "Standard"
+  "cardInfo": {
+    "id": "6805b2caa94783c5566f9397",
+    "productCode": "0BN03HNK",
+    "productName": "通用测试2卡",
+    "cardCurrency": "USD",
+    "maskCardNumber": "436797******2419",
+    "cardModel": "Standard"
   },
-  "CardAlias": "测试卡01",
-  "AuthCode": "123456",
-  "MerchantName": "AMAZON.COM",
-  "MerchantCountryCode": "US",
-  "MerchantCity": "Seattle",
-  "MerchantState": "WA",
-  "MerchantZipCode": "98101",
-  "MerchantDesc": "AMAZON.COM AMZN.COM/BILL WA",
-  "Status": "AuthSuccess",
-  "FundsDirection": "Expenditure",
-  "TransactionType": "Consume",
-  "FailureReason": null,
-  "FailureReasonCn": null,
-  "Note": "消费交易"
+  "cardAlias": "测试卡01",
+  "authCode": "123456",
+  "merchantName": "AMAZON.COM",
+  "merchantCountryCode": "US",
+  "merchantCity": "Seattle",
+  "merchantState": "WA",
+  "merchantZipCode": "98101",
+  "merchantDesc": "AMAZON.COM AMZN.COM/BILL WA",
+  "status": "AuthSuccess",
+  "fundsDirection": "Expenditure",
+  "transactionType": "Consume",
+  "failureReason": null,
+  "failureReasonCn": null,
+  "note": "消费交易"
 }
 ```
 
@@ -115,38 +153,39 @@
 
 | 字段                | 类型     | 说明                         |
 |---------------------|----------|------------------------------|
-| Id                  | string   | 交易唯一标识符               |
-| AuthTime            | datetime | 预授权时间(UTC)              |
-| SettleTime          | datetime | 结算时间(UTC，可能为空)      |
-| TransAmount         | Money    | 原始交易金额                 |
-| ├─ Currency         | string   | 币种                         |
-| └─ Amount           | decimal  | 金额                         |
-| AuthAmount          | Money    | 预授权金额                   |
-| ├─ Currency         | string   | 币种                         |
-| └─ Amount           | decimal  | 金额                         |
-| SettledAmount       | Money    | 结算金额(入账后返回)         |
-| ├─ Currency         | string   | 币种                         |
-| └─ Amount           | decimal  | 金额                         |
-| CardInfo            | CardInfo | 卡片信息                     |
-| ├─ Id               | string   | 卡片ID                       |
-| ├─ ProductCode      | string   | 产品编码                     |
-| ├─ ProductName      | string   | 产品名称                     |
-| ├─ MaskCardNumber   | string   | 脱敏卡号                     |
-| └─ CardModel        | string   | 卡模式                       |
-| CardAlias           | string   | 卡别名(卡昵称)               |
-| AuthCode            | string   | 授权码(授权失败时可能为空)   |
-| MerchantName        | string   | 商户名称                     |
-| MerchantCountryCode | string   | 商户国家代码                 |
-| MerchantCity        | string   | 商户所在城市                 |
-| MerchantState       | string   | 商户所在州                   |
-| MerchantZipCode     | string   | 商户邮编                     |
-| MerchantDesc        | string   | 商户描述                     |
-| Status              | string   | 交易状态                     |
-| FundsDirection      | string   | 资金方向(Income/Expenditure) |
-| TransactionType     | string   | 交易类型                     |
-| FailureReason       | string   | 失败原因(英文)               |
-| FailureReasonCn     | string   | 失败原因(中文)               |
-| Note                | string   | 备注信息                     |
+| id                  | string   | 交易唯一标识符               |
+| authTime            | datetime | 预授权时间(UTC)              |
+| settleTime          | datetime | 结算时间(UTC，可能为空)      |
+| transAmount         | Money    | 原始交易金额                 |
+| ├─ currency         | string   | 币种                         |
+| └─ amount           | decimal  | 金额                         |
+| authAmount          | Money    | 预授权金额                   |
+| ├─ currency         | string   | 币种                         |
+| └─ amount           | decimal  | 金额                         |
+| settledAmount       | Money    | 结算金额(入账后返回)         |
+| ├─ currency         | string   | 币种                         |
+| └─ amount           | decimal  | 金额                         |
+| cardInfo            | CardInfo | 卡片信息                     |
+| ├─ id               | string   | 卡片ID                       |
+| ├─ productCode      | string   | 产品编码                     |
+| ├─ productName      | string   | 产品名称                     |
+| ├─ cardCurrency     | string   | 卡币种                       |
+| ├─ maskCardNumber   | string   | 脱敏卡号                     |
+| └─ cardModel        | string   | 卡模式                       |
+| cardAlias           | string   | 卡别名(卡昵称)               |
+| authCode            | string   | 授权码(授权失败时可能为空)   |
+| merchantName        | string   | 商户名称                     |
+| merchantCountryCode | string   | 商户国家代码                 |
+| merchantCity        | string   | 商户所在城市                 |
+| merchantState       | string   | 商户所在州                   |
+| merchantZipCode     | string   | 商户邮编                     |
+| merchantDesc        | string   | 商户描述                     |
+| status              | string   | 交易状态                     |
+| fundsDirection      | string   | 资金方向(Income/Expenditure) |
+| transactionType     | string   | 交易类型                     |
+| failureReason       | string   | 失败原因(英文)               |
+| failureReasonCn     | string   | 失败原因(中文)               |
+| note                | string   | 备注信息                     |
 
 **枚举值说明**：
 
@@ -173,7 +212,7 @@
 
 ### 5.1 签名生成规则
 
-1. 将以下字段按顺序拼接：`Id + Type + CreatedTime + Data + Version`
+1. 将以下字段按顺序拼接：`id + type + createdTime + data + version`
 2. 使用您配置的Secret和HMAC-SHA256算法对拼接字符串进行签名
 3. 将结果进行Base64编码
 
@@ -183,9 +222,9 @@
 
 ```json
 {
-  "Success": true,
-  "ErrorCode": "",
-  "ErrorMessage": ""
+  "success": true,
+  "errorCode": "",
+  "errorMessage": ""
 }
 ```
 
@@ -193,9 +232,9 @@
 
 ```json
 {
-  "Success": false,
-  "ErrorCode": "ERROR_CODE",
-  "ErrorMessage": "错误详细信息"
+  "success": false,
+  "errorCode": "ERROR_CODE",
+  "errorMessage": "错误详细信息"
 }
 ```
 
@@ -224,7 +263,7 @@ public class OpenApiWebhookSignDemo {
         String id = "123456";
         String type = "CardPay";
         String createdTime = "2023-05-20T08:30:45Z";
-        String data = "{\"Id\":\"abc\",\"Amount\":100}"; // Data字段原始JSON字符串
+        String data = "{\"id\":\"abc\",\"amount\":100}"; // Data字段原始JSON字符串
         String version = "1.0";
         String secret = "your_webhook_secret";
         String sign = generateSignature(id, type, createdTime, data, version, secret);
@@ -251,15 +290,15 @@ $secret = 'your_webhook_secret';
 if (!verifySignature($payload, $secret)) {
     http_response_code(200);
     echo json_encode([
-        'Success' => false,
-        'ErrorCode' => 'INVALID_SIGNATURE',
-        'ErrorMessage' => '签名验证失败'
+        'success' => false,
+        'errorCode' => 'INVALID_SIGNATURE',
+        'errorMessage' => '签名验证失败'
     ]);
     exit();
 }
 
 // 根据事件类型处理不同的业务逻辑
-switch ($payload['Type']) {
+switch ($payload['type']) {
     case 'CardPay':
         handleCardPayNotification($payload);
         break;
@@ -270,9 +309,9 @@ switch ($payload['Type']) {
     default:
         http_response_code(200);
         echo json_encode([
-            'Success' => false,
-            'ErrorCode' => 'UNKNOWN_EVENT_TYPE',
-            'ErrorMessage' => '未知的事件类型'
+            'success' => false,
+            'errorCode' => 'UNKNOWN_EVENT_TYPE',
+            'errorMessage' => '未知的事件类型'
         ]);
         exit();
 }
@@ -280,9 +319,9 @@ switch ($payload['Type']) {
 // 返回成功响应
 http_response_code(200);
 echo json_encode([
-    'Success' => true,
-    'ErrorCode' => '',
-    'ErrorMessage' => ''
+    'success' => true,
+    'errorCode' => '',
+    'errorMessage' => ''
 ]);
 
 /**
@@ -294,15 +333,15 @@ echo json_encode([
  */
 function verifySignature($payload, $secret) {
     // 构建用于签名的字符串
-    $content = $payload['Id'] . $payload['Type'] . $payload['CreatedTime'] . 
-               json_encode($payload['Data']) . $payload['Version'];
+    $content = $payload['id'] . $payload['type'] . $payload['createdTime'] . 
+               json_encode($payload['data']) . $payload['version'];
     
     // 使用HMAC-SHA256计算签名
     $hash = hash_hmac('sha256', $content, $secret, true);
     $calculatedSignature = base64_encode($hash);
     
     // 比较计算出的签名与接收到的签名
-    return hash_equals($calculatedSignature, $payload['Signature']);
+    return hash_equals($calculatedSignature, $payload['signature']);
 }
 
 /**
@@ -313,13 +352,13 @@ function verifySignature($payload, $secret) {
  */
 function handleCardPayNotification($payload) {
     // 处理卡消费通知的业务逻辑
-    error_log('收到卡消费通知: ' . $payload['Id']);
+    error_log('收到卡消费通知: ' . $payload['id']);
     
     // 解析CardPay数据
-    $data = $payload['Data'];
-    $transactionId = $data['Id'];
-    $status = $data['Status'];
-    $authCode = isset($data['AuthCode']) ? $data['AuthCode'] : null;
+    $data = $payload['data'];
+    $transactionId = $data['id'];
+    $status = $data['status'];
+    $authCode = isset($data['authCode']) ? $data['authCode'] : null;
     
     error_log("交易ID: $transactionId");
     error_log("交易状态: $status");
@@ -356,7 +395,7 @@ function handleSettled($transactionId, $authCode) {
 
 function handleRechargeNotification($payload) {
     // 处理充值通知的业务逻辑
-    error_log('收到充值通知: ' . $payload['Id']);
+    error_log('收到充值通知: ' . $payload['id']);
 }
 ```
 
@@ -383,7 +422,7 @@ public class OpenApiWebhookSignDemo
         var id = "123456";
         var type = "CardPay";
         var createdTime = "2023-05-20T08:30:45Z";
-        var data = "{\"Id\":\"abc\",\"Amount\":100}"; // Data字段原始JSON字符串
+        var data = "{\"id\":\"abc\",\"amount\":100}"; // Data字段原始JSON字符串
         var version = "1.0";
         var secret = "your_webhook_secret";
         var sign = GenerateSignature(id, type, createdTime, data, version, secret);
