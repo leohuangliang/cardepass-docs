@@ -25,6 +25,7 @@ client_secret=YOUR_CLIENT_SECRET
 ```
 
 成功后返回:
+
 ```json
 {
   "access_token": "eyJhbGc...",
@@ -55,6 +56,7 @@ GET /v1/products
 ### 2. 开卡
 
 #### 标准模式开卡
+
 ```http
 POST /v1/orders/standard/apply
 Content-Type: application/json
@@ -69,6 +71,7 @@ Content-Type: application/json
 ```
 
 #### 共享余额模式开卡
+
 ```http
 POST /v1/orders/sharebalance/apply
 Content-Type: application/json
@@ -95,6 +98,7 @@ GET /v1/cards/{cardId}
 ### 标准模式(Standard)卡操作
 
 #### 1. 充值
+
 ```http
 POST /v1/orders/standard/topup
 Content-Type: application/json
@@ -107,6 +111,7 @@ Content-Type: application/json
 ```
 
 #### 2. 冻结
+
 ```http
 POST /v1/orders/standard/block
 Content-Type: application/json
@@ -118,6 +123,7 @@ Content-Type: application/json
 ```
 
 #### 3. 解冻
+
 ```http
 POST /v1/orders/standard/unblock
 Content-Type: application/json
@@ -129,6 +135,7 @@ Content-Type: application/json
 ```
 
 #### 4. 销卡
+
 ```http
 POST /v1/orders/standard/cancel
 Content-Type: application/json
@@ -140,6 +147,7 @@ Content-Type: application/json
 ```
 
 #### 5. 余额转出
+
 ```http
 POST /v1/orders/standard/withdraw
 Content-Type: application/json
@@ -154,6 +162,7 @@ Content-Type: application/json
 ### 共享余额模式(ShareBalance)卡操作
 
 #### 1. 调整限额
+
 ```http
 POST /v1/orders/sharebalance/creditLimit
 Content-Type: application/json
@@ -167,6 +176,7 @@ Content-Type: application/json
 ```
 
 #### 2. 冻结
+
 ```http
 POST /v1/orders/sharebalance/block
 Content-Type: application/json
@@ -178,6 +188,7 @@ Content-Type: application/json
 ```
 
 #### 3. 解冻
+
 ```http
 POST /v1/orders/sharebalance/unblock
 Content-Type: application/json
@@ -189,6 +200,7 @@ Content-Type: application/json
 ```
 
 #### 4. 销卡
+
 ```http
 POST /v1/orders/sharebalance/cancel
 Content-Type: application/json
@@ -202,16 +214,16 @@ Content-Type: application/json
 ### 两种模式的主要区别
 
 1. 标准模式(Standard):
-   - 每张卡都有独立的余额
-   - 需要先充值才能使用
-   - 支持余额转出操作
-   - 消费受卡内余额限制
+    - 每张卡都有独立的余额
+    - 需要先充值才能使用
+    - 支持余额转出操作
+    - 消费受卡内余额限制
 
 2. 共享余额模式(ShareBalance):
-   - 多张卡共享资金池余额
-   - 无需单独充值
-   - 通过限额控制消费
-   - 支持设置单笔限额(maxAuthAmount)和总额度(maxCreditAmount)
+    - 多张卡共享资金池余额
+    - 无需单独充值
+    - 通过限额控制消费
+    - 支持设置单笔限额(maxAuthAmount)和总额度(maxCreditAmount)
 
 ### 查询交易
 
@@ -235,18 +247,18 @@ GET /v1/transactions?CardId={cardId}&TransactionDateFrom=2024-01-01&TransactionD
 ## 常见问题
 
 1. Token 获取失败
-   - 检查 client_id 和 client_secret 是否正确
-   - 确认请求环境是否正确
+    - 检查 client_id 和 client_secret 是否正确
+    - 确认请求环境是否正确
 
 2. 开卡失败
-   - 检查产品代码是否正确
-   - 确认账户余额是否充足
-   - 验证币种是否支持
+    - 检查产品代码是否正确
+    - 确认账户余额是否充足
+    - 验证币种是否支持
 
 3. 交易查询无数据
-   - 确认查询时间范围是否正确
-   - 验证卡ID是否正确
-   - 检查卡状态是否正常
+    - 确认查询时间范围是否正确
+    - 验证卡ID是否正确
+    - 检查卡状态是否正常
 
 ## 技术支持
 

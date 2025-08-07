@@ -24,13 +24,13 @@ Base URLs:
 
 ### 请求参数
 
-| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                          |
-|---------------|----------|----------|----------|------------|-----------------------------------|
-| Content-Type  | header   | string   | 是       | 内容类型   | application/x-www-form-urlencoded |
-| grant_type    | body     | string   | 是       | 授权类型   | 固定值：client_credentials        |
-| client_id     | body     | string   | 是       | 客户端ID   | 客户端标识，需向cardepass申请     |
-| client_secret | body     | string   | 是       | 客户端密钥 | 客户端密钥，需向cardepass申请     |
-| scope         | body     | string   | 是       | 权限范围   | 固定值：openapi                   |
+| 参数名称          | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                              |
+|---------------|--------|--------|------|-------|-----------------------------------|
+| Content-Type  | header | string | 是    | 内容类型  | application/x-www-form-urlencoded |
+| grant_type    | body   | string | 是    | 授权类型  | 固定值：client_credentials            |
+| client_id     | body   | string | 是    | 客户端ID | 客户端标识，需向cardepass申请               |
+| client_secret | body   | string | 是    | 客户端密钥 | 客户端密钥，需向cardepass申请               |
+| scope         | body   | string | 是    | 权限范围  | 固定值：openapi                       |
 
 ### 请求示例
 
@@ -50,18 +50,18 @@ curl -X POST "https://test.cardepass.com/openapi/connect/token" \
 
 ### 响应参数说明
 
-| 参数名称     | 参数类型 | 中文名称 | 参数描述                           |
-|--------------|----------|----------|------------------------------------|
-| access_token | string   | 访问令牌 | 后续API调用需要的访问令牌          |
-| expires_in   | integer  | 过期时间 | 令牌有效期（秒），默认3600秒=1小时 |
-| token_type   | string   | 令牌类型 | 固定返回"Bearer"                   |
-| scope        | string   | 权限范围 | 令牌权限范围                       |
+| 参数名称         | 参数类型    | 中文名称 | 参数描述                 |
+|--------------|---------|------|----------------------|
+| access_token | string  | 访问令牌 | 后续API调用需要的访问令牌       |
+| expires_in   | integer | 过期时间 | 令牌有效期（秒），默认3600秒=1小时 |
+| token_type   | string  | 令牌类型 | 固定返回"Bearer"         |
+| scope        | string  | 权限范围 | 令牌权限范围               |
 
 ### 请求参数
 
-| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
-|---------------|----------|----------|----------|----------|-----------------------|
-| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
+| 参数名称          | 参数位置   | 参数类型   | 是否必填 | 中文名称 | 参数描述                  |
+|---------------|--------|--------|------|------|-----------------------|
+| Authorization | header | string | 是    | 授权头  | Bearer {access_token} |
 
 ### 请求示例
 
@@ -81,11 +81,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/ping" \
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -99,10 +99,10 @@ curl -X GET "https://test.cardepass.com/openapi/v1/ping" \
 
 ### 请求参数
 
-| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
-|---------------|----------|----------|----------|----------|-----------------------|
-| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
-| request       | query    |          | 否       | request  | 获取产品信息请求      |
+| 参数名称          | 参数位置   | 参数类型   | 是否必填 | 中文名称    | 参数描述                  |
+|---------------|--------|--------|------|---------|-----------------------|
+| Authorization | header | string | 是    | 授权头     | Bearer {access_token} |
+| request       | query  |        | 否    | request | 获取产品信息请求              |
 
 ### 请求示例
 
@@ -133,26 +133,26 @@ curl -X GET "https://test.cardepass.com/openapi/v1/products" \
 
 ### 响应参数说明
 
-| 参数名称        | 参数类型      | 中文名称           | 参数描述                                     |
-|-----------------|---------------|--------------------|----------------------------------------------|
-| responseId      | string        | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError        | boolean       | 是否有错误         | 是否有错误发生                               |
-| errorCode       | string        | 错误码             | 错误代码                                     |
-| errorMessage    | string        | 错误信息           | 错误信息                                     |
-| data            | array         | 数据               |                                              |
-| ├─ productCode  | string        | 产品编码           | 产品编号 (必填)                              |
-| ├─ productName  | string        | 产品名称           | 产品名称 (必填)                              |
-| ├─ cardModels   | array[string] | 支持的产品模式列表 | 支持的产品模式列表 (必填)                    |
-| └─ cardCurrency | array[string] | 支持的结算币种列表 | 支持的结算币种列表 (必填)                    |
-| └─ description  | string        | 产品介绍           | 产品介绍 (可选)                              |
+| 参数名称            | 参数类型          | 中文名称      | 参数描述                    |
+|-----------------|---------------|-----------|-------------------------|
+| responseId      | string        | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题 |
+| hasError        | boolean       | 是否有错误     | 是否有错误发生                 |
+| errorCode       | string        | 错误码       | 错误代码                    |
+| errorMessage    | string        | 错误信息      | 错误信息                    |
+| data            | array         | 数据        |                         |
+| ├─ productCode  | string        | 产品编码      | 产品编号 (必填)               |
+| ├─ productName  | string        | 产品名称      | 产品名称 (必填)               |
+| ├─ cardModels   | array[string] | 支持的产品模式列表 | 支持的产品模式列表 (必填)          |
+| └─ cardCurrency | array[string] | 支持的结算币种列表 | 支持的结算币种列表 (必填)          |
+| └─ description  | string        | 产品介绍      | 产品介绍 (可选)               |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -166,10 +166,10 @@ curl -X GET "https://test.cardepass.com/openapi/v1/products" \
 
 ### 请求参数
 
-| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
-|---------------|----------|----------|----------|----------|-----------------------|
-| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
-| cardId        | path     | string   | 是       | 卡ID     | 卡ID                  |
+| 参数名称          | 参数位置   | 参数类型   | 是否必填 | 中文名称 | 参数描述                  |
+|---------------|--------|--------|------|------|-----------------------|
+| Authorization | header | string | 是    | 授权头  | Bearer {access_token} |
+| cardId        | path   | string | 是    | 卡ID  | 卡ID                   |
 
 ### 请求示例
 
@@ -208,36 +208,36 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
 
 ### 响应参数说明
 
-| 参数名称            | 参数类型 | 中文名称   | 参数描述                                               |
-|---------------------|----------|------------|--------------------------------------------------------|
-| responseId          | string   | 响应ID     | 响应Id，需调用方保存，用于排查调用遇到的问题           |
-| hasError            | boolean  | 是否有错误 | 是否有错误发生                                         |
-| errorCode           | string   | 错误码     | 错误代码                                               |
-| errorMessage        | string   | 错误信息   | 错误信息                                               |
-| data                | object   | 数据       | 卡片详细信息                                           |
-| ├─ cardId           | string   | 卡ID       | 卡片唯一标识                                           |
-| ├─ cardModel        | string   | 卡模式     | Standard=标准模式, ShareBalance=共享余额模式           |
-| ├─ productCode      | string   | 产品编码   | 产品编码                                               |
-| ├─ cardNumber       | string   | 卡号       | 完整卡号（16位）                                       |
-| ├─ cvv              | string   | CVV        | 卡片安全码                                             |
-| ├─ expirationMMYY   | string   | 过期时间   | 卡片过期时间，格式：MM/YY                              |
-| ├─ cardCurrency     | string   | 卡币种     | 卡片结算币种（如：USD、EUR、GBP等）                    |
-| ├─ alias            | string   | 卡别名     | 卡片别名（用户自定义名称）                             |
-| └─ balanceAmount    | decimal  | 可用余额   | 当前可用余额                                           |
-| └─ status           | string   | 卡状态     | Active=活跃, Blocked=冻结, Cancel=注销, Expired=已过期 |
-| └─ maxAuthAmount    | decimal  | 单笔限额   | 共享余额模式：单笔最大授权金额                         |
-| └─ usedCreditAmount | decimal  | 已消费额度 | 共享余额模式：已使用的信用额度                         |
-| └─ maxCreditAmount  | decimal  | 总额度上限 | 共享余额模式：总信用额度上限（null表示无限制）         |
-| └─ cardOrganization | string   | 卡组织     | 卡组织（Mastercard/VISA等）                            |
-| └─ applyTime        | DateTime | 申请时间   | 卡片申请时间                                           |
+| 参数名称                | 参数类型     | 中文名称  | 参数描述                                          |
+|---------------------|----------|-------|-----------------------------------------------|
+| responseId          | string   | 响应ID  | 响应Id，需调用方保存，用于排查调用遇到的问题                       |
+| hasError            | boolean  | 是否有错误 | 是否有错误发生                                       |
+| errorCode           | string   | 错误码   | 错误代码                                          |
+| errorMessage        | string   | 错误信息  | 错误信息                                          |
+| data                | object   | 数据    | 卡片详细信息                                        |
+| ├─ cardId           | string   | 卡ID   | 卡片唯一标识                                        |
+| ├─ cardModel        | string   | 卡模式   | Standard=标准模式, ShareBalance=共享余额模式            |
+| ├─ productCode      | string   | 产品编码  | 产品编码                                          |
+| ├─ cardNumber       | string   | 卡号    | 完整卡号（16位）                                     |
+| ├─ cvv              | string   | CVV   | 卡片安全码                                         |
+| ├─ expirationMMYY   | string   | 过期时间  | 卡片过期时间，格式：MM/YY                               |
+| ├─ cardCurrency     | string   | 卡币种   | 卡片结算币种（如：USD、EUR、GBP等）                        |
+| ├─ alias            | string   | 卡别名   | 卡片别名（用户自定义名称）                                 |
+| └─ balanceAmount    | decimal  | 可用余额  | 当前可用余额                                        |
+| └─ status           | string   | 卡状态   | Active=活跃, Blocked=冻结, Cancel=注销, Expired=已过期 |
+| └─ maxAuthAmount    | decimal  | 单笔限额  | 共享余额模式：单笔最大授权金额                               |
+| └─ usedCreditAmount | decimal  | 已消费额度 | 共享余额模式：已使用的信用额度                               |
+| └─ maxCreditAmount  | decimal  | 总额度上限 | 共享余额模式：总信用额度上限（null表示无限制）                     |
+| └─ cardOrganization | string   | 卡组织   | 卡组织（Mastercard/VISA等）                         |
+| └─ applyTime        | DateTime | 申请时间  | 卡片申请时间                                        |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -251,15 +251,15 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称           | 参数描述                            |
-|-----------------|----------|----------|----------|--------------------|-------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头             | Bearer {access_token}               |
-| Content-Type    | header   | string   | 是       | 内容类型           | application/json                    |
-| productCode     | body     | string   | 是       | 产品编码           | 卡产品编码                          |
-| cardCurrency    | body     | string   | 是       | 支持的结算币种列表 | 币种                                |
-| topUpAmount     | body     | decimal  | 是       | 充值金额           | 开卡金额                            |
-| cardAlias       | body     | string   | 否       | 卡别名             | 卡别名                              |
-| customerOrderNo | body     | string   | 否       | 商户订单号         | 商户请求订单号（确保唯一性） (可选) |
+| 参数名称            | 参数位置   | 参数类型    | 是否必填 | 中文名称      | 参数描述                  |
+|-----------------|--------|---------|------|-----------|-----------------------|
+| Authorization   | header | string  | 是    | 授权头       | Bearer {access_token} |
+| Content-Type    | header | string  | 是    | 内容类型      | application/json      |
+| productCode     | body   | string  | 是    | 产品编码      | 卡产品编码                 |
+| cardCurrency    | body   | string  | 是    | 支持的结算币种列表 | 币种                    |
+| topUpAmount     | body   | decimal | 是    | 充值金额      | 开卡金额                  |
+| cardAlias       | body   | string  | 否    | 卡别名       | 卡别名                   |
+| customerOrderNo | body   | string  | 否    | 商户订单号     | 商户请求订单号（确保唯一性） (可选)   |
 
 ### 请求示例
 
@@ -335,42 +335,42 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/apply" \
 
 ### 响应参数说明
 
-| 参数名称            | 参数类型      | 中文名称           | 参数描述                                     |
-|---------------------|---------------|--------------------|----------------------------------------------|
-| responseId          | string        | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError            | boolean       | 是否有错误         | 是否有错误发生                               |
-| errorCode           | string        | 错误码             | 错误代码                                     |
-| errorMessage        | string        | 错误信息           | 错误信息                                     |
-| data                | object        | 数据               |                                              |
-| ├─ orderNo          | string        | 订单编号           | 订单编号 (必填)                              |
-| ├─ productInfo      | object        | 产品信息           |                                              |
-| │　├─ productCode   | string        | 产品编码           | 产品编码 (必填)                              |
-| │　├─ productName   | string        | 产品名称           | 产品名称 (必填)                              |
-| │　├─ cardModel     | string        | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式 |
-| │　├─ cardCurrency  | string        | 支持的结算币种列表 | 卡结算币种                                   |
-| ├─ totalTopUpAmount | decimal       | 总开卡金额         | 总开卡金额                                   |
-| ├─ totalFee         | decimal       | 总手续费           | 总手续费                                     |
-| ├─ totalPayAmount   | decimal       | 总支付金额         | 总支付金额                                   |
-| ├─ totalCardCount   | integer       | 总卡数             | 总卡数                                       |
-| ├─ totalOpened      | integer       | 已开卡数           | 已开卡数                                     |
-| ├─ orderLines       | array[object] | 开卡订单明细       | 开卡订单明细 (可选)                          |
-| ├─ cardInfos        | array[object] | 已开卡信息         | 已开卡信息 (可选)                            |
-| └─ status           | string        | 状态               | 订单状态                                     |
-| └─ payMessage       | string        | 支付信息           | 支付信息 (可选)                              |
-| └─ orderType        | string        | 订单类型           | 订单类型                                     |
-| └─ createdOn        | DateTime      | 创建时间           | 创建时间                                     |
-| └─ modifiedOn       | DateTime      | 修改时间           | 修改时间                                     |
-| └─ paidOn           | DateTime      | 支付时间           | 支付时间                                     |
-| └─ completedOn      | DateTime      | 完成时间           | 完成时间                                     |
-| └─ customerOrderNo  | string        | 商户订单号         | 商户请求订单号（确保唯一性） (可选)          |
+| 参数名称                | 参数类型          | 中文名称      | 参数描述                               |
+|---------------------|---------------|-----------|------------------------------------|
+| responseId          | string        | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题            |
+| hasError            | boolean       | 是否有错误     | 是否有错误发生                            |
+| errorCode           | string        | 错误码       | 错误代码                               |
+| errorMessage        | string        | 错误信息      | 错误信息                               |
+| data                | object        | 数据        |                                    |
+| ├─ orderNo          | string        | 订单编号      | 订单编号 (必填)                          |
+| ├─ productInfo      | object        | 产品信息      |                                    |
+| │　├─ productCode    | string        | 产品编码      | 产品编码 (必填)                          |
+| │　├─ productName    | string        | 产品名称      | 产品名称 (必填)                          |
+| │　├─ cardModel      | string        | 卡模式       | Standard=标准模式, ShareBalance=共享余额模式 |
+| │　├─ cardCurrency   | string        | 支持的结算币种列表 | 卡结算币种                              |
+| ├─ totalTopUpAmount | decimal       | 总开卡金额     | 总开卡金额                              |
+| ├─ totalFee         | decimal       | 总手续费      | 总手续费                               |
+| ├─ totalPayAmount   | decimal       | 总支付金额     | 总支付金额                              |
+| ├─ totalCardCount   | integer       | 总卡数       | 总卡数                                |
+| ├─ totalOpened      | integer       | 已开卡数      | 已开卡数                               |
+| ├─ orderLines       | array[object] | 开卡订单明细    | 开卡订单明细 (可选)                        |
+| ├─ cardInfos        | array[object] | 已开卡信息     | 已开卡信息 (可选)                         |
+| └─ status           | string        | 状态        | 订单状态                               |
+| └─ payMessage       | string        | 支付信息      | 支付信息 (可选)                          |
+| └─ orderType        | string        | 订单类型      | 订单类型                               |
+| └─ createdOn        | DateTime      | 创建时间      | 创建时间                               |
+| └─ modifiedOn       | DateTime      | 修改时间      | 修改时间                               |
+| └─ paidOn           | DateTime      | 支付时间      | 支付时间                               |
+| └─ completedOn      | DateTime      | 完成时间      | 完成时间                               |
+| └─ customerOrderNo  | string        | 商户订单号     | 商户请求订单号（确保唯一性） (可选)                |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -382,13 +382,13 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/apply" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
-|-----------------|----------|----------|----------|------------|------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
-| topUpAmount     | body     | decimal  | 是       | 充值金额   | 充值金额. （最低充值金额为1）      |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称            | 参数位置   | 参数类型    | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|---------|------|-------|-----------------------|
+| Authorization   | header | string  | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string  | 是    | 内容类型  | application/json      |
+| cardId          | body   | string  | 是    | 卡ID   | 卡ID (必填)              |
+| topUpAmount     | body   | decimal | 是    | 充值金额  | 充值金额. （最低充值金额为1）      |
+| customerOrderNo | body   | string  | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
 
 ### 请求示例
 
@@ -439,41 +439,41 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/topup" \
 
 ### 响应参数说明
 
-| 参数名称                   | 参数类型      | 中文名称           | 参数描述                                     |
-|----------------------------|---------------|--------------------|----------------------------------------------|
-| responseId                 | string        | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError                   | boolean       | 是否有错误         | 是否有错误发生                               |
-| errorCode                  | string        | 错误码             | 错误代码                                     |
-| errorMessage               | string        | 错误信息           | 错误信息                                     |
-| data                       | object        | 数据               |                                              |
-| ├─ orderNo                 | string        | 订单编号           | 订单编号 (必填)                              |
-| ├─ productInfo             | object        | 产品信息           |                                              |
-| │　├─ productCode          | string        | 产品编码           | 产品编码 (必填)                              |
-| │　├─ productName          | string        | 产品名称           | 产品名称 (必填)                              |
-| │　├─ cardModel            | string        | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式 |
-| │　├─ cardCurrency         | string        | 支持的结算币种列表 | 卡结算币种                                   |
-| ├─ totalTopUpAmount        | decimal       | 总开卡金额         | 总充值金额                                   |
-| ├─ totalFee                | decimal       | 总手续费           | 总手续费                                     |
-| ├─ totalPayAmount          | decimal       | 总支付金额         | 总支付金额                                   |
-| ├─ totalCardCount          | integer       | 总卡数             | 总卡数                                       |
-| ├─ totalCompletedCardCount | integer       | 已充值卡数         | 已充值卡数                                   |
-| ├─ orderLines              | array[object] | 开卡订单明细       | 开卡订单明细 (可选)                          |
-| └─ status                  | string        | 状态               | 订单状态                                     |
-| └─ payMessage              | string        | 支付信息           | 支付信息 (可选)                              |
-| └─ orderType               | string        | 订单类型           | 卡订单类型                                   |
-| └─ createdOn               | DateTime      | 创建时间           | 创建时间                                     |
-| └─ modifiedOn              | DateTime      | 修改时间           | 修改时间                                     |
-| └─ paidOn                  | DateTime      | 支付时间           | 支付时间                                     |
-| └─ completedOn             | DateTime      | 完成时间           | 完成时间                                     |
-| └─ customerOrderNo         | string        | 商户订单号         | 商户请求订单号（确保唯一性）(可选)           |
+| 参数名称                       | 参数类型          | 中文名称      | 参数描述                               |
+|----------------------------|---------------|-----------|------------------------------------|
+| responseId                 | string        | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题            |
+| hasError                   | boolean       | 是否有错误     | 是否有错误发生                            |
+| errorCode                  | string        | 错误码       | 错误代码                               |
+| errorMessage               | string        | 错误信息      | 错误信息                               |
+| data                       | object        | 数据        |                                    |
+| ├─ orderNo                 | string        | 订单编号      | 订单编号 (必填)                          |
+| ├─ productInfo             | object        | 产品信息      |                                    |
+| │　├─ productCode           | string        | 产品编码      | 产品编码 (必填)                          |
+| │　├─ productName           | string        | 产品名称      | 产品名称 (必填)                          |
+| │　├─ cardModel             | string        | 卡模式       | Standard=标准模式, ShareBalance=共享余额模式 |
+| │　├─ cardCurrency          | string        | 支持的结算币种列表 | 卡结算币种                              |
+| ├─ totalTopUpAmount        | decimal       | 总开卡金额     | 总充值金额                              |
+| ├─ totalFee                | decimal       | 总手续费      | 总手续费                               |
+| ├─ totalPayAmount          | decimal       | 总支付金额     | 总支付金额                              |
+| ├─ totalCardCount          | integer       | 总卡数       | 总卡数                                |
+| ├─ totalCompletedCardCount | integer       | 已充值卡数     | 已充值卡数                              |
+| ├─ orderLines              | array[object] | 开卡订单明细    | 开卡订单明细 (可选)                        |
+| └─ status                  | string        | 状态        | 订单状态                               |
+| └─ payMessage              | string        | 支付信息      | 支付信息 (可选)                          |
+| └─ orderType               | string        | 订单类型      | 卡订单类型                              |
+| └─ createdOn               | DateTime      | 创建时间      | 创建时间                               |
+| └─ modifiedOn              | DateTime      | 修改时间      | 修改时间                               |
+| └─ paidOn                  | DateTime      | 支付时间      | 支付时间                               |
+| └─ completedOn             | DateTime      | 完成时间      | 完成时间                               |
+| └─ customerOrderNo         | string        | 商户订单号     | 商户请求订单号（确保唯一性）(可选)                 |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -485,12 +485,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/topup" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
-|-----------------|----------|----------|----------|------------|------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|--------|------|-------|-----------------------|
+| Authorization   | header | string | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string | 是    | 内容类型  | application/json      |
+| cardId          | body   | string | 是    | 卡ID   | 卡ID (必填)              |
+| customerOrderNo | body   | string | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
 
 ### 请求示例
 
@@ -537,38 +537,38 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/block" \
 
 ### 响应参数说明
 
-| 参数名称             | 参数类型 | 中文名称           | 参数描述                                                 |
-|----------------------|----------|--------------------|----------------------------------------------------------|
-| responseId           | string   | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题             |
-| hasError             | boolean  | 是否有错误         | 是否有错误发生                                           |
-| errorCode            | string   | 错误码             | 错误代码                                                 |
-| errorMessage         | string   | 错误信息           | 错误信息                                                 |
-| data                 | object   | 数据               |                                                          |
-| ├─ orderNo           | string   | 订单编号           | 订单编号 (必填)                                          |
-| ├─ cardInfo          | object   | 卡信息             |                                                          |
-| │　├─ cardId         | string   | 卡ID               | 卡ID                                                     |
-| │　├─ productCode    | string   | 产品编码           | 产品编码                                                 |
-| │　├─ productName    | string   | 产品名称           | 产品名称                                                 |
-| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                                 |
-| │　├─ maskCardNumber | string   | 脱敏卡号           | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
-| │　├─ cardModel      | string   | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式             |
-| ├─ note              | string   | 备注               | 备注 (必填)                                              |
-| ├─ isBlocked         | boolean  | 是否渠道已冻结     | 是否渠道已冻结                                           |
-| ├─ status            | string   | 状态               | 订单状态                                                 |
-| ├─ failureReason     | string   | 失败原因           | 失败原因 (必填)                                          |
-| └─ orderType         | string   | 订单类型           | 订单类型                                                 |
-| └─ createdOn         | DateTime | 创建时间           | 创建时间                                                 |
-| └─ modifiedOn        | DateTime | 修改时间           | 修改时间                                                 |
-| └─ completedOn       | DateTime | 完成时间           | 完成时间                                                 |
-| └─ customerOrderNo   | string   | 商户订单号         | 商户请求订单号（确保唯一性）(可选)                       |
+| 参数名称                | 参数类型     | 中文名称      | 参数描述                                   |
+|---------------------|----------|-----------|----------------------------------------|
+| responseId          | string   | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题                |
+| hasError            | boolean  | 是否有错误     | 是否有错误发生                                |
+| errorCode           | string   | 错误码       | 错误代码                                   |
+| errorMessage        | string   | 错误信息      | 错误信息                                   |
+| data                | object   | 数据        |                                        |
+| ├─ orderNo          | string   | 订单编号      | 订单编号 (必填)                              |
+| ├─ cardInfo         | object   | 卡信息       |                                        |
+| │　├─ cardId         | string   | 卡ID       | 卡ID                                    |
+| │　├─ productCode    | string   | 产品编码      | 产品编码                                   |
+| │　├─ productName    | string   | 产品名称      | 产品名称                                   |
+| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                   |
+| │　├─ maskCardNumber | string   | 脱敏卡号      | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
+| │　├─ cardModel      | string   | 卡模式       | Standard=标准模式, ShareBalance=共享余额模式     |
+| ├─ note             | string   | 备注        | 备注 (必填)                                |
+| ├─ isBlocked        | boolean  | 是否渠道已冻结   | 是否渠道已冻结                                |
+| ├─ status           | string   | 状态        | 订单状态                                   |
+| ├─ failureReason    | string   | 失败原因      | 失败原因 (必填)                              |
+| └─ orderType        | string   | 订单类型      | 订单类型                                   |
+| └─ createdOn        | DateTime | 创建时间      | 创建时间                                   |
+| └─ modifiedOn       | DateTime | 修改时间      | 修改时间                                   |
+| └─ completedOn      | DateTime | 完成时间      | 完成时间                                   |
+| └─ customerOrderNo  | string   | 商户订单号     | 商户请求订单号（确保唯一性）(可选)                     |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -580,12 +580,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/block" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
-|-----------------|----------|----------|----------|------------|------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|--------|------|-------|-----------------------|
+| Authorization   | header | string | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string | 是    | 内容类型  | application/json      |
+| cardId          | body   | string | 是    | 卡ID   | 卡ID (必填)              |
+| customerOrderNo | body   | string | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
 
 ### 请求示例
 
@@ -631,37 +631,37 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/unblock" \
 
 ### 响应参数说明
 
-| 参数名称             | 参数类型 | 中文名称           | 参数描述                                                 |
-|----------------------|----------|--------------------|----------------------------------------------------------|
-| responseId           | string   | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题             |
-| hasError             | boolean  | 是否有错误         | 是否有错误发生                                           |
-| errorCode            | string   | 错误码             | 错误代码                                                 |
-| errorMessage         | string   | 错误信息           | 错误信息                                                 |
-| data                 | object   | 数据               |                                                          |
-| ├─ orderNo           | string   | 订单编号           | 订单编号 (必填)                                          |
-| ├─ cardInfo          | object   | 卡信息             |                                                          |
-| │　├─ cardId         | string   | 卡ID               | 卡ID                                                     |
-| │　├─ productCode    | string   | 产品编码           | 产品编码                                                 |
-| │　├─ productName    | string   | 产品名称           | 产品名称                                                 |
-| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                                 |
-| │　├─ maskCardNumber | string   | 脱敏卡号           | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
-| │　├─ cardModel      | string   | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式             |
-| ├─ note              | string   | 备注               | 备注 (必填)                                              |
-| ├─ status            | string   | 状态               | 订单状态                                                 |
-| ├─ failureReason     | string   | 失败原因           | 失败原因 (必填)                                          |
-| └─ orderType         | string   | 订单类型           | 订单类型                                                 |
-| └─ createdOn         | DateTime | 创建时间           | 创建时间                                                 |
-| └─ modifiedOn        | DateTime | 修改时间           | 修改时间                                                 |
-| └─ completedOn       | DateTime | 完成时间           | 完成时间                                                 |
-| └─ customerOrderNo   | string   | 商户订单号         | 商户请求订单号（确保唯一性）(可选)                       |
+| 参数名称                | 参数类型     | 中文名称      | 参数描述                                   |
+|---------------------|----------|-----------|----------------------------------------|
+| responseId          | string   | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题                |
+| hasError            | boolean  | 是否有错误     | 是否有错误发生                                |
+| errorCode           | string   | 错误码       | 错误代码                                   |
+| errorMessage        | string   | 错误信息      | 错误信息                                   |
+| data                | object   | 数据        |                                        |
+| ├─ orderNo          | string   | 订单编号      | 订单编号 (必填)                              |
+| ├─ cardInfo         | object   | 卡信息       |                                        |
+| │　├─ cardId         | string   | 卡ID       | 卡ID                                    |
+| │　├─ productCode    | string   | 产品编码      | 产品编码                                   |
+| │　├─ productName    | string   | 产品名称      | 产品名称                                   |
+| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                   |
+| │　├─ maskCardNumber | string   | 脱敏卡号      | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
+| │　├─ cardModel      | string   | 卡模式       | Standard=标准模式, ShareBalance=共享余额模式     |
+| ├─ note             | string   | 备注        | 备注 (必填)                                |
+| ├─ status           | string   | 状态        | 订单状态                                   |
+| ├─ failureReason    | string   | 失败原因      | 失败原因 (必填)                              |
+| └─ orderType        | string   | 订单类型      | 订单类型                                   |
+| └─ createdOn        | DateTime | 创建时间      | 创建时间                                   |
+| └─ modifiedOn       | DateTime | 修改时间      | 修改时间                                   |
+| └─ completedOn      | DateTime | 完成时间      | 完成时间                                   |
+| └─ customerOrderNo  | string   | 商户订单号     | 商户请求订单号（确保唯一性）(可选)                     |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -673,12 +673,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/unblock" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
-|-----------------|----------|----------|----------|------------|------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|--------|------|-------|-----------------------|
+| Authorization   | header | string | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string | 是    | 内容类型  | application/json      |
+| cardId          | body   | string | 是    | 卡ID   | 卡ID (必填)              |
+| customerOrderNo | body   | string | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
 
 ### 请求示例
 
@@ -729,42 +729,42 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/cancel" \
 
 ### 响应参数说明
 
-| 参数名称             | 参数类型 | 中文名称           | 参数描述                                                 |
-|----------------------|----------|--------------------|----------------------------------------------------------|
-| responseId           | string   | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题             |
-| hasError             | boolean  | 是否有错误         | 是否有错误发生                                           |
-| errorCode            | string   | 错误码             | 错误代码                                                 |
-| errorMessage         | string   | 错误信息           | 错误信息                                                 |
-| data                 | object   | 数据               |                                                          |
-| ├─ orderNo           | string   | 订单编号           | 订单编号                                                 |
-| ├─ cardInfo          | object   | 卡信息             |                                                          |
-| │　├─ cardId         | string   | 卡ID               | 卡ID                                                     |
-| │　├─ productCode    | string   | 产品编码           | 产品编码                                                 |
-| │　├─ productName    | string   | 产品名称           | 产品名称                                                 |
-| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                                 |
-| │　├─ maskCardNumber | string   | 脱敏卡号           | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
-| │　├─ cardModel      | string   | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式             |
-| ├─ fee               | decimal  | 销卡手续费         | 销卡手续费                                               |
-| ├─ chargeMethodType  | string   | 收费方式           | 收费方式                                                 |
-| ├─ fixedValue        | decimal  | 固定金额           | 固定金额                                                 |
-| ├─ percent           | decimal  | 百分比             | 百分比。小数格式                                         |
-| ├─ settleAmount      | decimal  | 结算金额           | 结算金额                                                 |
-| ├─ note              | string   | 备注               | 备注 (必填)                                              |
-| └─ status            | string   | 状态               | 订单状态                                                 |
-| └─ settleStatus      | string   | 结算状态           | 结算状态                                                 |
-| └─ orderType         | string   | 订单类型           | 订单类型                                                 |
-| └─ failureReason     | string   | 失败原因           | 失败原因                                                 |
-| └─ createdOn         | DateTime | 创建时间           | 创建时间                                                 |
-| └─ completedOn       | DateTime | 完成时间           | 完成时间                                                 |
-| └─ customerOrderNo   | string   | 商户订单号         | 商户请求订单号（确保唯一性）(可选)                       |
+| 参数名称                | 参数类型     | 中文名称      | 参数描述                                   |
+|---------------------|----------|-----------|----------------------------------------|
+| responseId          | string   | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题                |
+| hasError            | boolean  | 是否有错误     | 是否有错误发生                                |
+| errorCode           | string   | 错误码       | 错误代码                                   |
+| errorMessage        | string   | 错误信息      | 错误信息                                   |
+| data                | object   | 数据        |                                        |
+| ├─ orderNo          | string   | 订单编号      | 订单编号                                   |
+| ├─ cardInfo         | object   | 卡信息       |                                        |
+| │　├─ cardId         | string   | 卡ID       | 卡ID                                    |
+| │　├─ productCode    | string   | 产品编码      | 产品编码                                   |
+| │　├─ productName    | string   | 产品名称      | 产品名称                                   |
+| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                   |
+| │　├─ maskCardNumber | string   | 脱敏卡号      | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
+| │　├─ cardModel      | string   | 卡模式       | Standard=标准模式, ShareBalance=共享余额模式     |
+| ├─ fee              | decimal  | 销卡手续费     | 销卡手续费                                  |
+| ├─ chargeMethodType | string   | 收费方式      | 收费方式                                   |
+| ├─ fixedValue       | decimal  | 固定金额      | 固定金额                                   |
+| ├─ percent          | decimal  | 百分比       | 百分比。小数格式                               |
+| ├─ settleAmount     | decimal  | 结算金额      | 结算金额                                   |
+| ├─ note             | string   | 备注        | 备注 (必填)                                |
+| └─ status           | string   | 状态        | 订单状态                                   |
+| └─ settleStatus     | string   | 结算状态      | 结算状态                                   |
+| └─ orderType        | string   | 订单类型      | 订单类型                                   |
+| └─ failureReason    | string   | 失败原因      | 失败原因                                   |
+| └─ createdOn        | DateTime | 创建时间      | 创建时间                                   |
+| └─ completedOn      | DateTime | 完成时间      | 完成时间                                   |
+| └─ customerOrderNo  | string   | 商户订单号     | 商户请求订单号（确保唯一性）(可选)                     |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -776,13 +776,13 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/cancel" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
-|-----------------|----------|----------|----------|------------|------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
-| withdrawAmount  | body     | decimal  | 否       | 转出金额   | 转出金额                           |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称            | 参数位置   | 参数类型    | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|---------|------|-------|-----------------------|
+| Authorization   | header | string  | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string  | 是    | 内容类型  | application/json      |
+| cardId          | body   | string  | 是    | 卡ID   | 卡ID (必填)              |
+| withdrawAmount  | body   | decimal | 否    | 转出金额  | 转出金额                  |
+| customerOrderNo | body   | string  | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
 
 ### 请求示例
 
@@ -823,32 +823,32 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/withdraw" \
 
 ### 响应参数说明
 
-| 参数名称           | 参数类型 | 中文名称   | 参数描述                                     |
-|--------------------|----------|------------|----------------------------------------------|
-| responseId         | string   | 响应ID     | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError           | boolean  | 是否有错误 | 是否有错误发生                               |
-| errorCode          | string   | 错误码     | 错误代码                                     |
-| errorMessage       | string   | 错误信息   | 错误信息                                     |
-| data               | object   | 数据       |                                              |
-| ├─ orderNo         | string   | 订单编号   | 订单编号 (必填)                              |
-| ├─ cardId          | string   | 卡ID       | 卡ID (必填)                                  |
-| ├─ withdrawAmount  | decimal  | 转出金额   | 转出金额                                     |
-| ├─ withdrawFee     | decimal  | 转出手续费 | 转出手续费                                   |
-| ├─ totalAmount     | decimal  | 订单总金额 | 总金额（转出金额+手续费）                    |
-| ├─ status          | string   | 状态       | 订单状态                                     |
-| └─ orderType       | string   | 订单类型   | 订单类型                                     |
-| └─ createdOn       | DateTime | 创建时间   | 创建时间                                     |
-| └─ modifiedOn      | DateTime | 修改时间   | 修改时间                                     |
-| └─ completedOn     | DateTime | 完成时间   | 完成时间                                     |
-| └─ customerOrderNo | string   | 商户订单号 | 商户请求订单号 (可选)                        |
+| 参数名称               | 参数类型     | 中文名称  | 参数描述                    |
+|--------------------|----------|-------|-------------------------|
+| responseId         | string   | 响应ID  | 响应Id，需调用方保存，用于排查调用遇到的问题 |
+| hasError           | boolean  | 是否有错误 | 是否有错误发生                 |
+| errorCode          | string   | 错误码   | 错误代码                    |
+| errorMessage       | string   | 错误信息  | 错误信息                    |
+| data               | object   | 数据    |                         |
+| ├─ orderNo         | string   | 订单编号  | 订单编号 (必填)               |
+| ├─ cardId          | string   | 卡ID   | 卡ID (必填)                |
+| ├─ withdrawAmount  | decimal  | 转出金额  | 转出金额                    |
+| ├─ withdrawFee     | decimal  | 转出手续费 | 转出手续费                   |
+| ├─ totalAmount     | decimal  | 订单总金额 | 总金额（转出金额+手续费）           |
+| ├─ status          | string   | 状态    | 订单状态                    |
+| └─ orderType       | string   | 订单类型  | 订单类型                    |
+| └─ createdOn       | DateTime | 创建时间  | 创建时间                    |
+| └─ modifiedOn      | DateTime | 修改时间  | 修改时间                    |
+| └─ completedOn     | DateTime | 完成时间  | 完成时间                    |
+| └─ customerOrderNo | string   | 商户订单号 | 商户请求订单号 (可选)            |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -864,12 +864,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/withdraw" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                                                                                                                                         |
-|-----------------|----------|----------|----------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}                                                                                                                            |
-| OrderType       | query    | string   | 否       | 订单类型   | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CardWithdraw 卡余额转出订单 |
-| OrderNo         | query    | string   | 否       | 订单号     | 订单号 (可选)                                                                                                                                    |
-| CustomerOrderNo | query    | string   | 否       | 商户订单号 | 商户订单号 (可选)                                                                                                                                |
+| 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                                                                                                       |
+|-----------------|--------|--------|------|-------|------------------------------------------------------------------------------------------------------------|
+| Authorization   | header | string | 是    | 授权头   | Bearer {access_token}                                                                                      |
+| OrderType       | query  | string | 否    | 订单类型  | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnBlock 卡解冻订单、CardWithdraw 卡余额转出订单 |
+| OrderNo         | query  | string | 否    | 订单号   | 订单号 (可选)                                                                                                   |
+| CustomerOrderNo | query  | string | 否    | 商户订单号 | 商户订单号 (可选)                                                                                                 |
 
 ### 请求示例
 
@@ -892,17 +892,17 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/standard?OrderType=App
 
 ### 响应参数说明
 
-| 参数名称 | 参数类型 | 中文名称 | 参数描述       |
-|----------|----------|----------|----------------|
-| data     |          | 数据     | 标准卡订单详情 |
+| 参数名称 | 参数类型 | 中文名称 | 参数描述    |
+|------|------|------|---------|
+| data |      | 数据   | 标准卡订单详情 |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -916,16 +916,16 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/standard?OrderType=App
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称           | 参数描述                                  |
-|-----------------|----------|----------|----------|--------------------|-------------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头             | Bearer {access_token}                     |
-| Content-Type    | header   | string   | 是       | 内容类型           | application/json                          |
-| productCode     | body     | string   | 是       | 产品编码           | 卡产品编码                                |
-| cardCurrency    | body     | string   | 是       | 支持的结算币种列表 | 币种                                      |
-| maxAuthAmount   | body     | decimal  | 是       | 单笔限额           | 单笔限额                                  |
-| maxCreditAmount | body     | decimal  | 否       | 总额度上限         | 单卡消费总额度,可以为空，为空表示不限额度 |
-| cardAlias       | body     | string   | 否       | 卡别名             | 卡别名                                    |
-| customerOrderNo | body     | string   | 否       | 商户订单号         | 商户请求订单号（确保唯一性） (可选)       |
+| 参数名称            | 参数位置   | 参数类型    | 是否必填 | 中文名称      | 参数描述                  |
+|-----------------|--------|---------|------|-----------|-----------------------|
+| Authorization   | header | string  | 是    | 授权头       | Bearer {access_token} |
+| Content-Type    | header | string  | 是    | 内容类型      | application/json      |
+| productCode     | body   | string  | 是    | 产品编码      | 卡产品编码                 |
+| cardCurrency    | body   | string  | 是    | 支持的结算币种列表 | 币种                    |
+| maxAuthAmount   | body   | decimal | 是    | 单笔限额      | 单笔限额                  |
+| maxCreditAmount | body   | decimal | 否    | 总额度上限     | 单卡消费总额度,可以为空，为空表示不限额度 |
+| cardAlias       | body   | string  | 否    | 卡别名       | 卡别名                   |
+| customerOrderNo | body   | string  | 否    | 商户订单号     | 商户请求订单号（确保唯一性） (可选)   |
 
 ### 请求示例
 
@@ -979,43 +979,43 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/apply" \
 
 ### 响应参数说明
 
-| 参数名称           | 参数类型      | 中文名称           | 参数描述                                     |
-|--------------------|---------------|--------------------|----------------------------------------------|
-| responseId         | string        | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError           | boolean       | 是否有错误         | 是否有错误发生                               |
-| errorCode          | string        | 错误码             | 错误代码                                     |
-| errorMessage       | string        | 错误信息           | 错误信息                                     |
-| data               | object        | 数据               |                                              |
-| ├─ orderNo         | string        | 订单编号           | 订单编号                                     |
-| ├─ productInfo     | object        | 产品信息           |                                              |
-| │　├─ productCode  | string        | 产品编码           | 产品编码 (必填)                              |
-| │　├─ productName  | string        | 产品名称           | 产品名称 (必填)                              |
-| │　├─ cardModel    | string        | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式 |
-| │　├─ cardCurrency | string        | 支持的结算币种列表 | 卡结算币种                                   |
-| ├─ quantity        | integer       | 申请数量           | 开卡数                                       |
-| ├─ maxAuthAmount   | decimal       | 单笔限额           | 单笔限额                                     |
-| ├─ maxCreditAmount | decimal       | 总额度上限         | 单卡消费总额度,可以为空，为空表示不限额度    |
-| ├─ totalAmount     | decimal       | 订单总金额         | 总交易金额                                   |
-| └─ transAmount     | decimal       | transAmount        | 交易金额                                     |
-| └─ transFee        | decimal       | 手续费             | 开卡手续费(交易手续费)                       |
-| └─ openedQty       | integer       | 已开卡数           | 已开卡数                                     |
-| └─ cardInfos       | array[object] | 已开卡信息         | 已开卡信息                                   |
-| └─ note            | string        | 备注               | 备注                                         |
-| └─ status          | string        | 状态               | 订单状态                                     |
-| Failure-处理失败   |               |                    |                                              |
-| ├─ orderType       | string        | 订单类型           | 订单类型                                     |
-| ├─ createdOn       | DateTime      | 创建时间           | 创建时间                                     |
-| ├─ modifiedOn      | DateTime      | 修改时间           | 修改时间                                     |
-| └─ completedOn     | DateTime      | 完成时间           | 完成时间                                     |
-| └─ customerOrderNo | string        | 商户订单号         | 客户订单号                                   |
+| 参数名称               | 参数类型          | 中文名称        | 参数描述                               |
+|--------------------|---------------|-------------|------------------------------------|
+| responseId         | string        | 响应ID        | 响应Id，需调用方保存，用于排查调用遇到的问题            |
+| hasError           | boolean       | 是否有错误       | 是否有错误发生                            |
+| errorCode          | string        | 错误码         | 错误代码                               |
+| errorMessage       | string        | 错误信息        | 错误信息                               |
+| data               | object        | 数据          |                                    |
+| ├─ orderNo         | string        | 订单编号        | 订单编号                               |
+| ├─ productInfo     | object        | 产品信息        |                                    |
+| │　├─ productCode   | string        | 产品编码        | 产品编码 (必填)                          |
+| │　├─ productName   | string        | 产品名称        | 产品名称 (必填)                          |
+| │　├─ cardModel     | string        | 卡模式         | Standard=标准模式, ShareBalance=共享余额模式 |
+| │　├─ cardCurrency  | string        | 支持的结算币种列表   | 卡结算币种                              |
+| ├─ quantity        | integer       | 申请数量        | 开卡数                                |
+| ├─ maxAuthAmount   | decimal       | 单笔限额        | 单笔限额                               |
+| ├─ maxCreditAmount | decimal       | 总额度上限       | 单卡消费总额度,可以为空，为空表示不限额度              |
+| ├─ totalAmount     | decimal       | 订单总金额       | 总交易金额                              |
+| └─ transAmount     | decimal       | transAmount | 交易金额                               |
+| └─ transFee        | decimal       | 手续费         | 开卡手续费(交易手续费)                       |
+| └─ openedQty       | integer       | 已开卡数        | 已开卡数                               |
+| └─ cardInfos       | array[object] | 已开卡信息       | 已开卡信息                              |
+| └─ note            | string        | 备注          | 备注                                 |
+| └─ status          | string        | 状态          | 订单状态                               |
+| Failure-处理失败       |               |             |                                    |
+| ├─ orderType       | string        | 订单类型        | 订单类型                               |
+| ├─ createdOn       | DateTime      | 创建时间        | 创建时间                               |
+| ├─ modifiedOn      | DateTime      | 修改时间        | 修改时间                               |
+| └─ completedOn     | DateTime      | 完成时间        | 完成时间                               |
+| └─ customerOrderNo | string        | 商户订单号       | 客户订单号                              |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1027,14 +1027,14 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/apply" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                                |
-|-----------------|----------|----------|----------|------------|-----------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}                   |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                        |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                             |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选)      |
-| maxAuthAmount   | body     | decimal  | 是       | 单笔限额   | 共享模式： 单笔限额                     |
-| maxCreditAmount | body     | decimal  | 否       | 总额度上限 | 共享模式: 总额度。额度为空表示 不限制。 |
+| 参数名称            | 参数位置   | 参数类型    | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|---------|------|-------|-----------------------|
+| Authorization   | header | string  | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string  | 是    | 内容类型  | application/json      |
+| cardId          | body   | string  | 是    | 卡ID   | 卡ID (必填)              |
+| customerOrderNo | body   | string  | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
+| maxAuthAmount   | body   | decimal | 是    | 单笔限额  | 共享模式： 单笔限额            |
+| maxCreditAmount | body   | decimal | 否    | 总额度上限 | 共享模式: 总额度。额度为空表示 不限制。 |
 
 ### 请求示例
 
@@ -1075,31 +1075,31 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/creditLi
 
 ### 响应参数说明
 
-| 参数名称           | 参数类型 | 中文名称   | 参数描述                                     |
-|--------------------|----------|------------|----------------------------------------------|
-| responseId         | string   | 响应ID     | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError           | boolean  | 是否有错误 | 是否有错误发生                               |
-| errorCode          | string   | 错误码     | 错误代码                                     |
-| errorMessage       | string   | 错误信息   | 错误信息                                     |
-| data               | object   | 数据       |                                              |
-| ├─ orderNo         | string   | 订单编号   | 共享卡限额修改订单编号                       |
-| ├─ cardId          | string   | 卡ID       | 卡ID                                         |
-| ├─ maxAuthAmount   | decimal  | 单笔限额   | 单笔限额                                     |
-| ├─ maxCreditAmount | decimal  | 总额度上限 | 总限额，为空表示不限制                       |
-| ├─ status          | string   | 状态       | 卡限额修改状态                               |
-| └─ orderType       | string   | 订单类型   | 订单类型                                     |
-| └─ failureReason   | string   | 失败原因   | 失败原因                                     |
-| └─ createdOn       | DateTime | 创建时间   | 创建时间                                     |
-| └─ completedOn     | DateTime | 完成时间   | 完成时间                                     |
-| └─ customerOrderNo | string   | 商户订单号 | 客户订单号                                   |
+| 参数名称               | 参数类型     | 中文名称  | 参数描述                    |
+|--------------------|----------|-------|-------------------------|
+| responseId         | string   | 响应ID  | 响应Id，需调用方保存，用于排查调用遇到的问题 |
+| hasError           | boolean  | 是否有错误 | 是否有错误发生                 |
+| errorCode          | string   | 错误码   | 错误代码                    |
+| errorMessage       | string   | 错误信息  | 错误信息                    |
+| data               | object   | 数据    |                         |
+| ├─ orderNo         | string   | 订单编号  | 共享卡限额修改订单编号             |
+| ├─ cardId          | string   | 卡ID   | 卡ID                     |
+| ├─ maxAuthAmount   | decimal  | 单笔限额  | 单笔限额                    |
+| ├─ maxCreditAmount | decimal  | 总额度上限 | 总限额，为空表示不限制             |
+| ├─ status          | string   | 状态    | 卡限额修改状态                 |
+| └─ orderType       | string   | 订单类型  | 订单类型                    |
+| └─ failureReason   | string   | 失败原因  | 失败原因                    |
+| └─ createdOn       | DateTime | 创建时间  | 创建时间                    |
+| └─ completedOn     | DateTime | 完成时间  | 完成时间                    |
+| └─ customerOrderNo | string   | 商户订单号 | 客户订单号                   |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1111,12 +1111,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/creditLi
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
-|-----------------|----------|----------|----------|------------|------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|--------|------|-------|-----------------------|
+| Authorization   | header | string | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string | 是    | 内容类型  | application/json      |
+| cardId          | body   | string | 是    | 卡ID   | 卡ID (必填)              |
+| customerOrderNo | body   | string | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
 
 ### 请求示例
 
@@ -1162,38 +1162,38 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/block" \
 
 ### 响应参数说明
 
-| 参数名称             | 参数类型 | 中文名称           | 参数描述                                                 |
-|----------------------|----------|--------------------|----------------------------------------------------------|
-| responseId           | string   | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题             |
-| hasError             | boolean  | 是否有错误         | 是否有错误发生                                           |
-| errorCode            | string   | 错误码             | 错误代码                                                 |
-| errorMessage         | string   | 错误信息           | 错误信息                                                 |
-| data                 | object   | 数据               |                                                          |
-| ├─ orderNo           | string   | 订单编号           | 订单编号                                                 |
-| ├─ cardInfo          | object   | 卡信息             |                                                          |
-| │　├─ cardId         | string   | 卡ID               | 卡ID                                                     |
-| │　├─ productCode    | string   | 产品编码           | 产品编码                                                 |
-| │　├─ productName    | string   | 产品名称           | 产品名称                                                 |
-| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                                 |
-| │　├─ maskCardNumber | string   | 脱敏卡号           | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
-| │　├─ cardModel      | string   | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式             |
-| ├─ note              | string   | 备注               | 备注                                                     |
-| ├─ isBlocked         | boolean  | 是否渠道已冻结     | 是否渠道已冻结                                           |
-| ├─ status            | string   | 状态               | 订单状态                                                 |
-| ├─ failureReason     | string   | 失败原因           | 失败原因                                                 |
-| └─ orderType         | string   | 订单类型           | 订单类型                                                 |
-| └─ createdOn         | DateTime | 创建时间           | 创建时间                                                 |
-| └─ modifiedOn        | DateTime | 修改时间           | 修改时间                                                 |
-| └─ completedOn       | DateTime | 完成时间           | 完成时间                                                 |
-| └─ customerOrderNo   | string   | 商户订单号         | 客户请求订单号（确保唯一性）                             |
+| 参数名称                | 参数类型     | 中文名称      | 参数描述                                   |
+|---------------------|----------|-----------|----------------------------------------|
+| responseId          | string   | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题                |
+| hasError            | boolean  | 是否有错误     | 是否有错误发生                                |
+| errorCode           | string   | 错误码       | 错误代码                                   |
+| errorMessage        | string   | 错误信息      | 错误信息                                   |
+| data                | object   | 数据        |                                        |
+| ├─ orderNo          | string   | 订单编号      | 订单编号                                   |
+| ├─ cardInfo         | object   | 卡信息       |                                        |
+| │　├─ cardId         | string   | 卡ID       | 卡ID                                    |
+| │　├─ productCode    | string   | 产品编码      | 产品编码                                   |
+| │　├─ productName    | string   | 产品名称      | 产品名称                                   |
+| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                   |
+| │　├─ maskCardNumber | string   | 脱敏卡号      | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
+| │　├─ cardModel      | string   | 卡模式       | Standard=标准模式, ShareBalance=共享余额模式     |
+| ├─ note             | string   | 备注        | 备注                                     |
+| ├─ isBlocked        | boolean  | 是否渠道已冻结   | 是否渠道已冻结                                |
+| ├─ status           | string   | 状态        | 订单状态                                   |
+| ├─ failureReason    | string   | 失败原因      | 失败原因                                   |
+| └─ orderType        | string   | 订单类型      | 订单类型                                   |
+| └─ createdOn        | DateTime | 创建时间      | 创建时间                                   |
+| └─ modifiedOn       | DateTime | 修改时间      | 修改时间                                   |
+| └─ completedOn      | DateTime | 完成时间      | 完成时间                                   |
+| └─ customerOrderNo  | string   | 商户订单号     | 客户请求订单号（确保唯一性）                         |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1205,12 +1205,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/block" \
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
-|-----------------|----------|----------|----------|------------|------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|--------|------|-------|-----------------------|
+| Authorization   | header | string | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string | 是    | 内容类型  | application/json      |
+| cardId          | body   | string | 是    | 卡ID   | 卡ID (必填)              |
+| customerOrderNo | body   | string | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
 
 ### 请求示例
 
@@ -1255,37 +1255,37 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/unblock"
 
 ### 响应参数说明
 
-| 参数名称             | 参数类型 | 中文名称           | 参数描述                                                 |
-|----------------------|----------|--------------------|----------------------------------------------------------|
-| responseId           | string   | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题             |
-| hasError             | boolean  | 是否有错误         | 是否有错误发生                                           |
-| errorCode            | string   | 错误码             | 错误代码                                                 |
-| errorMessage         | string   | 错误信息           | 错误信息                                                 |
-| data                 | object   | 数据               |                                                          |
-| ├─ orderNo           | string   | 订单编号           | 订单编号                                                 |
-| ├─ cardInfo          | object   | 卡信息             |                                                          |
-| │　├─ cardId         | string   | 卡ID               | 卡ID                                                     |
-| │　├─ productCode    | string   | 产品编码           | 产品编码                                                 |
-| │　├─ productName    | string   | 产品名称           | 产品名称                                                 |
-| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                                 |
-| │　├─ maskCardNumber | string   | 脱敏卡号           | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
-| │　├─ cardModel      | string   | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式             |
-| ├─ note              | string   | 备注               | 备注                                                     |
-| ├─ status            | string   | 状态               | 订单状态                                                 |
-| ├─ failureReason     | string   | 失败原因           | 失败原因                                                 |
-| └─ orderType         | string   | 订单类型           | 订单类型                                                 |
-| └─ createdOn         | DateTime | 创建时间           | 创建时间                                                 |
-| └─ modifiedOn        | DateTime | 修改时间           | 修改时间                                                 |
-| └─ completedOn       | DateTime | 完成时间           | 完成时间                                                 |
-| └─ customerOrderNo   | string   | 商户订单号         | 客户请求订单号（确保唯一性）                             |
+| 参数名称                | 参数类型     | 中文名称      | 参数描述                                   |
+|---------------------|----------|-----------|----------------------------------------|
+| responseId          | string   | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题                |
+| hasError            | boolean  | 是否有错误     | 是否有错误发生                                |
+| errorCode           | string   | 错误码       | 错误代码                                   |
+| errorMessage        | string   | 错误信息      | 错误信息                                   |
+| data                | object   | 数据        |                                        |
+| ├─ orderNo          | string   | 订单编号      | 订单编号                                   |
+| ├─ cardInfo         | object   | 卡信息       |                                        |
+| │　├─ cardId         | string   | 卡ID       | 卡ID                                    |
+| │　├─ productCode    | string   | 产品编码      | 产品编码                                   |
+| │　├─ productName    | string   | 产品名称      | 产品名称                                   |
+| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                   |
+| │　├─ maskCardNumber | string   | 脱敏卡号      | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
+| │　├─ cardModel      | string   | 卡模式       | Standard=标准模式, ShareBalance=共享余额模式     |
+| ├─ note             | string   | 备注        | 备注                                     |
+| ├─ status           | string   | 状态        | 订单状态                                   |
+| ├─ failureReason    | string   | 失败原因      | 失败原因                                   |
+| └─ orderType        | string   | 订单类型      | 订单类型                                   |
+| └─ createdOn        | DateTime | 创建时间      | 创建时间                                   |
+| └─ modifiedOn       | DateTime | 修改时间      | 修改时间                                   |
+| └─ completedOn      | DateTime | 完成时间      | 完成时间                                   |
+| └─ customerOrderNo  | string   | 商户订单号     | 客户请求订单号（确保唯一性）                         |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1297,12 +1297,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/unblock"
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                           |
-|-----------------|----------|----------|----------|------------|------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}              |
-| Content-Type    | header   | string   | 是       | 内容类型   | application/json                   |
-| cardId          | body     | string   | 是       | 卡ID       | 卡ID (必填)                        |
-| customerOrderNo | body     | string   | 否       | 商户订单号 | 商户请求订单号（确保唯一性）(可选) |
+| 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                  |
+|-----------------|--------|--------|------|-------|-----------------------|
+| Authorization   | header | string | 是    | 授权头   | Bearer {access_token} |
+| Content-Type    | header | string | 是    | 内容类型  | application/json      |
+| cardId          | body   | string | 是    | 卡ID   | 卡ID (必填)              |
+| customerOrderNo | body   | string | 否    | 商户订单号 | 商户请求订单号（确保唯一性）(可选)    |
 
 ### 请求示例
 
@@ -1351,41 +1351,41 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/cancel" 
 
 ### 响应参数说明
 
-| 参数名称             | 参数类型 | 中文名称           | 参数描述                                                 |
-|----------------------|----------|--------------------|----------------------------------------------------------|
-| responseId           | string   | 响应ID             | 响应Id，需调用方保存，用于排查调用遇到的问题             |
-| hasError             | boolean  | 是否有错误         | 是否有错误发生                                           |
-| errorCode            | string   | 错误码             | 错误代码                                                 |
-| errorMessage         | string   | 错误信息           | 错误信息                                                 |
-| data                 | object   | 数据               |                                                          |
-| ├─ orderNo           | string   | 订单编号           | 订单编号                                                 |
-| ├─ cardInfo          | object   | 卡信息             |                                                          |
-| │　├─ cardId         | string   | 卡ID               | 卡ID                                                     |
-| │　├─ productCode    | string   | 产品编码           | 产品编码                                                 |
-| │　├─ productName    | string   | 产品名称           | 产品名称                                                 |
-| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                                 |
-| │　├─ maskCardNumber | string   | 脱敏卡号           | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
-| │　├─ cardModel      | string   | 卡模式             | Standard=标准模式, ShareBalance=共享余额模式             |
-| ├─ fee               | decimal  | 销卡手续费         | 销卡手续费                                               |
-| ├─ chargeMethodType  | string   | 收费方式           | 收费方式                                                 |
-| ├─ fixedValue        | decimal  | 固定金额           | 固定金额                                                 |
-| ├─ percent           | decimal  | 百分比             | 百分比。小数格式                                         |
-| ├─ note              | string   | 备注               | 备注                                                     |
-| └─ status            | string   | 状态               | 订单状态                                                 |
-| └─ orderType         | string   | 订单类型           | 订单类型                                                 |
-| └─ settleStatus      | string   | 结算状态           | 结算状态                                                 |
-| └─ failureReason     | string   | 失败原因           | 失败原因                                                 |
-| └─ createdOn         | DateTime | 创建时间           | 创建时间                                                 |
-| └─ completedOn       | DateTime | 完成时间           | 完成时间                                                 |
-| └─ customerOrderNo   | string   | 商户订单号         | 客户请求订单号（确保唯一性）                             |
+| 参数名称                | 参数类型     | 中文名称      | 参数描述                                   |
+|---------------------|----------|-----------|----------------------------------------|
+| responseId          | string   | 响应ID      | 响应Id，需调用方保存，用于排查调用遇到的问题                |
+| hasError            | boolean  | 是否有错误     | 是否有错误发生                                |
+| errorCode           | string   | 错误码       | 错误代码                                   |
+| errorMessage        | string   | 错误信息      | 错误信息                                   |
+| data                | object   | 数据        |                                        |
+| ├─ orderNo          | string   | 订单编号      | 订单编号                                   |
+| ├─ cardInfo         | object   | 卡信息       |                                        |
+| │　├─ cardId         | string   | 卡ID       | 卡ID                                    |
+| │　├─ productCode    | string   | 产品编码      | 产品编码                                   |
+| │　├─ productName    | string   | 产品名称      | 产品名称                                   |
+| │　├─ cardCurrency   | string   | 支持的结算币种列表 | 结算币种                                   |
+| │　├─ maskCardNumber | string   | 脱敏卡号      | 脱敏卡号： 卡号前6位 + 后4位非脱敏。例如： 504232***4234 |
+| │　├─ cardModel      | string   | 卡模式       | Standard=标准模式, ShareBalance=共享余额模式     |
+| ├─ fee              | decimal  | 销卡手续费     | 销卡手续费                                  |
+| ├─ chargeMethodType | string   | 收费方式      | 收费方式                                   |
+| ├─ fixedValue       | decimal  | 固定金额      | 固定金额                                   |
+| ├─ percent          | decimal  | 百分比       | 百分比。小数格式                               |
+| ├─ note             | string   | 备注        | 备注                                     |
+| └─ status           | string   | 状态        | 订单状态                                   |
+| └─ orderType        | string   | 订单类型      | 订单类型                                   |
+| └─ settleStatus     | string   | 结算状态      | 结算状态                                   |
+| └─ failureReason    | string   | 失败原因      | 失败原因                                   |
+| └─ createdOn        | DateTime | 创建时间      | 创建时间                                   |
+| └─ completedOn      | DateTime | 完成时间      | 完成时间                                   |
+| └─ customerOrderNo  | string   | 商户订单号     | 客户请求订单号（确保唯一性）                         |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1401,12 +1401,12 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/cancel" 
 
 ### 请求参数
 
-| 参数名称        | 参数位置 | 参数类型 | 是否必填 | 中文名称   | 参数描述                                                                                                                             |
-|-----------------|----------|----------|----------|------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Authorization   | header   | string   | 是       | 授权头     | Bearer {access_token}                                                                                                                |
-| OrderType       | query    | string   | 否       | 订单类型   | 订单类型：ApplyCard（开卡订单）、CreditLimit（调整限额）、CardCancel（销卡订单）、CardBlock（卡冻结订单）、CardUnBlock（卡解冻订单） |
-| OrderNo         | query    | string   | 否       | 订单号     | 订单号                                                                                                                               |
-| CustomerOrderNo | query    | string   | 否       | 商户订单号 | 商户订单号                                                                                                                           |
+| 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                                                                                        |
+|-----------------|--------|--------|------|-------|---------------------------------------------------------------------------------------------|
+| Authorization   | header | string | 是    | 授权头   | Bearer {access_token}                                                                       |
+| OrderType       | query  | string | 否    | 订单类型  | 订单类型：ApplyCard（开卡订单）、CreditLimit（调整限额）、CardCancel（销卡订单）、CardBlock（卡冻结订单）、CardUnBlock（卡解冻订单） |
+| OrderNo         | query  | string | 否    | 订单号   | 订单号                                                                                         |
+| CustomerOrderNo | query  | string | 否    | 商户订单号 | 商户订单号                                                                                       |
 
 ### 请求示例
 
@@ -1429,17 +1429,17 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/sharebalance?OrderType
 
 ### 响应参数说明
 
-| 参数名称 | 参数类型 | 中文名称 | 参数描述         |
-|----------|----------|----------|------------------|
-| data     |          | 数据     | 共享模式订单详情 |
+| 参数名称 | 参数类型 | 中文名称 | 参数描述     |
+|------|------|------|----------|
+| data |      | 数据   | 共享模式订单详情 |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1453,9 +1453,9 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/sharebalance?OrderType
 
 ### 请求参数
 
-| 参数名称      | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
-|---------------|----------|----------|----------|----------|-----------------------|
-| Authorization | header   | string   | 是       | 授权头   | Bearer {access_token} |
+| 参数名称          | 参数位置   | 参数类型   | 是否必填 | 中文名称 | 参数描述                  |
+|---------------|--------|--------|------|------|-----------------------|
+| Authorization | header | string | 是    | 授权头  | Bearer {access_token} |
 
 ### 请求示例
 
@@ -1483,23 +1483,23 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts" \
 
 ### 响应参数说明
 
-| 参数名称     | 参数类型 | 中文名称   | 参数描述                                     |
-|--------------|----------|------------|----------------------------------------------|
-| responseId   | string   | 响应ID     | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError     | boolean  | 是否有错误 | 是否有错误发生                               |
-| errorCode    | string   | 错误码     | 错误代码                                     |
-| errorMessage | string   | 错误信息   | 错误信息                                     |
-| data         | array    | 数据       |                                              |
-| ├─ currency  | string   | 货币类型   | 币种 (可选)                                  |
-| └─ amount    | decimal  | 金额       | 金额值                                       |
+| 参数名称         | 参数类型    | 中文名称  | 参数描述                    |
+|--------------|---------|-------|-------------------------|
+| responseId   | string  | 响应ID  | 响应Id，需调用方保存，用于排查调用遇到的问题 |
+| hasError     | boolean | 是否有错误 | 是否有错误发生                 |
+| errorCode    | string  | 错误码   | 错误代码                    |
+| errorMessage | string  | 错误信息  | 错误信息                    |
+| data         | array   | 数据    |                         |
+| ├─ currency  | string  | 货币类型  | 币种 (可选)                 |
+| └─ amount    | decimal | 金额    | 金额值                     |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1511,14 +1511,14 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts" \
 
 ### 请求参数
 
-| 参数名称            | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
-|---------------------|----------|----------|----------|----------|-----------------------|
-| Authorization       | header   | string   | 是       | 授权头   | Bearer {access_token} |
-| CardId              | query    | string   | 否       | 卡片ID   | 卡ID (可选)           |
-| TransactionDateFrom | query    | DateTime | 否       | 开始日期 | 开始交易日期          |
-| TransactionDateTo   | query    | DateTime | 否       | 结束日期 | 结束交易日期          |
-| PageNumber          | query    | integer  | 否       | 页码     | 当前页                |
-| PageSize            | query    | integer  | 否       | 页大小   | 分页大小              |
+| 参数名称                | 参数位置   | 参数类型     | 是否必填 | 中文名称 | 参数描述                  |
+|---------------------|--------|----------|------|------|-----------------------|
+| Authorization       | header | string   | 是    | 授权头  | Bearer {access_token} |
+| CardId              | query  | string   | 否    | 卡片ID | 卡ID (可选)              |
+| TransactionDateFrom | query  | DateTime | 否    | 开始日期 | 开始交易日期                |
+| TransactionDateTo   | query  | DateTime | 否    | 结束日期 | 结束交易日期                |
+| PageNumber          | query  | integer  | 否    | 页码   | 当前页                   |
+| PageSize            | query  | integer  | 否    | 页大小  | 分页大小                  |
 
 ### 请求示例
 
@@ -1547,26 +1547,26 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/cardAccountLogs?Card
 
 ### 响应参数说明
 
-| 参数名称        | 参数类型      | 中文名称     | 参数描述                                     |
-|-----------------|---------------|--------------|----------------------------------------------|
-| responseId      | string        | 响应ID       | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError        | boolean       | 是否有错误   | 是否有错误发生                               |
-| errorCode       | string        | 错误码       | 错误代码                                     |
-| errorMessage    | string        | 错误信息     | 错误信息                                     |
-| data            | object        | 数据         |                                              |
-| ├─ totalPages   | integer       | totalPages   | 总页数                                       |
-| ├─ totalRecords | long          | totalRecords | 总记录数                                     |
-| ├─ data         | array[object] | 数据         | 数据 (必填)                                  |
-| └─ pageNumber   | integer       | pageNumber   | 当前页                                       |
-| └─ pageSize     | integer       | pageSize     | 分页数量                                     |
+| 参数名称            | 参数类型          | 中文名称         | 参数描述                    |
+|-----------------|---------------|--------------|-------------------------|
+| responseId      | string        | 响应ID         | 响应Id，需调用方保存，用于排查调用遇到的问题 |
+| hasError        | boolean       | 是否有错误        | 是否有错误发生                 |
+| errorCode       | string        | 错误码          | 错误代码                    |
+| errorMessage    | string        | 错误信息         | 错误信息                    |
+| data            | object        | 数据           |                         |
+| ├─ totalPages   | integer       | totalPages   | 总页数                     |
+| ├─ totalRecords | long          | totalRecords | 总记录数                    |
+| ├─ data         | array[object] | 数据           | 数据 (必填)                 |
+| └─ pageNumber   | integer       | pageNumber   | 当前页                     |
+| └─ pageSize     | integer       | pageSize     | 分页数量                    |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1578,13 +1578,13 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/cardAccountLogs?Card
 
 ### 请求参数
 
-| 参数名称            | 参数位置 | 参数类型 | 是否必填 | 中文名称 | 参数描述              |
-|---------------------|----------|----------|----------|----------|-----------------------|
-| Authorization       | header   | string   | 是       | 授权头   | Bearer {access_token} |
-| TransactionDateFrom | query    | DateTime | 否       | 开始日期 | 开始交易日期          |
-| TransactionDateTo   | query    | DateTime | 否       | 结束日期 | 结束交易日期          |
-| Limit               | query    | integer  | 否       | 限制数量 |                       |
-| Offset              | query    | integer  | 否       | 偏移量   |                       |
+| 参数名称                | 参数位置   | 参数类型     | 是否必填 | 中文名称 | 参数描述                  |
+|---------------------|--------|----------|------|------|-----------------------|
+| Authorization       | header | string   | 是    | 授权头  | Bearer {access_token} |
+| TransactionDateFrom | query  | DateTime | 否    | 开始日期 | 开始交易日期                |
+| TransactionDateTo   | query  | DateTime | 否    | 结束日期 | 结束交易日期                |
+| Limit               | query  | integer  | 否    | 限制数量 |                       |
+| Offset              | query  | integer  | 否    | 偏移量  |                       |
 
 ### 请求示例
 
@@ -1613,26 +1613,26 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs" \
 
 ### 响应参数说明
 
-| 参数名称        | 参数类型      | 中文名称     | 参数描述                                     |
-|-----------------|---------------|--------------|----------------------------------------------|
-| responseId      | string        | 响应ID       | 响应Id，需调用方保存，用于排查调用遇到的问题 |
-| hasError        | boolean       | 是否有错误   | 是否有错误发生                               |
-| errorCode       | string        | 错误码       | 错误代码                                     |
-| errorMessage    | string        | 错误信息     | 错误信息                                     |
-| data            | object        | 数据         |                                              |
-| ├─ pageNumber   | integer       | pageNumber   |                                              |
-| ├─ pageSize     | integer       | pageSize     |                                              |
-| ├─ totalRecords | integer       | totalRecords |                                              |
-| └─ totalPages   | integer       | totalPages   |                                              |
-| └─ data         | array[object] | 数据         |                                              |
+| 参数名称            | 参数类型          | 中文名称         | 参数描述                    |
+|-----------------|---------------|--------------|-------------------------|
+| responseId      | string        | 响应ID         | 响应Id，需调用方保存，用于排查调用遇到的问题 |
+| hasError        | boolean       | 是否有错误        | 是否有错误发生                 |
+| errorCode       | string        | 错误码          | 错误代码                    |
+| errorMessage    | string        | 错误信息         | 错误信息                    |
+| data            | object        | 数据           |                         |
+| ├─ pageNumber   | integer       | pageNumber   |                         |
+| ├─ pageSize     | integer       | pageSize     |                         |
+| ├─ totalRecords | integer       | totalRecords |                         |
+| └─ totalPages   | integer       | totalPages   |                         |
+| └─ data         | array[object] | 数据           |                         |
 
 ### 状态码说明
 
-| 状态码 | 说明     | 解决方案         |
-|--------|----------|------------------|
-| 200    | 成功     | 请求处理成功     |
-| 401    | 未授权   | 重新获取访问令牌 |
-| 403    | 禁止访问 | 检查权限设置     |
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
 
 ---
 
@@ -1640,14 +1640,14 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs" \
 
 ## 通用错误码
 
-| 错误码 | HTTP状态码 | 错误说明           | 解决方案                 |
-|--------|------------|--------------------|--------------------------|
-| 401    | 401        | 访问令牌无效或过期 | 重新获取访问令牌         |
-| 403    | 403        | 权限不足           | 检查账户权限或联系管理员 |
-| 404    | 404        | 请求的资源不存在   | 检查请求的资源ID是否正确 |
-| 400    | 400        | 请求参数错误       | 检查请求参数格式和内容   |
-| 429    | 429        | 请求频率超限       | 降低请求频率或等待后重试 |
-| 500    | 500        | 服务器内部错误     | 稍后重试或联系技术支持   |
+| 错误码 | HTTP状态码 | 错误说明      | 解决方案          |
+|-----|---------|-----------|---------------|
+| 401 | 401     | 访问令牌无效或过期 | 重新获取访问令牌      |
+| 403 | 403     | 权限不足      | 检查账户权限或联系管理员  |
+| 404 | 404     | 请求的资源不存在  | 检查请求的资源ID是否正确 |
+| 400 | 400     | 请求参数错误    | 检查请求参数格式和内容   |
+| 429 | 429     | 请求频率超限    | 降低请求频率或等待后重试  |
+| 500 | 500     | 服务器内部错误   | 稍后重试或联系技术支持   |
 
 ---
 
@@ -1681,9 +1681,9 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs" \
 
 # 版本历史
 
-| 版本号 | 发布日期   | 更新内容 |
-|--------|------------|----------|
-| v1.0   | 2025-06-26 | 第一版   |
+| 版本号  | 发布日期       | 更新内容 |
+|------|------------|------|
+| v1.0 | 2025-06-26 | 第一版  |
 
 ---
 

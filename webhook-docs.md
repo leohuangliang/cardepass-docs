@@ -1,6 +1,7 @@
 # Webhook通知对接文档
 
-> **注意：Webhook所有字段（包括Envelope外层、Data业务数据、响应体）均为小写字母开头（小驼峰），如 id、type、createdTime、data、version、signature、success、errorCode、errorMessage。请严格区分。**
+> **注意：Webhook所有字段（包括Envelope外层、Data业务数据、响应体）均为小写字母开头（小驼峰），如
+id、type、createdTime、data、version、signature、success、errorCode、errorMessage。请严格区分。**
 
 ## 1. 概述
 
@@ -74,28 +75,28 @@
 
 ### 3.3 参数说明
 
-| 字段名      | 类型     | 说明                           |
-|-------------|----------|--------------------------------|
-| id          | string   | 通知的唯一标识符               |
-| type        | string   | 通知类型，见下方事件类型表     |
-| createdTime | datetime | 通知创建时间（UTC时间）        |
+| 字段名         | 类型       | 说明              |
+|-------------|----------|-----------------|
+| id          | string   | 通知的唯一标识符        |
+| type        | string   | 通知类型，见下方事件类型表   |
+| createdTime | datetime | 通知创建时间（UTC时间）   |
 | data        | object   | 通知的具体内容，与事件类型相关 |
-| version     | string   | 接口版本号                     |
+| version     | string   | 接口版本号           |
 | signature   | string   | 请求签名，用于验证请求的真实性 |
 
 ### 3.4 事件类型(Type)
 
-| 类型           | 说明                 | 实现状态            |
-|----------------|----------------------|---------------------|
-| CardPay        | 卡消费通知           | ✅ 已实现            |
-| ApplyCard      | 开卡通知             | 🚧 开发中，暂未提供 |
-| Recharge       | 充值通知             | 🚧 开发中，暂未提供 |
+| 类型             | 说明         | 实现状态        |
+|----------------|------------|-------------|
+| CardPay        | 卡消费通知      | ✅ 已实现       |
+| ApplyCard      | 开卡通知       | 🚧 开发中，暂未提供 |
+| Recharge       | 充值通知       | 🚧 开发中，暂未提供 |
 | AcctPay        | 共享账户资金动账通知 | 🚧 开发中，暂未提供 |
-| CardAudit      | 卡片审核通知         | 🚧 开发中，暂未提供 |
-| CardActivation | 卡片激活通知         | 🚧 开发中，暂未提供 |
-| CardBlock      | 卡片锁定通知         | 🚧 开发中，暂未提供 |
-| CardUnblock    | 卡片解锁通知         | 🚧 开发中，暂未提供 |
-| CardCancel     | 卡片注销通知         | 🚧 开发中，暂未提供 |
+| CardAudit      | 卡片审核通知     | 🚧 开发中，暂未提供 |
+| CardActivation | 卡片激活通知     | 🚧 开发中，暂未提供 |
+| CardBlock      | 卡片锁定通知     | 🚧 开发中，暂未提供 |
+| CardUnblock    | 卡片解锁通知     | 🚧 开发中，暂未提供 |
+| CardCancel     | 卡片注销通知     | 🚧 开发中，暂未提供 |
 
 > **📋 实现状态说明**：
 > - ✅ **已实现**：完全支持，可正常使用
@@ -151,54 +152,56 @@
 
 **字段说明**：
 
-| 字段                | 类型     | 说明                         |
-|---------------------|----------|------------------------------|
-| id                  | string   | 交易唯一标识符               |
-| authTime            | datetime | 预授权时间(UTC)              |
-| settleTime          | datetime | 结算时间(UTC，可能为空)      |
-| transAmount         | Money    | 原始交易金额                 |
-| ├─ currency         | string   | 币种                         |
-| └─ amount           | decimal  | 金额                         |
-| authAmount          | Money    | 预授权金额                   |
-| ├─ currency         | string   | 币种                         |
-| └─ amount           | decimal  | 金额                         |
-| settledAmount       | Money    | 结算金额(入账后返回)         |
-| ├─ currency         | string   | 币种                         |
-| └─ amount           | decimal  | 金额                         |
+| 字段                  | 类型       | 说明                       |
+|---------------------|----------|--------------------------|
+| id                  | string   | 交易唯一标识符                  |
+| authTime            | datetime | 预授权时间(UTC)               |
+| settleTime          | datetime | 结算时间(UTC，可能为空)           |
+| transAmount         | Money    | 原始交易金额                   |
+| ├─ currency         | string   | 币种                       |
+| └─ amount           | decimal  | 金额                       |
+| authAmount          | Money    | 预授权金额                    |
+| ├─ currency         | string   | 币种                       |
+| └─ amount           | decimal  | 金额                       |
+| settledAmount       | Money    | 结算金额(入账后返回)              |
+| ├─ currency         | string   | 币种                       |
+| └─ amount           | decimal  | 金额                       |
 | cardInfo            | CardInfo | 卡片信息                     |
-| ├─ id               | string   | 卡片ID                       |
+| ├─ id               | string   | 卡片ID                     |
 | ├─ productCode      | string   | 产品编码                     |
 | ├─ productName      | string   | 产品名称                     |
-| ├─ cardCurrency     | string   | 卡币种                       |
+| ├─ cardCurrency     | string   | 卡币种                      |
 | ├─ maskCardNumber   | string   | 脱敏卡号                     |
-| └─ cardModel        | string   | 卡模式                       |
-| cardAlias           | string   | 卡别名(卡昵称)               |
-| authCode            | string   | 授权码(授权失败时可能为空)   |
+| └─ cardModel        | string   | 卡模式                      |
+| cardAlias           | string   | 卡别名(卡昵称)                 |
+| authCode            | string   | 授权码(授权失败时可能为空)           |
 | merchantName        | string   | 商户名称                     |
-| merchantCountryCode | string   | 商户国家代码                 |
-| merchantCity        | string   | 商户所在城市                 |
-| merchantState       | string   | 商户所在州                   |
+| merchantCountryCode | string   | 商户国家代码                   |
+| merchantCity        | string   | 商户所在城市                   |
+| merchantState       | string   | 商户所在州                    |
 | merchantZipCode     | string   | 商户邮编                     |
 | merchantDesc        | string   | 商户描述                     |
 | status              | string   | 交易状态                     |
 | fundsDirection      | string   | 资金方向(Income/Expenditure) |
 | transactionType     | string   | 交易类型                     |
-| failureReason       | string   | 失败原因(英文)               |
-| failureReasonCn     | string   | 失败原因(中文)               |
+| failureReason       | string   | 失败原因(英文)                 |
+| failureReasonCn     | string   | 失败原因(中文)                 |
 | note                | string   | 备注信息                     |
 
 **枚举值说明**：
 
 - **Status**: `AuthSuccess`(预授权成功), `AuthFailure`(预授权失败), `Settled`(已入账)
-- **FundsDirection**: `Income`(收入), `Expenditure`(支出)  
-- **TransactionType**: `Consume`(消费), `ConsumeRefund`(消费退款), `ConsumeDispute`(消费争议), `DisputeRelease`(争议释放), `ConsumeReversal`(取消消费), `ConsumeRefundReversal`(消费退款冲正), `AuthQuery`(预授权查询), `TransFee`(交易手续费)
+- **FundsDirection**: `Income`(收入), `Expenditure`(支出)
+- **TransactionType**: `Consume`(消费), `ConsumeRefund`(消费退款), `ConsumeDispute`(消费争议), `DisputeRelease`(
+  争议释放), `ConsumeReversal`(取消消费), `ConsumeRefundReversal`(消费退款冲正), `AuthQuery`(预授权查询), `TransFee`(
+  交易手续费)
 
 ### 4.2 其他事件类型 🚧
 
 以下事件类型正在开发中，Data字段结构将在后续版本中提供：
 
 - **ApplyCard** - 开卡通知
-- **Recharge** - 充值通知  
+- **Recharge** - 充值通知
 - **AcctPay** - 共享账户资金动账通知
 - **CardAudit** - 卡片审核通知
 - **CardActivation** - 卡片激活通知
