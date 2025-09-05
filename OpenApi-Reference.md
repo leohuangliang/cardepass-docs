@@ -439,12 +439,12 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
 | └─ cardOrganization | string   | 卡组织   | 卡组织（Mastercard/VISA等）                         |
 | └─ applyTime        | DateTime | 申请时间  | 卡片申请时间                                        |
 | └─ permissions      | object   | 操作权限  | 卡片操作权限信息                                      |
-| &nbsp;&nbsp;&nbsp;&nbsp;├─ allowOpenCard    | boolean  | 允许开卡  | 是否允许开卡操作                                      |
-| &nbsp;&nbsp;&nbsp;&nbsp;├─ allowTopUpCard   | boolean  | 允许充值  | 是否允许充值操作                                      |
-| &nbsp;&nbsp;&nbsp;&nbsp;├─ allowBlockCard   | boolean  | 允许冻结  | 是否允许冻结操作                                      |
-| &nbsp;&nbsp;&nbsp;&nbsp;├─ allowUnBlockCard | boolean  | 允许解冻  | 是否允许解冻操作                                      |
-| &nbsp;&nbsp;&nbsp;&nbsp;├─ allowCancelCard  | boolean  | 允许销卡  | 是否允许销卡操作                                      |
-| &nbsp;&nbsp;&nbsp;&nbsp;└─ allowWithdraw    | boolean  | 允许提取  | 是否允许余额提取操作                                    |
+| &emsp;&emsp;├─ allowOpenCard    | boolean  | 允许开卡  | 是否允许开卡操作                                      |
+| &emsp;&emsp;├─ allowTopUpCard   | boolean  | 允许充值  | 是否允许充值操作                                      |
+| &emsp;&emsp;├─ allowBlockCard   | boolean  | 允许冻结  | 是否允许冻结操作                                      |
+| &emsp;&emsp;├─ allowUnBlockCard | boolean  | 允许解冻  | 是否允许解冻操作                                      |
+| &emsp;&emsp;├─ allowCancelCard  | boolean  | 允许销卡  | 是否允许销卡操作                                      |
+| &emsp;&emsp;└─ allowWithdraw    | boolean  | 允许提取  | 是否允许余额提取操作                                    |
 
 #### 状态码说明
 
