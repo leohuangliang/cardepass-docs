@@ -16,26 +16,27 @@ Base URLs:
 - [产品管理](#产品管理)
   - [GET 查询客户可用产品列表](#get-查询客户可用产品列表)
 - [卡片管理](#卡片管理)
-  - [GET 查询卡片信息](#get-查询卡片信息)
-  - [GET 查询卡片列表](#get-查询卡片列表)
-  - [GET 查询卡片交易记录](#get-查询卡片交易记录)
-  - [POST 冻结卡片](#post-冻结卡片)
-  - [POST 解冻卡片](#post-解冻卡片)
-  - [POST 注销卡片](#post-注销卡片)
+  - [GET 查询卡信息](#get-查询卡信息)
 
 - [标准模式订单管理](#标准模式订单管理)
-  - [POST 标准模式开卡](#post-标准模式开卡)
-  - [POST 标准模式充值](#post-标准模式充值)
-  - [GET 查询订单状态](#get-查询订单状态)
-  - [GET 查询订单列表](#get-查询订单列表)
+  - [POST 【标准模式】开卡申请](#post-标准模式开卡申请)
+  - [POST 【标准模式】卡充值](#post-标准模式卡充值)
+  - [POST 【标准模式】卡冻结](#post-标准模式卡冻结)
+  - [POST 【标准模式】卡解冻](#post-标准模式卡解冻)
+  - [POST 【标准模式】销卡](#post-标准模式销卡)
+  - [POST 【标准模式】卡余额转出](#post-标准模式卡余额转出)
+  - [GET 标准模式类型的订单查询](#get-标准模式类型的订单查询)
 - [共享余额模式订单管理](#共享余额模式订单管理)
-  - [POST 共享余额模式开卡](#post-共享余额模式开卡)
-  - [POST 共享余额模式提现](#post-共享余额模式提现)
-  - [GET 查询共享余额订单状态](#get-查询共享余额订单状态)
-  - [GET 查询共享余额订单列表](#get-查询共享余额订单列表)
+  - [POST 【共享余额模式】开卡申请](#post-共享余额模式开卡申请)
+  - [POST 【共享余额模式】修改限额](#post-共享余额模式修改限额)
+  - [POST 【共享余额模式】冻结卡](#post-共享余额模式冻结卡)
+  - [POST 【共享余额模式】解冻卡](#post-共享余额模式解冻卡)
+  - [POST 【共享余额模式】销卡](#post-共享余额模式销卡)
+  - [GET 【共享余额模式】订单查询](#get-共享余额模式订单查询)
 - [客户账户管理](#客户账户管理)
-  - [GET 查询客户账户余额](#get-查询客户账户余额)
-  - [GET 查询客户账户交易记录](#get-查询客户账户交易记录)
+  - [GET 获取客户资金账户余额信息](#get-获取客户资金账户余额信息)
+  - [GET 分页查询卡资金明细](#get-分页查询卡资金明细)
+  - [GET 分页查询客户账户资金明细](#get-分页查询客户账户资金明细)
 - [交易管理](#交易管理)
   - [GET 查询交易流水（分页）](#get-查询交易流水分页)
 - [错误码说明](#错误码说明)
@@ -1133,14 +1134,19 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/standard/withdraw" \
 | 参数名称            | 参数位置   | 参数类型   | 是否必填 | 中文名称  | 参数描述                                                                                                       |
 |-----------------|--------|--------|------|-------|------------------------------------------------------------------------------------------------------------|
 | Authorization   | header | string | 是    | 授权头   | Bearer {access_token}                                                                                      |
-| orderType       | query  | string | 否    | 订单类型  | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnblock 卡解冻订单、CardWithdraw 卡余额转出订单 |
+| orderType       | query  | string | 是    | 订单类型  | 订单类型: ApplyCard 开卡订单、CardTopUp 充值订单、CardCancel 销卡订单、CardBlock 卡冻结订单、CardUnblock 卡解冻订单、CardWithdraw 卡余额转出订单 |
 | orderNo         | query  | string | 否    | 订单号   | 订单号 (可选)                                                                                                   |
 | customerOrderNo | query  | string | 否    | 商户订单号 | 商户订单号 (可选)                                                                                                 |
 
 #### 请求示例
 
 ```bash
-curl -X GET "https://test.cardepass.com/openapi/v1/orders/standard?orderType=ApplyCard" \
+# 使用订单号查询
+curl -X GET "https://test.cardepass.com/openapi/v1/orders/standard?orderType=ApplyCard&orderNo=ORD202501150001" \
+  -H "Authorization: Bearer your_access_token"
+
+# 使用客户订单号查询
+curl -X GET "https://test.cardepass.com/openapi/v1/orders/standard?orderType=ApplyCard&customerOrderNo=CUST202501150001" \
   -H "Authorization: Bearer your_access_token"
 ```
 
@@ -2525,10 +2531,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/transactions?transactionDateF
 | v1.0 | 2025-06-26 | 第一版  |
 | v1.1 | 2025-08-18 | 主要增加了产品相关权限说明，例如是否允许开卡，是否允许充值等权限  |
 | v1.2 | 2025-09-05 | 新增交易管理模块，添加GET /v1/transactions接口用于分页查询交易流水 |
+| v1.3 | 2025-09-05 | 修正GET /v1/orders/standard接口文档：将orderType参数标记为必填，增加使用orderNo和customerOrderNo查询的curl示例 |
 ---
 
 **文档最后更新时间**: 2025-09-05
-**文档版本**: v1.2
+**文档版本**: v1.3
 **API版本**: v1
 **生成方式**: 基于OpenAPI规范(swagger.json)自动生成
 
