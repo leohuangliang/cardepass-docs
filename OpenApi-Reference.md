@@ -7,6 +7,43 @@ Base URLs:
 * 测试环境: https://test.cardepass.com/openapi
 * 生产环境: https://cardepass.com/openapi
 
+## 目录
+
+- [认证方式](#认证方式)
+- [Token管理](#token管理)
+  - [POST 获取访问令牌](#post-获取访问令牌)
+  - [GET 健康检查](#get-健康检查)
+- [产品管理](#产品管理)
+  - [GET 查询客户可用产品列表](#get-查询客户可用产品列表)
+- [卡片管理](#卡片管理)
+  - [GET 查询卡片信息](#get-查询卡片信息)
+  - [GET 查询卡片列表](#get-查询卡片列表)
+  - [GET 查询卡片交易记录](#get-查询卡片交易记录)
+  - [POST 冻结卡片](#post-冻结卡片)
+  - [POST 解冻卡片](#post-解冻卡片)
+  - [POST 注销卡片](#post-注销卡片)
+
+- [标准模式订单管理](#标准模式订单管理)
+  - [POST 标准模式开卡](#post-标准模式开卡)
+  - [POST 标准模式充值](#post-标准模式充值)
+  - [GET 查询订单状态](#get-查询订单状态)
+  - [GET 查询订单列表](#get-查询订单列表)
+- [共享余额模式订单管理](#共享余额模式订单管理)
+  - [POST 共享余额模式开卡](#post-共享余额模式开卡)
+  - [POST 共享余额模式提现](#post-共享余额模式提现)
+  - [GET 查询共享余额订单状态](#get-查询共享余额订单状态)
+  - [GET 查询共享余额订单列表](#get-查询共享余额订单列表)
+- [客户账户管理](#客户账户管理)
+  - [GET 查询客户账户余额](#get-查询客户账户余额)
+  - [GET 查询客户账户交易记录](#get-查询客户账户交易记录)
+- [交易管理](#交易管理)
+  - [GET 查询交易流水（分页）](#get-查询交易流水分页)
+- [错误码说明](#错误码说明)
+- [最佳实践](#最佳实践)
+- [版本历史](#版本历史)
+
+---
+
 ## 认证方式
 
 - HTTP认证，使用Bearer Token
@@ -417,6 +454,8 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
 | 403 | 禁止访问 | 检查权限设置   |
 
 ---
+
+
 
 ## 标准模式订单管理
 
@@ -2300,6 +2339,142 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs?pageInde
 
 ---
 
+## 交易管理
+
+### GET 查询交易流水（分页）
+
+**接口地址：** GET /v1/transactions
+
+**功能描述：** 查询虚拟卡交易流水，支持分页查询
+
+#### 请求参数
+
+| 参数名称              | 参数位置   | 参数类型     | 是否必填 | 中文名称      | 参数描述                                                                                           |
+|-------------------|--------|----------|------|-----------|------------------------------------------------------------------------------------------------|
+| Authorization     | header | string   | 是    | 授权头       | Bearer {access_token}                                                                          |
+| cardId            | query  | string   | 否    | 卡ID       | 指定查询的卡片ID，不传则查询所有卡片的交易                                                                         |
+| transactionDateFrom | query  | datetime | 是    | 交易开始时间    | 交易查询开始时间，格式：2024-01-01T00:00:00Z                                                              |
+| transactionDateTo | query  | datetime | 是    | 交易结束时间    | 交易查询结束时间，格式：2024-01-01T23:59:59Z                                                              |
+| transactionStatus | query  | string   | 否    | 交易状态      | 交易状态筛选：AuthSuccess-预授权成功, AuthFailure-预授权失败, Settled-已入账                                      |
+| pageSize          | query  | integer  | 否    | 每页数量      | 每页返回的记录数，默认20，最大100                                                                            |
+| pageCursor        | query  | string   | 否    | 分页游标      | 分页游标，用于获取下一页数据。首次查询不传，后续查询传入上一页返回的pageCursor值。当返回"None"时表示已到最后一页                           |
+
+#### 请求示例
+
+```bash
+# 查询所有卡片的交易记录
+curl -X GET "https://test.cardepass.com/openapi/v1/transactions?transactionDateFrom=2024-01-01T00:00:00Z&transactionDateTo=2024-01-31T23:59:59Z&pageSize=20" \
+  -H "Authorization: Bearer your_access_token"
+
+# 查询指定卡片的交易记录
+curl -X GET "https://test.cardepass.com/openapi/v1/transactions?cardId=CARD123456&transactionDateFrom=2024-01-01T00:00:00Z&transactionDateTo=2024-01-31T23:59:59Z&transactionStatus=Settled" \
+  -H "Authorization: Bearer your_access_token"
+
+# 分页查询（获取下一页）
+curl -X GET "https://test.cardepass.com/openapi/v1/transactions?transactionDateFrom=2024-01-01T00:00:00Z&transactionDateTo=2024-01-31T23:59:59Z&pageSize=20&pageCursor=eyJpZCI6IjY1YzNkNGY4..." \
+  -H "Authorization: Bearer your_access_token"
+```
+
+#### 响应示例
+
+```json
+{
+  "responseId": "12345678-1234-1234-1234-123456789012",
+  "hasError": false,
+  "errorCode": null,
+  "errorMessage": "操作成功",
+  "data": {
+    "pageCursor": "eyJpZCI6IjY1YzNkNGY4NzEyMzQ1Njc4OWFiY2RlZiJ9",
+    "pageSize": 20,
+    "data": [
+      {
+        "id": "65c3d4f871234567890abcdef",
+        "authTime": "2024-01-15T10:30:00Z",
+        "settleTime": "2024-01-15T10:35:00Z",
+        "transAmount": {
+          "amount": 99.99,
+          "currency": "USD"
+        },
+        "authAmount": {
+          "amount": 99.99,
+          "currency": "USD"
+        },
+        "settledAmount": {
+          "amount": 99.99,
+          "currency": "USD"
+        },
+        "cardInfo": {
+          "cardId": "CARD123456",
+          "maskedCardNumber": "****1234",
+          "cardCurrency": "USD"
+        },
+        "cardAlias": "我的美元卡",
+        "authCode": "123456",
+        "merchantName": "Amazon.com",
+        "merchantCountryCode": "US",
+        "merchantCity": "Seattle",
+        "merchantState": "WA",
+        "merchantZipCode": "98101",
+        "merchantDesc": "AMAZON.COM AMZN.COM/BILL WA",
+        "status": "Settled",
+        "fundsDirection": "Expenditure",
+        "transactionType": "Consume",
+        "failureReason": null,
+        "failureReasonCn": null,
+        "note": "在线购物消费"
+      }
+    ]
+  }
+}
+```
+
+#### 响应参数说明
+
+| 参数名称                        | 参数类型          | 中文名称         | 参数描述                                                                                     |
+|------------------------------|---------------|--------------|----------------------------------------------------------------------------------------|
+| responseId                   | string        | 响应ID         | 响应Id，需调用方保存，用于排查调用遇到的问题                                                               |
+| hasError                     | boolean       | 是否有错误        | 是否有错误发生                                                                                |
+| errorCode                    | string        | 错误码          | 错误代码                                                                                   |
+| errorMessage                 | string        | 错误信息         | 错误信息                                                                                   |
+| data                         | object        | 数据           | 分页查询结果数据                                                                               |
+| ├─ pageCursor                | string        | 分页游标         | 下一页的分页游标，"None"表示已到最后一页                                                              |
+| ├─ pageSize                  | integer       | 每页数量         | 当前页返回的记录数                                                                              |
+| └─ data                      | array[object] | 交易列表         | 交易记录列表                                                                                 |
+| 　├─ id                      | string        | 交易ID         | 唯一交易标识符                                                                                |
+| 　├─ authTime                | datetime      | 预授权时间        | 交易预授权发生时间                                                                              |
+| 　├─ settleTime              | datetime      | 清算时间         | 交易清算完成时间（可选）                                                                           |
+| 　├─ transAmount             | object        | 原始交易金额       | 商户收取的原始交易金额                                                                            |
+| 　├─ authAmount              | object        | 预授权金额        | 预授权冻结的金额（卡本币）                                                                          |
+| 　├─ settledAmount           | object        | 结算金额         | 最终结算的金额（可选）                                                                            |
+| 　├─ cardInfo                | object        | 卡片信息         | 关联的卡片信息                                                                                |
+| 　　├─ cardId                | string        | 卡片ID         | 卡片唯一标识符                                                                                |
+| 　　├─ maskedCardNumber      | string        | 脱敏卡号         | 脱敏处理的卡号                                                                                |
+| 　　└─ cardCurrency          | string        | 卡片币种         | 卡片结算币种                                                                                 |
+| 　├─ cardAlias               | string        | 卡片别名         | 用户设置的卡片昵称（可选）                                                                          |
+| 　├─ authCode                | string        | 授权码          | 交易授权码（可选）                                                                              |
+| 　├─ merchantName            | string        | 商户名称         | 交易商户名称                                                                                 |
+| 　├─ merchantCountryCode     | string        | 商户国家代码       | 商户所在国家的ISO代码                                                                           |
+| 　├─ merchantCity            | string        | 商户城市         | 商户所在城市                                                                                 |
+| 　├─ merchantState           | string        | 商户州/省        | 商户所在州或省份                                                                               |
+| 　├─ merchantZipCode         | string        | 商户邮编         | 商户邮政编码                                                                                 |
+| 　├─ merchantDesc            | string        | 商户描述         | 商户详细描述信息                                                                               |
+| 　├─ status                  | string        | 交易状态         | AuthSuccess-预授权成功, AuthFailure-预授权失败, Settled-已入账                                      |
+| 　├─ fundsDirection          | string        | 资金方向         | Income-收入, Expenditure-支出                                                              |
+| 　├─ transactionType         | string        | 交易类型         | Consume-消费, ConsumeRefund-消费退款, ConsumeDispute-消费争议, DisputeRelease-争议释放, ConsumeReversal-消费冲正, ConsumeRefundReversal-消费退款冲正, AuthQuery-预授权查询, TransFee-交易手续费 |
+| 　├─ failureReason           | string        | 失败原因         | 交易失败时的英文原因描述（可选）                                                                       |
+| 　├─ failureReasonCn         | string        | 中文失败原因       | 交易失败时的中文原因描述（可选）                                                                       |
+| 　└─ note                    | string        | 交易备注         | 交易相关备注信息（可选）                                                                           |
+
+#### 状态码说明
+
+| 状态码 | 说明   | 解决方案     |
+|-----|------|----------|
+| 200 | 成功   | 请求处理成功   |
+| 401 | 未授权  | 重新获取访问令牌 |
+| 403 | 禁止访问 | 检查权限设置   |
+
+---
+
 ## 错误码说明
 
 #### 通用错误码
@@ -2349,10 +2524,11 @@ curl -X GET "https://test.cardepass.com/openapi/v1/accounts/accountLogs?pageInde
 |------|------------|------|
 | v1.0 | 2025-06-26 | 第一版  |
 | v1.1 | 2025-08-18 | 主要增加了产品相关权限说明，例如是否允许开卡，是否允许充值等权限  |
+| v1.2 | 2025-09-05 | 新增交易管理模块，添加GET /v1/transactions接口用于分页查询交易流水 |
 ---
 
-**文档最后更新时间**: 2025-06-26
-**文档版本**: v1.0
+**文档最后更新时间**: 2025-09-05
+**文档版本**: v1.2
 **API版本**: v1
 **生成方式**: 基于OpenAPI规范(swagger.json)自动生成
 
