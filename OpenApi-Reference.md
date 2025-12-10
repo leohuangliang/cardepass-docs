@@ -198,7 +198,8 @@ curl -X GET "https://test.cardepass.com/openapi/v1/products" \
             "allowBlockCard": true,
             "allowUnBlockCard": true,
             "allowCancelCard": true,
-            "allowWithdraw": false
+            "allowWithdraw": false,
+            "allowUpdateLimit": false
           }
         },
         {
@@ -217,7 +218,8 @@ curl -X GET "https://test.cardepass.com/openapi/v1/products" \
             "allowBlockCard": true,
             "allowUnBlockCard": true,
             "allowCancelCard": true,
-            "allowWithdraw": true
+            "allowWithdraw": false,
+            "allowUpdateLimit": true
           }
         }
       ]
@@ -330,9 +332,9 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
     "alias": "我的美元卡",
     "balanceAmount": 1250.5,
     "status": "Active",
-    "maxAuthAmount": null,
-    "usedCreditAmount": null,
-    "maxCreditAmount": null,
+    "maxAuthAmount": 500.0,
+    "usedCreditAmount": 1200.0,
+    "maxCreditAmount": 10000.0,
     "cardOrganization": "Mastercard",
     "applyTime": "2025-01-10T08:00:00Z",
     "permissions": {
@@ -433,9 +435,9 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
 | ├─ alias            | string   | 卡别名   | 卡片别名（用户自定义名称）                                 |
 | └─ balanceAmount    | decimal  | 可用余额  | 当前可用余额                                        |
 | └─ status           | string   | 卡状态   | Active=活跃, Blocked=冻结, Cancel=注销, Expired=已过期 |
-| └─ maxAuthAmount    | decimal  | 单笔限额  | 共享余额模式：单笔最大授权金额                               |
-| └─ usedCreditAmount | decimal  | 已消费额度 | 共享余额模式：已使用的信用额度                               |
-| └─ maxCreditAmount  | decimal  | 总额度上限 | 共享余额模式：总信用额度上限（null表示无限制）                     |
+| └─ maxAuthAmount    | decimal  | 单笔限额  | 共享余额模式：单笔交易限额                                  |
+| └─ usedCreditAmount | decimal  | 已消费额度 | 共享余额模式：已使用的信用额度                                 |
+| └─ maxCreditAmount  | decimal  | 总额度上限 | 共享余额模式：单卡消费总额度                                  |
 | └─ cardOrganization | string   | 卡组织   | 卡组织（Mastercard/VISA等）                         |
 | └─ applyTime        | DateTime | 申请时间  | 卡片申请时间                                        |
 | └─ permissions      | object   | 操作权限  | 卡片操作权限信息                                      |
@@ -444,7 +446,8 @@ curl -X GET "https://test.cardepass.com/openapi/v1/cards/CARD123456" \
 | &emsp;&emsp;├─ allowBlockCard   | boolean  | 允许冻结  | 是否允许冻结操作                                      |
 | &emsp;&emsp;├─ allowUnBlockCard | boolean  | 允许解冻  | 是否允许解冻操作                                      |
 | &emsp;&emsp;├─ allowCancelCard  | boolean  | 允许销卡  | 是否允许销卡操作                                      |
-| &emsp;&emsp;└─ allowWithdraw    | boolean  | 允许提取  | 是否允许余额提取操作                                    |
+| &emsp;&emsp;├─ allowWithdraw    | boolean  | 允许提取  | 是否允许余额提取操作                                    |
+| &emsp;&emsp;└─ allowUpdateLimit | boolean  | 允许修改限额 | 是否允许修改限额操作                                    |
 
 #### 状态码说明
 
@@ -1334,8 +1337,8 @@ curl -X GET "https://test.cardepass.com/openapi/v1/orders/standard?orderType=App
 | Content-Type    | header | string  | 是    | 内容类型      | application/json      |
 | productCode     | body   | string  | 是    | 产品编码      | 卡产品编码                 |
 | cardCurrency    | body   | Currency | 是    | 币种        | 币种枚举值，如：USD、EUR、CNY等 |
-| maxAuthAmount   | body   | decimal | 是    | 单笔限额      | 单笔限额                  |
-| maxCreditAmount | body   | decimal | 否    | 总额度上限     | 单卡消费总额度,可以为空，为空表示不限额度 |
+| maxAuthAmount   | body   | decimal | 是    | 单笔限额      | 单笔交易限额（最小值为1）              |
+| maxCreditAmount | body   | decimal | 是    | 总额度上限     | 单卡消费总额度（必须为整数，最小值为1）     |
 | cardAlias       | body   | string  | 否    | 卡别名       | 卡别名                   |
 | customerOrderNo | body   | string  | 否    | 商户订单号     | 商户请求订单号（确保唯一性） (可选)   |
 
@@ -1414,8 +1417,8 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/apply" \
 | 　├─ cardModel     | string        | 卡模式         | ShareBalance=共享余额模式                |
 | 　└─ cardCurrency  | Currency      | 币种          | 卡结算币种                              |
 | ├─ quantity        | integer       | 申请数量        | 开卡数                                |
-| ├─ maxAuthAmount   | decimal       | 单笔限额        | 单笔限额                               |
-| ├─ maxCreditAmount | decimal       | 总额度上限       | 单卡消费总额度,可以为空，为空表示不限额度              |
+| ├─ maxAuthAmount   | decimal       | 单笔限额        | 单笔交易限额                             |
+| ├─ maxCreditAmount | decimal       | 总额度上限       | 单卡消费总额度（必须为整数，最小值为1）                |
 | ├─ totalAmount     | decimal       | 订单总金额       | 总交易金额                              |
 | ├─ transAmount     | decimal       | 交易金额        | 交易金额                               |
 | └─ transFee        | decimal       | 手续费         | 开卡手续费(交易手续费)                       |
@@ -1458,8 +1461,8 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/apply" \
 | Content-Type    | header | string  | 是    | 内容类型  | application/json      |
 | cardId          | body   | string  | 是    | 卡ID   | 卡ID                    |
 | customerOrderNo | body   | string  | 否    | 商户订单号 | 商户请求订单号（确保唯一性）        |
-| maxAuthAmount   | body   | decimal | 是    | 单笔限额  | 共享模式单笔限额              |
-| maxCreditAmount | body   | decimal | 否    | 总额度上限 | 共享模式总额度，为空表示不限制       |
+| maxAuthAmount   | body   | decimal | 是    | 单笔限额  | 单笔交易限额（必须为整数）            |
+| maxCreditAmount | body   | decimal | 是    | 总额度上限 | 单卡消费总额度（必须为整数，最小值为1）     |
 
 #### 请求示例
 
@@ -1509,8 +1512,8 @@ curl -X POST "https://test.cardepass.com/openapi/v1/orders/sharebalance/creditLi
 | data               | object   | 数据    |                         |
 | ├─ orderNo         | string   | 订单编号  | 共享卡限额修改订单编号             |
 | ├─ cardId          | string   | 卡ID   | 卡ID                     |
-| ├─ maxAuthAmount   | decimal  | 单笔限额  | 单笔限额                    |
-| ├─ maxCreditAmount | decimal  | 总额度上限 | 总限额，为空表示不限制             |
+| ├─ maxAuthAmount   | decimal  | 单笔限额  | 单笔交易限额（必须为整数）            |
+| ├─ maxCreditAmount | decimal  | 总额度上限 | 单卡消费总额度（必须为整数，最小值为1）     |
 | ├─ status          | string   | 状态    | 卡限额修改状态 (Pending: 处理中, Completed: 已完成, Failure: 处理失败) |
 | └─ orderType       | string   | 订单类型  | 订单类型                    |
 | ├─ failureReason   | string   | 失败原因  | 失败原因 (可选)                |
